@@ -21,6 +21,8 @@
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
+      "@styles/*": ["src/styles/*"],
+      "@contexts/*": ["src/contexts/*"],
       "@types/*": ["src/types/*"],
       "@data/*": ["src/data/*"]
     }
