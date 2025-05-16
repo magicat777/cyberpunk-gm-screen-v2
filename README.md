@@ -2,6 +2,8 @@
 
 A modern, accessible, and interactive Game Master Screen for Cyberpunk Red tabletop RPG sessions. Built with React and deployed via GitHub Pages.
 
+🔗 **Repository:** https://github.com/magicat777/cyberpunk-gm-screen-v2
+
 ## Features
 
 - 🎲 Interactive dice rolling with results history
@@ -18,7 +20,7 @@ A modern, accessible, and interactive Game Master Screen for Cyberpunk Red table
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cyberpunk-gm-screen-v2.git
+git clone https://github.com/magicat777/cyberpunk-gm-screen-v2.git
 
 # Install dependencies
 cd cyberpunk-gm-screen-v2
@@ -47,6 +49,7 @@ This project uses:
 
 ```bash
 # Build and run the Docker container
+cd scripts/docker
 docker-compose up -d
 
 # Access the application at http://localhost:5173
@@ -55,6 +58,10 @@ docker-compose up -d
 ## Contributing
 
 Please read our [Contributing Guide](docs/02-development/contributing.md) before submitting pull requests.
+
+## Project Structure
+
+This repository contains the production code. Documentation and project management files are maintained separately.
 
 ## License
 
