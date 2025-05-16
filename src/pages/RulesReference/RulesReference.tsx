@@ -1,11 +1,11 @@
 import React from 'react';
+import { RulesReference as RulesReferenceComponent } from '@components/reference/RulesReference';
 import styles from './RulesReference.module.css';
 
 const RulesReference: React.FC = () => {
   return (
     <div className={styles.rulesReference}>
-      <h1 className={styles.title}>Rules Reference</h1>
-      <p className={styles.placeholder}>Rules reference component coming soon...</p>
+      <RulesReferenceComponent />
     </div>
   );
 };
