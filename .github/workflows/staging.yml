@@ -1,0 +1,41 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build for staging
+      run: npm run build
+      env:
+        NODE_ENV: staging
+        PUBLIC_URL: /staging/
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: staging-build
+        path: dist
+        retention-days: 7
+    
+    # Note: Actual deployment steps would depend on your staging infrastructure
+    # This could be deployment to a cloud service, FTP, or other hosting solution
+    - name: Deploy to staging
+      run: |
+        echo "Staging deployment would happen here"
+        echo "Build artifacts are available for manual deployment"

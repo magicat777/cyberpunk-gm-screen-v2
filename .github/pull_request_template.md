@@ -1,39 +1,32 @@
-## PR Summary
-Brief description of what this PR does.
+## Description
 
-## Related Issue
-Closes #(issue number)
+Please include a summary of the changes and the related issue.
 
-## Type of Change
+Fixes # (issue)
+
+## Type of change
+
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] Documentation update
-- [ ] Performance improvement
-- [ ] Refactoring
 
-## Implementation Details
-Describe your implementation approach and any important decisions.
+## How Has This Been Tested?
 
-## Testing
-- [ ] Unit tests pass
-- [ ] Integration tests pass
-- [ ] Manual testing completed
-- [ ] Tested on mobile devices
-- [ ] Tested with screen reader
+Please describe the tests that you ran to verify your changes.
 
-## Checklist
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] Manual testing
+
+## Checklist:
+
 - [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
+- [ ] I have performed a self-review of my code
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation
 - [ ] My changes generate no new warnings
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] New and existing unit tests pass locally with my changes
-- [ ] Any dependent changes have been merged and published
-
-## Screenshots
-If applicable, add screenshots to demonstrate the changes.
-
-## Additional Notes
-Any additional information that reviewers should know.
+- [ ] Any dependent changes have been merged and published in downstream modules
+- [ ] I have checked my code and corrected any misspellings
