@@ -1,0 +1,98 @@
+.skeleton {
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton:last-child {
+  margin-bottom: 0;
+}
+
+/* Base shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.text,
+.line,
+.header,
+.button,
+.circle {
+  background: linear-gradient(
+    to right,
+    var(--bg-secondary) 8%,
+    var(--color-primary-dim) 38%,
+    var(--bg-secondary) 54%
+  );
+  background-size: 936px 104px;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* Text skeleton */
+.text {
+  height: 16px;
+  width: 100%;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Card skeleton */
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--color-primary-dim);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  width: 100%;
+}
+
+.header {
+  height: 24px;
+  width: 60%;
+  margin-bottom: var(--spacing-md);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.line {
+  height: 14px;
+  width: 100%;
+}
+
+/* List skeleton */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+/* Button skeleton */
+.button {
+  border-radius: var(--radius-sm);
+}

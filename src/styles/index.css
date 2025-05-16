@@ -12,6 +12,7 @@
   --color-accent: #00ffff;
   --color-warning: #ffff00;
   --color-danger: #ff0040;
+  --color-primary-dim: #00cc33;
   
   /* Background colors */
   --bg-primary: #0a0a0a;
@@ -38,6 +39,11 @@
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
+  
+  /* Layout */
+  --max-width: 1200px;
+  --sidebar-width: 250px;
+  --header-height: 60px;
 }
 
 body {
