@@ -1,0 +1,56 @@
+/* High Contrast Theme - Maximum contrast for accessibility */
+[data-theme="high-contrast"] {
+  /* Primary colors */
+  --color-primary: #ffff00;         /* Yellow */
+  --color-secondary: #ff00ff;       /* Magenta */
+  --color-accent: #00ffff;          /* Cyan */
+  --color-warning: #ff8800;         /* Orange */
+  --color-danger: #ff0000;          /* Red */
+  --color-primary-dim: #cccc00;     /* Darker yellow */
+  
+  /* Backgrounds */
+  --bg-primary: #000000;            /* Pure black */
+  --bg-secondary: #000000;          /* Pure black */
+  --bg-tertiary: #000000;           /* Pure black */
+  --bg-overlay: rgba(0, 0, 0, 0.9);
+  
+  /* Text colors */
+  --text-primary: #ffffff;          /* Pure white */
+  --text-secondary: #ffffff;        /* Pure white */
+  --text-tertiary: #cccccc;         /* Light gray */
+  --text-disabled: #666666;         /* Dark gray */
+  
+  /* Interactive states */
+  --hover-bg: rgba(255, 255, 0, 0.2);
+  --active-bg: rgba(255, 255, 0, 0.3);
+  --focus-ring: 0 0 0 3px var(--color-primary);
+  
+  /* Borders */
+  --border-color: #ffffff;          /* White */
+  --border-subtle: #cccccc;         /* Light gray */
+  
+  /* Shadows */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --glow: 0 0 5px var(--color-primary);
+  
+  /* Gradients */
+  --gradient-primary: none;
+  --gradient-secondary: none;
+  
+  /* Code blocks */
+  --code-bg: #000000;
+  --code-border: #ffffff;
+  
+  /* Special effects */
+  --scanline-opacity: 0;
+  --glitch-color-1: transparent;
+  --glitch-color-2: transparent;
+  
+  /* High contrast specific */
+  --outline-width: 3px;
+  --text-decoration-thickness: 2px;
+  --font-weight-normal: 500;
+  --font-weight-bold: 700;
+}

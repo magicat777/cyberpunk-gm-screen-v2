@@ -1,4 +1,5 @@
 import React from 'react';
+import { usePreferences } from '@/store';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -6,6 +7,30 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+  const { preferences, updateTheme } = usePreferences();
+  
+  const handleThemeToggle = () => {
+    const themes: Array<typeof preferences.theme> = ['cyberpunk', 'dark', 'light', 'high-contrast'];
+    const currentIndex = themes.indexOf(preferences.theme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    updateTheme(themes[nextIndex]);
+  };
+  
+  const getThemeIcon = () => {
+    switch (preferences.theme) {
+      case 'light':
+        return '☀️';
+      case 'dark':
+        return '🌙';
+      case 'cyberpunk':
+        return '💾';
+      case 'high-contrast':
+        return '👁️';
+      default:
+        return '🌙';
+    }
+  };
+  
   return (
     <header className={styles.header} role="banner">
       <div className={styles.container}>
@@ -27,10 +52,12 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <div className={styles.actions}>
           <button
             className={styles.themeToggle}
-            aria-label="Toggle theme"
+            onClick={handleThemeToggle}
+            aria-label={`Current theme: ${preferences.theme}. Click to change theme`}
             type="button"
+            title={`Theme: ${preferences.theme}`}
           >
-            🌙
+            {getThemeIcon()}
           </button>
         </div>
       </div>

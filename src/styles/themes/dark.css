@@ -1,0 +1,50 @@
+/* Dark Theme - Clean dark theme without neon effects */
+[data-theme="dark"] {
+  /* Primary colors */
+  --color-primary: #3b82f6;         /* Blue */
+  --color-secondary: #8b5cf6;       /* Purple */
+  --color-accent: #10b981;          /* Green */
+  --color-warning: #f59e0b;         /* Amber */
+  --color-danger: #ef4444;          /* Red */
+  --color-primary-dim: #2563eb;     /* Darker blue */
+  
+  /* Backgrounds */
+  --bg-primary: #0f172a;            /* Slate 900 */
+  --bg-secondary: #1e293b;          /* Slate 800 */
+  --bg-tertiary: #334155;           /* Slate 700 */
+  --bg-overlay: rgba(0, 0, 0, 0.7);
+  
+  /* Text colors */
+  --text-primary: #f8fafc;          /* Slate 50 */
+  --text-secondary: #cbd5e1;        /* Slate 300 */
+  --text-tertiary: #94a3b8;         /* Slate 400 */
+  --text-disabled: #64748b;         /* Slate 500 */
+  
+  /* Interactive states */
+  --hover-bg: rgba(59, 130, 246, 0.1);
+  --active-bg: rgba(59, 130, 246, 0.2);
+  --focus-ring: 0 0 0 2px var(--color-primary);
+  
+  /* Borders */
+  --border-color: #334155;          /* Slate 700 */
+  --border-subtle: #1e293b;         /* Slate 800 */
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --glow: none;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  --gradient-secondary: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+  
+  /* Code blocks */
+  --code-bg: #1e293b;
+  --code-border: #334155;
+  
+  /* Special effects */
+  --scanline-opacity: 0;
+  --glitch-color-1: transparent;
+  --glitch-color-2: transparent;
+}

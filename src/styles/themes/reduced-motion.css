@@ -1,0 +1,68 @@
+/* Reduced Motion Support */
+
+/* When reduced motion is enabled */
+[data-reduced-motion="true"] * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  animation-delay: 0.01ms !important;
+  transition-delay: 0.01ms !important;
+}
+
+/* Disable specific animations */
+[data-reduced-motion="true"] {
+  /* Disable loading spinner rotation */
+  --spinner-animation: none;
+  
+  /* Disable shimmer effects */
+  --shimmer-animation: none;
+  
+  /* Disable glitch effects */
+  --glitch-animation: none;
+  
+  /* Disable fade animations */
+  --fade-animation: none;
+  
+  /* Disable slide animations */
+  --slide-animation: none;
+  
+  /* Disable bounce animations */
+  --bounce-animation: none;
+  
+  /* Disable pulse animations */
+  --pulse-animation: none;
+}
+
+/* Keep essential indicators */
+[data-reduced-motion="true"] .loading-spinner {
+  border: 3px solid var(--color-primary);
+  opacity: 0.8;
+}
+
+[data-reduced-motion="true"] .skeleton-screen {
+  background: var(--bg-secondary);
+  opacity: 0.6;
+}
+
+/* Respect system preference as well */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    animation-delay: 0.01ms !important;
+    transition-delay: 0.01ms !important;
+  }
+  
+  .loading-spinner {
+    animation: none;
+    border: 3px solid var(--color-primary);
+    opacity: 0.8;
+  }
+  
+  .skeleton-screen {
+    animation: none;
+    background: var(--bg-secondary);
+    opacity: 0.6;
+  }
+}

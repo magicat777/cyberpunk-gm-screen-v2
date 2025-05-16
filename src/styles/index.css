@@ -1,4 +1,13 @@
 /* Cyberpunk GM Screen - Global Styles */
+
+/* Import theme files */
+@import './themes/cyberpunk.css';
+@import './themes/dark.css';
+@import './themes/light.css';
+@import './themes/high-contrast.css';
+@import './themes/font-sizes.css';
+@import './themes/reduced-motion.css';
+
 * {
   box-sizing: border-box;
   margin: 0;
