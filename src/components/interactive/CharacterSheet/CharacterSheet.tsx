@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useStore } from '../../../store/useStore';
-import { Character, StatType, SkillType, ArmorLocation } from '../../../types/game';
+// import { useStore } from '../../../store/useStore';
+import { Character, StatType, SkillType, ArmorLocation, RoleType } from '../../../types/game';
 import styles from './CharacterSheet.module.css';
 import { Button } from '../../utility/Form/Button';
 import { Icon } from '../../utility/Icon';
 import { TextInput } from '../../utility/Form/TextInput';
 import { Select } from '../../utility/Form/Select';
-import { Checkbox } from '../../utility/Form/Checkbox';
+// import { Checkbox } from '../../utility/Form/Checkbox';
 
 interface CharacterSheetProps {
   character: Character;
@@ -66,9 +66,9 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
   const updateHP = (value: number) => {
     setEditedCharacter(prev => ({
       ...prev,
-      hp: {
-        ...prev.hp,
-        current: Math.max(0, Math.min(prev.hp.max, value))
+      hitPoints: {
+        ...prev.hitPoints,
+        current: Math.max(0, Math.min(prev.hitPoints.max, value))
       }
     }));
   };
@@ -94,32 +94,33 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
             <TextInput
               label="Name"
               value={editedCharacter.name}
-              onChange={(e) => setEditedCharacter({ ...editedCharacter, name: e.target.value })}
+              onChange={(value) => setEditedCharacter({ ...editedCharacter, name: value })}
               className={styles.nameInput}
             />
             <TextInput
               label="Handle"
               value={editedCharacter.handle || ''}
-              onChange={(e) => setEditedCharacter({ ...editedCharacter, handle: e.target.value })}
+              onChange={(value) => setEditedCharacter({ ...editedCharacter, handle: value })}
               className={styles.handleInput}
             />
             <Select
               label="Role"
               value={editedCharacter.role}
-              onChange={(e) => setEditedCharacter({ ...editedCharacter, role: e.target.value as any })}
+              onChange={(value) => setEditedCharacter({ ...editedCharacter, role: value as RoleType })}
               className={styles.roleSelect}
-            >
-              <option value="Solo">Solo</option>
-              <option value="Netrunner">Netrunner</option>
-              <option value="Tech">Tech</option>
-              <option value="Medtech">Medtech</option>
-              <option value="Media">Media</option>
-              <option value="Exec">Exec</option>
-              <option value="Lawman">Lawman</option>
-              <option value="Fixer">Fixer</option>
-              <option value="Nomad">Nomad</option>
-              <option value="Rockerboy">Rockerboy</option>
-            </Select>
+              options={[
+                { value: 'Solo', label: 'Solo' },
+                { value: 'Netrunner', label: 'Netrunner' },
+                { value: 'Tech', label: 'Tech' },
+                { value: 'Medtech', label: 'Medtech' },
+                { value: 'Media', label: 'Media' },
+                { value: 'Exec', label: 'Exec' },
+                { value: 'Lawman', label: 'Lawman' },
+                { value: 'Fixer', label: 'Fixer' },
+                { value: 'Nomad', label: 'Nomad' },
+                { value: 'Rockerboy', label: 'Rockerboy' }
+              ]}
+            />
           </>
         ) : (
           <>
@@ -135,23 +136,23 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
           <>
             {isEditing ? (
               <>
-                <Button onClick={handleSave} size="small">
+                <Button onClick={handleSave} size="sm">
                   <Icon name="save" /> Save
                 </Button>
-                <Button onClick={handleCancel} variant="secondary" size="small">
-                  <Icon name="times" /> Cancel
+                <Button onClick={handleCancel} variant="secondary" size="sm">
+                  <Icon name="close" /> Cancel
                 </Button>
               </>
             ) : (
-              <Button onClick={() => setIsEditing(true)} size="small">
-                <Icon name="pencil" /> Edit
+              <Button onClick={() => setIsEditing(true)} size="sm">
+                <Icon name="edit" /> Edit
               </Button>
             )}
           </>
         )}
         {onDelete && (
-          <Button onClick={() => onDelete(character.id)} variant="danger" size="small">
-            <Icon name="trash" /> Delete
+          <Button onClick={() => onDelete(character.id)} variant="danger" size="sm">
+            <Icon name="remove" /> Delete
           </Button>
         )}
       </div>
@@ -168,16 +169,16 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
               type="number"
               min="1"
               max="10"
-              value={data.current}
-              onChange={(e) => updateStat(stat as StatType, parseInt(e.target.value) || 1)}
+              value={data.value}
+              onChange={(value) => updateStat(stat as StatType, parseInt(value) || 1)}
               className={styles.statInput}
             />
           ) : (
-            <div className={styles.statValue}>{data.current}</div>
+            <div className={styles.statValue}>{data.value}</div>
           )}
-          {data.current !== data.base && (
+          {data.value !== data.base && (
             <span className={styles.modifier}>
-              ({data.base}{data.current > data.base ? '+' : ''}{data.current - data.base})
+              ({data.base}{data.value > data.base ? '+' : ''}{data.value - data.base})
             </span>
           )}
         </div>
@@ -187,26 +188,26 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
 
   const renderSkills = () => (
     <div className={styles.skillsList}>
-      {Object.entries(editedCharacter.skills).map(([skill, data]) => (
-        <div key={skill} className={styles.skillRow}>
+      {editedCharacter.skills.map((skill) => (
+        <div key={skill.name} className={styles.skillRow}>
           <span className={styles.skillName}>
-            {skill.replace(/([A-Z])/g, ' $1').trim()}
+            {skill.name.replace(/([A-Z])/g, ' $1').trim()}
           </span>
-          <span className={styles.skillStat}>({data.linkedStat})</span>
+          <span className={styles.skillStat}>({skill.stat})</span>
           {isEditing ? (
             <input
               type="number"
               min="0"
               max="10"
-              value={data.level}
-              onChange={(e) => updateSkill(skill as SkillType, parseInt(e.target.value) || 0)}
+              value={skill.level}
+              onChange={(value) => updateSkill(skill.name as SkillType, parseInt(value) || 0)}
               className={styles.skillInput}
             />
           ) : (
-            <span className={styles.skillLevel}>{data.level}</span>
+            <span className={styles.skillLevel}>{skill.level}</span>
           )}
           <span className={styles.skillTotal}>
-            Total: {data.level + editedCharacter.stats[data.linkedStat].current}
+            Total: {skill.level + editedCharacter.stats[skill.stat].value}
           </span>
         </div>
       ))}
@@ -236,29 +237,29 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 / {editedCharacter.hp.max}
               </>
             ) : (
-              `${editedCharacter.hp.current} / ${editedCharacter.hp.max}`
+              `${editedCharacter.hitPoints.current} / ${editedCharacter.hitPoints.max}`
             )}
           </span>
         </div>
-        <p className={styles.deathSave}>Death Save: {editedCharacter.deathSave}</p>
+        <p className={styles.deathSave}>Death Save: {editedCharacter.hitPoints.deathSave}</p>
       </div>
 
       <div className={styles.armorSection}>
         <h3>Armor</h3>
         <div className={styles.armorGrid}>
-          {Object.entries(editedCharacter.armor).map(([location, armor]) => (
-            <div key={location} className={styles.armorBlock}>
-              <label>{location}</label>
+          {editedCharacter.armor.map((armor) => (
+            <div key={armor.id} className={styles.armorBlock}>
+              <label>{armor.location}</label>
               {isEditing ? (
                 <input
                   type="number"
                   min="0"
-                  value={armor.current}
-                  onChange={(e) => updateArmor(location as ArmorLocation, parseInt(e.target.value) || 0)}
+                  value={armor.sp}
+                  onChange={(value) => updateArmor(armor.location, parseInt(value) || 0)}
                   className={styles.armorInput}
                 />
               ) : (
-                <span>{armor.current} / {armor.max}</span>
+                <span>{armor.sp}</span>
               )}
             </div>
           ))}

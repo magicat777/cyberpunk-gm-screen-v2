@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useStore } from '../../../store/useStore';
 import { Encounter, EncounterParticipant, EncounterTemplate, EnvironmentConditions } from '../../../types/encounter';
 import styles from './EncounterBuilder.module.css';
 import { Button } from '../../utility/Form/Button';
@@ -9,10 +8,6 @@ import { TextArea } from '../../utility/Form/TextArea';
 import { Select } from '../../utility/Form/Select';
 
 export const EncounterBuilder: React.FC = () => {
-  const { characters } = useStore(state => ({
-    characters: state.characters
-  }));
-
   const [activeTab, setActiveTab] = useState<'builder' | 'templates' | 'saved'>('builder');
   const [encounter, setEncounter] = useState<Partial<Encounter>>({
     name: '',
@@ -376,14 +371,14 @@ export const EncounterBuilder: React.FC = () => {
           </div>
         </div>
         <div className={styles.participantButtons}>
-          <Button onClick={() => addParticipant('player')} size="sm">
-            <Icon name="add" /> Add Player
+          <Button onClick={() => addParticipant('player')} size="sm" icon={<Icon name="add" />}>
+            Add Player
           </Button>
-          <Button onClick={() => addParticipant('npc')} size="sm">
-            <Icon name="add" /> Add NPC
+          <Button onClick={() => addParticipant('npc')} size="sm" icon={<Icon name="add" />}>
+            Add NPC
           </Button>
-          <Button onClick={() => addParticipant('enemy')} size="sm">
-            <Icon name="add" /> Add Enemy
+          <Button onClick={() => addParticipant('enemy')} size="sm" icon={<Icon name="add" />}>
+            Add Enemy
           </Button>
         </div>
         <div className={styles.participantsList}>
@@ -400,8 +395,9 @@ export const EncounterBuilder: React.FC = () => {
                   onClick={() => removeParticipant(participant.id)}
                   variant="danger"
                   size="sm"
+                  icon={<Icon name="remove" />}
                 >
-                  <Icon name="remove" />
+                  Remove
                 </Button>
               </div>
               <div className={styles.participantDetails}>
@@ -447,10 +443,9 @@ export const EncounterBuilder: React.FC = () => {
             value={newObjective}
             onChange={(value) => setNewObjective(value)}
             placeholder="Add objective..."
-            onKeyDown={(e) => e.key === 'Enter' && addObjective()}
           />
-          <Button onClick={addObjective} size="sm">
-            <Icon name="add" /> Add
+          <Button onClick={addObjective} size="sm" icon={<Icon name="add" />}>
+            Add
           </Button>
         </div>
         <ul className={styles.objectivesList}>
@@ -473,12 +468,11 @@ export const EncounterBuilder: React.FC = () => {
         <div className={styles.tagInput}>
           <TextInput
             value={newTag}
-            onChange={(e) => setNewTag(e.target.value)}
+            onChange={(value) => setNewTag(value)}
             placeholder="Add tag..."
-            onKeyPress={(e) => e.key === 'Enter' && addTag()}
           />
-          <Button onClick={addTag} size="sm">
-            <Icon name="add" /> Add
+          <Button onClick={addTag} size="sm" icon={<Icon name="add" />}>
+            Add
           </Button>
         </div>
         <div className={styles.tagsList}>
@@ -500,15 +494,15 @@ export const EncounterBuilder: React.FC = () => {
         <h3>Notes</h3>
         <TextArea
           value={encounter.notes || ''}
-          onChange={(e) => setEncounter({ ...encounter, notes: e.target.value })}
+          onChange={(value) => setEncounter({ ...encounter, notes: value })}
           rows={4}
           placeholder="Additional notes..."
         />
       </div>
 
       <div className={styles.actions}>
-        <Button onClick={saveEncounter} disabled={!encounter.name}>
-          <Icon name="save" /> Save Encounter
+        <Button onClick={saveEncounter} disabled={!encounter.name} icon={<Icon name="save" />}>
+          Save Encounter
         </Button>
         <Button
           onClick={() => setEncounter({
@@ -527,8 +521,9 @@ export const EncounterBuilder: React.FC = () => {
             tags: []
           })}
           variant="secondary"
+          icon={<Icon name="redo" />}
         >
-          <Icon name="refresh" /> Clear Form
+          Clear Form
         </Button>
       </div>
     </div>
@@ -556,14 +551,14 @@ export const EncounterBuilder: React.FC = () => {
               <span>Participants: {template.suggestedParticipants.length} types</span>
             </div>
             <Button
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 loadTemplate(template.id);
                 setActiveTab('builder');
               }}
               size="sm"
+              icon={<Icon name="chevron-right" />}
             >
-              <Icon name="arrow-right" /> Use Template
+              Use Template
             </Button>
           </div>
         ))}
@@ -575,7 +570,7 @@ export const EncounterBuilder: React.FC = () => {
     <div className={styles.savedContent}>
       {savedEncounters.length === 0 ? (
         <div className={styles.noSaved}>
-          <Icon name="folder-open" size="large" />
+          <Icon name="load" size="lg" />
           <p>No saved encounters</p>
         </div>
       ) : (
@@ -598,8 +593,9 @@ export const EncounterBuilder: React.FC = () => {
                     setActiveTab('builder');
                   }}
                   size="sm"
+                  icon={<Icon name="edit" />}
                 >
-                  <Icon name="pencil" /> Edit
+                  Edit
                 </Button>
                 <Button
                   onClick={() => setSavedEncounters(prev => 
@@ -607,8 +603,9 @@ export const EncounterBuilder: React.FC = () => {
                   )}
                   variant="danger"
                   size="sm"
+                  icon={<Icon name="remove" />}
                 >
-                  <Icon name="trash" /> Delete
+                  Delete
                 </Button>
               </div>
             </div>
@@ -630,13 +627,13 @@ export const EncounterBuilder: React.FC = () => {
           className={`${styles.tab} ${activeTab === 'builder' ? styles.active : ''}`}
           onClick={() => setActiveTab('builder')}
         >
-          <Icon name="hammer" /> Builder
+          <Icon name="settings" /> Builder
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'templates' ? styles.active : ''}`}
           onClick={() => setActiveTab('templates')}
         >
-          <Icon name="file-alt" /> Templates
+          <Icon name="save" /> Templates
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'saved' ? styles.active : ''}`}

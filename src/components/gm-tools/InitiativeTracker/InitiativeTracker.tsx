@@ -136,7 +136,8 @@ export function InitiativeTracker() {
                 variant="primary"
                 size="sm"
                 onClick={() => startCombat(currentEncounter.id)}
-                startIcon={<Icon name="play" />}
+                icon={<Icon name="chevron-right" />}
+                iconPosition="start"
                 disabled={currentEncounter.participants.length === 0}
               >
                 Start Combat
@@ -145,7 +146,8 @@ export function InitiativeTracker() {
                 variant="secondary"
                 size="sm"
                 onClick={handleRollAllInitiatives}
-                startIcon={<Icon name="dice-d10" />}
+                icon={<Icon name="dice-d10" />}
+                iconPosition="start"
                 disabled={currentEncounter.participants.length === 0}
               >
                 Roll All
@@ -157,7 +159,8 @@ export function InitiativeTracker() {
                 variant="danger"
                 size="sm"
                 onClick={() => endCombat(currentEncounter.id)}
-                startIcon={<Icon name="stop" />}
+                icon={<Icon name="close" />}
+                iconPosition="start"
               >
                 End Combat
               </Button>
@@ -185,10 +188,11 @@ export function InitiativeTracker() {
             </div>
             <div className={styles.turnActions}>
               <Button
-                variant="ghost"
+                variant="secondary"
                 size="sm"
                 onClick={() => previousTurn(currentEncounter.id)}
-                startIcon={<Icon name="chevron-left" />}
+                icon={<Icon name="chevron-left" />}
+                iconPosition="start"
               >
                 Previous
               </Button>
@@ -196,7 +200,8 @@ export function InitiativeTracker() {
                 variant="primary"
                 size="sm"
                 onClick={() => nextTurn(currentEncounter.id)}
-                endIcon={<Icon name="chevron-right" />}
+                icon={<Icon name="chevron-right" />}
+                iconPosition="end"
               >
                 Next Turn
               </Button>
@@ -209,10 +214,11 @@ export function InitiativeTracker() {
         <div className={styles.listHeader}>
           <Typography variant="h3">Participants</Typography>
           <Button
-            variant="ghost"
+            variant="secondary"
             size="sm"
             onClick={() => setShowAddForm(!showAddForm)}
-            startIcon={<Icon name={showAddForm ? 'x' : 'plus'} />}
+            icon={<Icon name={showAddForm ? 'close' : 'add'} />}
+            iconPosition="start"
           >
             {showAddForm ? 'Cancel' : 'Add'}
           </Button>
@@ -223,35 +229,35 @@ export function InitiativeTracker() {
             <TextInput
               label="Name"
               value={newParticipantName}
-              onChange={(e) => setNewParticipantName(e.target.value)}
+              onChange={(value) => setNewParticipantName(value)}
               placeholder="Character name"
             />
             <div className={styles.statsRow}>
               <TextInput
                 label="REF"
                 value={newParticipantReflex}
-                onChange={(e) => setNewParticipantReflex(e.target.value)}
+                onChange={(value) => setNewParticipantReflex(value)}
                 placeholder="5"
                 type="number"
               />
               <TextInput
                 label="HP"
                 value={newParticipantHP}
-                onChange={(e) => setNewParticipantHP(e.target.value)}
+                onChange={(value) => setNewParticipantHP(value)}
                 placeholder="30"
                 type="number"
               />
             </div>
             <div className={styles.typeToggle}>
               <Button
-                variant={!isNPC ? 'primary' : 'ghost'}
+                variant={!isNPC ? 'primary' : 'secondary'}
                 size="sm"
                 onClick={() => setIsNPC(false)}
               >
                 PC
               </Button>
               <Button
-                variant={isNPC ? 'primary' : 'ghost'}
+                variant={isNPC ? 'primary' : 'secondary'}
                 size="sm"
                 onClick={() => setIsNPC(true)}
               >
@@ -272,7 +278,7 @@ export function InitiativeTracker() {
         <div className={styles.participants}>
           {currentEncounter.participants.length === 0 ? (
             <div className={styles.emptyState}>
-              <Icon name="users" size="xl" />
+              <Icon name="player" size="xl" />
               <Typography variant="body1">No participants yet</Typography>
               <Typography variant="body2">Add characters to begin combat</Typography>
             </div>
@@ -291,7 +297,7 @@ export function InitiativeTracker() {
                 <div className={styles.participantHeader}>
                   <div className={styles.participantName}>
                     <Icon 
-                      name={participant.isNPC ? 'user-x' : 'user'} 
+                      name={participant.isNPC ? 'npc' : 'player'} 
                       size="sm"
                       title={participant.isNPC ? 'NPC' : 'Player Character'}
                     />
@@ -309,8 +315,8 @@ export function InitiativeTracker() {
                   <div className={styles.hpTracker}>
                     <Typography variant="body2">HP:</Typography>
                     <TextInput
-                      value={participant.hitPoints}
-                      onChange={(e) => handleUpdateHP(participant.id, parseInt(e.target.value) || 0)}
+                      value={String(participant.hitPoints)}
+                      onChange={(value) => handleUpdateHP(participant.id, parseInt(value) || 0)}
                       type="number"
                       className={styles.hpInput}
                     />
@@ -335,7 +341,7 @@ export function InitiativeTracker() {
 
                 <div className={styles.participantActions}>
                   <Button
-                    variant="ghost"
+                    variant="secondary"
                     size="sm"
                     onClick={() => {
                       const newRoll = Math.floor(Math.random() * 10) + 1;
@@ -348,15 +354,15 @@ export function InitiativeTracker() {
                     }}
                     title="Reroll initiative"
                   >
-                    <Icon name="refresh" />
+                    <Icon name="redo" />
                   </Button>
                   <Button
-                    variant="ghost"
+                    variant="secondary"
                     size="sm"
                     onClick={() => removeParticipant(currentEncounter.id, participant.id)}
                     title="Remove participant"
                   >
-                    <Icon name="trash" />
+                    <Icon name="close" />
                   </Button>
                 </div>
               </div>

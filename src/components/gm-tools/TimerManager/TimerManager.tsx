@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TimerManager.module.css';
 import { Button } from '../../utility/Form/Button';
 import { Icon } from '../../utility/Icon';
@@ -21,12 +21,19 @@ interface Timer {
 export const TimerManager: React.FC = () => {
   const [timers, setTimers] = useState<Timer[]>([]);
   const [showNewTimerModal, setShowNewTimerModal] = useState(false);
-  const [newTimerData, setNewTimerData] = useState({
+  const [newTimerData, setNewTimerData] = useState<{
+    name: string;
+    minutes: number;
+    seconds: number;
+    type: 'countdown' | 'stopwatch';
+    category: 'combat' | 'session' | 'custom';
+    sound: boolean;
+  }>({
     name: '',
     minutes: 0,
     seconds: 0,
-    type: 'countdown' as const,
-    category: 'custom' as const,
+    type: 'countdown',
+    category: 'custom',
     sound: true
   });
 
@@ -176,7 +183,7 @@ export const TimerManager: React.FC = () => {
         <h2>Timer Manager</h2>
         <div className={styles.headerActions}>
           <Button onClick={() => setShowNewTimerModal(true)}>
-            <Icon name="plus" /> New Timer
+            <Icon name="add" /> New Timer
           </Button>
         </div>
       </div>
@@ -189,9 +196,9 @@ export const TimerManager: React.FC = () => {
               key={index}
               onClick={() => createFromTemplate(template)}
               variant="secondary"
-              size="small"
+              size="sm"
             >
-              <Icon name="clock" /> {template.name}
+              <Icon name="settings" /> {template.name}
             </Button>
           ))}
         </div>
@@ -201,7 +208,7 @@ export const TimerManager: React.FC = () => {
         <h3>Active Timers</h3>
         {timers.length === 0 ? (
           <div className={styles.noTimers}>
-            <Icon name="clock" size="large" />
+            <Icon name="settings" size="lg" />
             <p>No active timers</p>
           </div>
         ) : (
@@ -240,24 +247,24 @@ export const TimerManager: React.FC = () => {
                   <Button
                     onClick={() => toggleTimer(timer.id)}
                     variant={timer.isRunning ? 'secondary' : 'primary'}
-                    size="small"
+                    size="sm"
                   >
-                    <Icon name={timer.isRunning ? 'pause' : 'play'} />
+                    <Icon name={timer.isRunning ? 'chevron-up' : 'chevron-right'} />
                     {timer.isRunning ? 'Pause' : 'Start'}
                   </Button>
                   <Button
                     onClick={() => resetTimer(timer.id)}
-                    variant="ghost"
-                    size="small"
+                    variant="tertiary"
+                    size="sm"
                   >
-                    <Icon name="refresh" /> Reset
+                    <Icon name="redo" /> Reset
                   </Button>
                   <Button
                     onClick={() => deleteTimer(timer.id)}
                     variant="danger"
-                    size="small"
+                    size="sm"
                   >
-                    <Icon name="trash" />
+                    <Icon name="remove" />
                   </Button>
                 </div>
 
@@ -280,7 +287,7 @@ export const TimerManager: React.FC = () => {
             <TextInput
               label="Timer Name"
               value={newTimerData.name}
-              onChange={(e) => setNewTimerData({ ...newTimerData, name: e.target.value })}
+              onChange={(value) => setNewTimerData({ ...newTimerData, name: value })}
               placeholder="Enter timer name..."
             />
 
@@ -288,22 +295,19 @@ export const TimerManager: React.FC = () => {
               <TextInput
                 label="Minutes"
                 type="number"
-                min="0"
-                value={newTimerData.minutes}
-                onChange={(e) => setNewTimerData({ 
+                value={newTimerData.minutes.toString()}
+                onChange={(value) => setNewTimerData({ 
                   ...newTimerData, 
-                  minutes: parseInt(e.target.value) || 0 
+                  minutes: parseInt(value) || 0 
                 })}
               />
               <TextInput
                 label="Seconds"
                 type="number"
-                min="0"
-                max="59"
-                value={newTimerData.seconds}
-                onChange={(e) => setNewTimerData({ 
+                value={newTimerData.seconds.toString()}
+                onChange={(value) => setNewTimerData({ 
                   ...newTimerData, 
-                  seconds: parseInt(e.target.value) || 0 
+                  seconds: parseInt(value) || 0 
                 })}
               />
             </div>
@@ -311,27 +315,29 @@ export const TimerManager: React.FC = () => {
             <Select
               label="Timer Type"
               value={newTimerData.type}
-              onChange={(e) => setNewTimerData({ 
+              onChange={(value) => setNewTimerData({ 
                 ...newTimerData, 
-                type: e.target.value as 'countdown' | 'stopwatch' 
+                type: value as 'countdown' | 'stopwatch' 
               })}
-            >
-              <option value="countdown">Countdown</option>
-              <option value="stopwatch">Stopwatch</option>
-            </Select>
+              options={[
+                { value: 'countdown', label: 'Countdown' },
+                { value: 'stopwatch', label: 'Stopwatch' }
+              ]}
+            />
 
             <Select
               label="Category"
               value={newTimerData.category}
-              onChange={(e) => setNewTimerData({ 
+              onChange={(value) => setNewTimerData({ 
                 ...newTimerData, 
-                category: e.target.value as Timer['category'] 
+                category: value as Timer['category'] 
               })}
-            >
-              <option value="combat">Combat</option>
-              <option value="session">Session</option>
-              <option value="custom">Custom</option>
-            </Select>
+              options={[
+                { value: 'combat', label: 'Combat' },
+                { value: 'session', label: 'Session' },
+                { value: 'custom', label: 'Custom' }
+              ]}
+            />
 
             <label className={styles.soundToggle}>
               <input

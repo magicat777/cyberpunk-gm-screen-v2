@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDice } from '@/store';
 import { useSound } from '@/utils/sound';
 import styles from './DiceRoller.module.css';
