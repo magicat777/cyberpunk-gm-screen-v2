@@ -3,6 +3,7 @@
 A modern, accessible, and interactive Game Master Screen for Cyberpunk Red tabletop RPG sessions. Built with React and deployed via GitHub Pages.
 
 🔗 **Repository:** https://github.com/magicat777/cyberpunk-gm-screen-v2
+🌐 **Live Site:** https://magicat777.github.io/cyberpunk-gm-screen-v2/
 
 ## Features
 
