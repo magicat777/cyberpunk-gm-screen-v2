@@ -43,12 +43,13 @@ export const IconShowcase: React.FC = () => {
           type="text"
           placeholder="Search icons..."
           value={searchTerm}
-          onChange={(value) => setSearchTerm(value)}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          id="icon-search"
           className={styles.searchInput}
         />
         
         <div className={styles.sizeSelector}>
-          <label>Size:</label>
+          <label htmlFor="icon-search">Size:</label>
           {(['sm', 'md', 'lg', 'xl'] as const).map(size => (
             <button
               key={size}
@@ -78,14 +79,14 @@ export const IconShowcase: React.FC = () => {
             <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
             <div className={styles.iconGrid}>
               {categoryIcons.map(iconName => (
-                <div
+                <button type="button"
                   key={iconName}
                   className={styles.iconItem}
                   onClick={() => setSelectedIcon(iconName as IconName)}
                 >
                   <Icon name={iconName as IconName} size={iconSize} />
                   <span>{iconName}</span>
-                </div>
+                </button>
               ))}
             </div>
           </div>

@@ -17,6 +17,7 @@ export function SaveManager() {
   const [saveDescription, setSaveDescription] = useState('');
   const [showConfirmDelete, setShowConfirmDelete] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const { showSuccess, showError } = useNotification();
   const { preferences } = useStore();
 
@@ -24,6 +25,9 @@ export function SaveManager() {
   useEffect(() => {
     if (isOpen) {
       loadSaveSlots();
+      dialogRef.current?.showModal();
+    } else {
+      dialogRef.current?.close();
     }
   }, [isOpen]);
 
@@ -142,8 +146,18 @@ export function SaveManager() {
       </Button>
 
       {isOpen && (
-        <div className={styles.overlay} onClick={() => setIsOpen(false)}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <>
+          <div 
+            className={styles.overlay} 
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+          <dialog
+            ref={dialogRef}
+            className={styles.modal} 
+            aria-label="Save and Load Game Dialog"
+            onClose={() => setIsOpen(false)}
+          >
             <div className={styles.header}>
               <Typography variant="h2">Save/Load Game</Typography>
               <button
@@ -347,8 +361,8 @@ export function SaveManager() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </dialog>
+        </>
       )}
     </>
   );

@@ -37,12 +37,10 @@ export const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <a 
-                href="#"
-                className={styles.link}
+              <button type="button" className={`link-button ${styles.link}`}
               >
                 Documentation
-              </a>
+              </button>
             </li>
           </ul>
         </div>

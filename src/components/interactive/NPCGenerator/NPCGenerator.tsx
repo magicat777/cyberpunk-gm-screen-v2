@@ -1,3 +1,4 @@
+import { handleKeyboardClick } from '@/utils/accessibilityHelpers';
 import React, { useState } from 'react';
 import { useStore } from '../../../store/useStore';
 import { 
@@ -422,10 +423,12 @@ export const NPCGenerator: React.FC = () => {
       ) : (
         <div className={styles.savedGrid}>
           {savedNPCs.map(npc => (
-            <div
+            <button
               key={npc.id}
               className={`${styles.savedCard} ${selectedSavedNPC?.id === npc.id ? styles.selected : ''}`}
               onClick={() => setSelectedSavedNPC(npc)}
+              onKeyDown={(e) => handleKeyboardClick(e, () => setSelectedSavedNPC(npc))}
+              tabIndex={0}
             >
               <h4>{npc.name}</h4>
               <div className={styles.savedMeta}>
@@ -457,7 +460,7 @@ export const NPCGenerator: React.FC = () => {
                   <Icon name="remove" /> Delete
                 </Button>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       )}
@@ -515,5 +518,6 @@ function getLinkedStat(skill: SkillType): StatType {
     // Add more mappings as needed
   };
   
-  return skillStatMap[skill] || 'INT';
+  return skillStatMap[skill] ?? 'INT';
 }
+

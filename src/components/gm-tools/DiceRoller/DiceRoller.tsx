@@ -89,8 +89,9 @@ export const DiceRoller: React.FC = () => {
                 min="1"
                 max="20"
                 value={diceCount}
-                onChange={(value) => setDiceCount(Math.max(1, parseInt(value) || 1))}
+                onChange={(e) => setDiceCount(Math.max(1, parseInt(e.target.value) || 1))}
                 className={styles.numberInput}
+                aria-label="Dice count"
               />
             </div>
 
@@ -100,8 +101,8 @@ export const DiceRoller: React.FC = () => {
               <select
                 id="dice-type"
                 value={selectedDice.value}
-                onChange={(value) => {
-                  const dice = DICE_TYPES.find(d => d.value === parseInt(value));
+                onChange={(e) => {
+                  const dice = DICE_TYPES.find(d => d.value === parseInt(e.target.value));
                   if (dice) setSelectedDice(dice);
                 }}
                 className={styles.select}
@@ -123,8 +124,9 @@ export const DiceRoller: React.FC = () => {
                 min="-20"
                 max="20"
                 value={modifier}
-                onChange={(value) => setModifier(parseInt(value) || 0)}
+                onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
                 className={styles.numberInput}
+                aria-label="Dice modifier"
               />
             </div>
 
@@ -138,7 +140,7 @@ export const DiceRoller: React.FC = () => {
                   onChange={(e) => setExploding(e.target.checked)}
                   className={styles.checkbox}
                 />
-                Exploding
+                {' '}Exploding
               </label>
             </div>
           </div>
@@ -167,7 +169,7 @@ export const DiceRoller: React.FC = () => {
                 {getMostRecentRoll()?.result}
               </div>
               <div className={styles.resultDetails}>
-                <div className={styles.rollType}>{formatRollString(getMostRecentRoll()!)}</div>
+                <div className={styles.rollType}>{getMostRecentRoll() && formatRollString(getMostRecentRoll())}</div>
                 <div className={styles.rollBreakdown}>
                   Rolls: [{getMostRecentRoll()?.rolls.join(', ')}]
                   {getMostRecentRoll()?.modifier !== 0 && 

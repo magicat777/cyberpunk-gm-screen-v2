@@ -348,7 +348,7 @@ export const TimerManager: React.FC = () => {
                   sound: e.target.checked 
                 })}
               />
-              Play sound when timer completes
+              {' '}Play sound when timer completes
             </label>
 
             <div className={styles.modalActions}>

@@ -1,3 +1,4 @@
+import { handleKeyboardClick } from '@/utils/accessibilityHelpers';
 import React, { useState } from 'react';
 import { useStore } from '../../store/useStore';
 import { CharacterSheet } from '../../components/interactive/CharacterSheet/CharacterSheet';
@@ -157,10 +158,12 @@ export const Characters: React.FC = () => {
             <p className={styles.noCharacters}>No characters found</p>
           ) : (
             filteredCharacters.map(character => (
-              <div
+              <button
                 key={character.id}
                 className={`${styles.characterCard} ${selectedCharacterId === character.id ? styles.selected : ''}`}
                 onClick={() => setSelectedCharacterId(character.id)}
+                onKeyDown={(e) => handleKeyboardClick(e, () => setSelectedCharacterId(character.id))}
+                tabIndex={0}
               >
                 <div className={styles.characterInfo}>
                   <h3>{character.name}</h3>
@@ -171,7 +174,7 @@ export const Characters: React.FC = () => {
                   <span>HP: {character.hp.current}/{character.hp.max}</span>
                   <span>Humanity: {character.humanity.current}</span>
                 </div>
-              </div>
+              </button>
             ))
           )}
         </div>

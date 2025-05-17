@@ -163,9 +163,9 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
     <div className={styles.statsGrid}>
       {Object.entries(editedCharacter.stats).map(([stat, data]) => (
         <div key={stat} className={styles.statBlock}>
-          <label>{stat.toUpperCase()}</label>
+          <label htmlFor="field-1">{stat.toUpperCase()}</label>
           {isEditing ? (
-            <input
+            <input id="field-1"
               type="number"
               min="1"
               max="10"
@@ -195,7 +195,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
           </span>
           <span className={styles.skillStat}>({skill.stat})</span>
           {isEditing ? (
-            <input
+            <input id="field-1"
               type="number"
               min="0"
               max="10"
@@ -226,7 +226,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
           <span className={styles.hpText}>
             {isEditing ? (
               <>
-                <input
+                <input id="field-1"
                   type="number"
                   min="0"
                   max={editedCharacter.hp.max}
@@ -249,9 +249,9 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
         <div className={styles.armorGrid}>
           {editedCharacter.armor.map((armor) => (
             <div key={armor.id} className={styles.armorBlock}>
-              <label>{armor.location}</label>
+              <label htmlFor="field-1">{armor.location}</label>
               {isEditing ? (
-                <input
+                <input id="field-1"
                   type="number"
                   min="0"
                   value={armor.sp}
@@ -313,7 +313,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
     <div className={styles.cyberwareSection}>
       <h3>Cyberware</h3>
       <div className={styles.humanityBar}>
-        <label>Humanity</label>
+        <label htmlFor="field-1">Humanity</label>
         <div className={styles.humanityProgress}>
           <div
             className={styles.humanityFill}

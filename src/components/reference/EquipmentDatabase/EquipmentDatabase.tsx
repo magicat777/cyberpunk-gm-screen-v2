@@ -1,3 +1,4 @@
+import { handleKeyboardClick } from '@/utils/accessibilityHelpers';
 import React, { useState, useMemo } from 'react';
 import { 
   Equipment, 
@@ -257,10 +258,12 @@ export const EquipmentDatabase: React.FC = () => {
   };
 
   const renderItemCard = (item: Equipment) => (
-    <div
+    <button
       key={item.id}
       className={`${styles.itemCard} ${selectedItem?.id === item.id ? styles.selected : ''}`}
       onClick={() => setSelectedItem(item)}
+      onKeyDown={(e) => handleKeyboardClick(e, () => setSelectedItem(item))}
+      tabIndex={0}
     >
       <div className={styles.itemHeader}>
         <h4>{item.name}</h4>
@@ -273,7 +276,7 @@ export const EquipmentDatabase: React.FC = () => {
         <span className={styles.availability}>Avail: {item.availability}</span>
       </div>
       <p className={styles.itemDescription}>{item.description}</p>
-    </div>
+    </button>
   );
 
   const renderItemRow = (item: Equipment) => (
@@ -303,7 +306,7 @@ export const EquipmentDatabase: React.FC = () => {
           <div className={styles.searchSection}>
             <TextInput
               placeholder="Search equipment..."
-              value={filters.search || ''}
+              value={filters.search ?? ''}
               onChange={(value) => setFilters({ ...filters, search: value })}
               className={styles.searchInput}
             />
@@ -327,7 +330,7 @@ export const EquipmentDatabase: React.FC = () => {
               <TextInput
                 type="number"
                 placeholder="Min"
-                value={filters.minCost || ''}
+                value={filters.minCost ?? ''}
                 onChange={(value) => setFilters({ 
                   ...filters, 
                   minCost: value ? parseInt(value) : undefined 
@@ -337,7 +340,7 @@ export const EquipmentDatabase: React.FC = () => {
               <TextInput
                 type="number"
                 placeholder="Max"
-                value={filters.maxCost || ''}
+                value={filters.maxCost ?? ''}
                 onChange={(value) => setFilters({ 
                   ...filters, 
                   maxCost: value ? parseInt(value) : undefined 
@@ -486,8 +489,8 @@ export const EquipmentDatabase: React.FC = () => {
               <div className={styles.detailTags}>
                 <h4>Tags</h4>
                 <div className={styles.tagList}>
-                  {selectedItem.tags.map((tag, index) => (
-                    <span key={index} className={styles.tag}>
+                  {selectedItem.tags.map((tag) => (
+                    <span key={tag} className={styles.tag}>
                       {tag}
                     </span>
                   ))}

@@ -1,3 +1,4 @@
+import { handleKeyboardClick } from '@/utils/accessibilityHelpers';
 import React, { useState } from 'react';
 import { Encounter, EncounterParticipant, EncounterTemplate, EnvironmentConditions } from '../../../types/encounter';
 import styles from './EncounterBuilder.module.css';
@@ -533,10 +534,12 @@ export const EncounterBuilder: React.FC = () => {
     <div className={styles.templatesContent}>
       <div className={styles.templateGrid}>
         {templates.map(template => (
-          <div
+          <button
             key={template.id}
             className={`${styles.templateCard} ${selectedTemplate === template.id ? styles.selected : ''}`}
             onClick={() => setSelectedTemplate(template.id)}
+            onKeyDown={(e) => handleKeyboardClick(e, () => setSelectedTemplate(template.id))}
+            tabIndex={0}
           >
             <h4>{template.name}</h4>
             <div className={styles.templateMeta}>
@@ -550,17 +553,19 @@ export const EncounterBuilder: React.FC = () => {
               <span>Party Size: {template.partySize.min}-{template.partySize.max}</span>
               <span>Participants: {template.suggestedParticipants.length} types</span>
             </div>
-            <Button
-              onClick={() => {
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
                 loadTemplate(template.id);
                 setActiveTab('builder');
               }}
-              size="sm"
-              icon={<Icon name="chevron-right" />}
+              className={styles.useTemplate}
+              aria-label="Use this template"
             >
+              <Icon name="chevron-right" />
               Use Template
-            </Button>
-          </div>
+            </button>
+          </button>
         ))}
       </div>
     </div>
