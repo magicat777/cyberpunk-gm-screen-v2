@@ -6,6 +6,7 @@
 @import './themes/light.css';
 @import './themes/high-contrast.css';
 @import './themes/font-sizes.css';
+@import './themes/typography.css';
 @import './themes/reduced-motion.css';
 
 * {

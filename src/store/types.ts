@@ -17,6 +17,32 @@ export interface GameSession {
   lastUpdated: Date;
   notes: string;
   combatEncounters: CombatEncounter[];
+  players: string[];
+  tags: string[];
+  status: 'planning' | 'active' | 'completed' | 'archived';
+  synopsis?: string;
+  npcs: string[];
+  loot: LootItem[];
+  experienceAwarded: number;
+  reputationChanges: ReputationChange[];
+  sessionNumber?: number;
+  campaignId?: string;
+}
+
+export interface LootItem {
+  id: string;
+  name: string;
+  description: string;
+  value: number;
+  quantity: number;
+  receivedBy?: string;
+}
+
+export interface ReputationChange {
+  id: string;
+  character: string;
+  amount: number;
+  reason: string;
 }
 
 export interface CombatEncounter {
@@ -26,16 +52,57 @@ export interface CombatEncounter {
   currentTurn: number;
   round: number;
   isActive: boolean;
+  isPaused: boolean;
+  combatLog: CombatLogEntry[];
+  environmentalFactors?: string[];
+  startTime?: Date;
+  endTime?: Date;
+}
+
+export interface CombatLogEntry {
+  id: string;
+  timestamp: Date;
+  round: number;
+  participantId?: string;
+  action: string;
+  details?: string;
+  damage?: number;
+  type: 'action' | 'damage' | 'status' | 'system';
 }
 
 export interface CombatParticipant {
   id: string;
   name: string;
   initiative: number;
+  initiativeRoll?: number;
+  reflexes?: number;
   hitPoints: number;
   maxHitPoints: number;
+  seriouslyWounded: boolean;
+  deathSave: number;
   isNPC: boolean;
+  conditions: StatusCondition[];
+  hasActed: boolean;
+  delayedTurn: boolean;
   notes?: string;
+  color?: string;
+  characterId?: string;
+}
+
+export interface StatusCondition {
+  id: string;
+  name: string;
+  duration?: number;
+  isPersistent: boolean;
+  effects: string[];
+  icon?: string;
+}
+
+export interface InitiativeModifier {
+  id: string;
+  source: string;
+  value: number;
+  description: string;
 }
 
 export interface Character {

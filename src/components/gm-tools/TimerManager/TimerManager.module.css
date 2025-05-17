@@ -1,0 +1,245 @@
+.timerManager {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  height: 100%;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.headerActions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.templates {
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+}
+
+.templates h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text);
+}
+
+.templateGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.timersSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.timersSection h3 {
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--color-text);
+}
+
+.noTimers {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.timerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.timerCard {
+  background-color: var(--color-background);
+  border: 3px solid;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  transition: all 0.3s;
+}
+
+.timerCard.running {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.timerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timerHeader h4 {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.timerCategory {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.timerDisplay {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.time {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  color: var(--color-text);
+}
+
+.progressBar {
+  height: 8px;
+  background-color: var(--color-surface);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  transition: width 1s linear;
+}
+
+.timerControls {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+}
+
+.timerComplete {
+  text-align: center;
+  color: var(--color-success);
+  font-weight: bold;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: var(--color-surface);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.modalContent h3 {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.durationInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.soundToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.soundToggle input {
+  cursor: pointer;
+}
+
+.modalActions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+  margin-top: var(--spacing-lg);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .timerManager {
+    padding: var(--spacing-md);
+  }
+
+  .header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+
+  .templateGrid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .timerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .time {
+    font-size: 2rem;
+  }
+
+  .timerControls {
+    flex-wrap: wrap;
+  }
+
+  .modalContent {
+    padding: var(--spacing-lg);
+  }
+
+  .durationInputs {
+    grid-template-columns: 1fr;
+  }
+}

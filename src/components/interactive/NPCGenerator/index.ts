@@ -1,0 +1,1 @@
+export { NPCGenerator } from './NPCGenerator';

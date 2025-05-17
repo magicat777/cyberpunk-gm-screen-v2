@@ -1,0 +1,218 @@
+.typography {
+  margin: 0;
+  font-family: var(--font-family-base);
+  transition: color 0.3s ease;
+}
+
+/* Variants */
+.variant-h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.01562em;
+}
+
+.variant-h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.00833em;
+}
+
+.variant-h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-heading);
+  letter-spacing: 0;
+}
+
+.variant-h4 {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-heading);
+  letter-spacing: 0.00735em;
+}
+
+.variant-h5 {
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-heading);
+  letter-spacing: 0;
+}
+
+.variant-h6 {
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-heading);
+  letter-spacing: 0.0075em;
+}
+
+.variant-subtitle1 {
+  font-size: var(--font-size-subtitle1);
+  line-height: 1.75;
+  letter-spacing: 0.00938em;
+}
+
+.variant-subtitle2 {
+  font-size: var(--font-size-subtitle2);
+  line-height: 1.57;
+  letter-spacing: 0.00714em;
+}
+
+.variant-body1 {
+  font-size: var(--font-size-body1);
+  line-height: var(--line-height-body);
+  letter-spacing: 0.00938em;
+}
+
+.variant-body2 {
+  font-size: var(--font-size-body2);
+  line-height: var(--line-height-body);
+  letter-spacing: 0.01071em;
+}
+
+.variant-caption {
+  font-size: var(--font-size-caption);
+  line-height: 1.66;
+  letter-spacing: 0.03333em;
+}
+
+.variant-overline {
+  font-size: var(--font-size-overline);
+  line-height: 2.66;
+  letter-spacing: 0.08333em;
+  text-transform: uppercase;
+}
+
+/* Font Weights */
+.weight-thin {
+  font-weight: 100;
+}
+
+.weight-light {
+  font-weight: 300;
+}
+
+.weight-regular {
+  font-weight: 400;
+}
+
+.weight-medium {
+  font-weight: 500;
+}
+
+.weight-semibold {
+  font-weight: 600;
+}
+
+.weight-bold {
+  font-weight: 700;
+}
+
+.weight-extrabold {
+  font-weight: 800;
+}
+
+.weight-black {
+  font-weight: 900;
+}
+
+/* Text Alignment */
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-justify {
+  text-align: justify;
+}
+
+.align-inherit {
+  text-align: inherit;
+}
+
+/* Colors */
+.color-primary {
+  color: var(--cp-primary);
+}
+
+.color-secondary {
+  color: var(--cp-secondary);
+}
+
+.color-error {
+  color: var(--cp-red);
+}
+
+.color-warning {
+  color: var(--cp-yellow);
+}
+
+.color-info {
+  color: var(--cp-cyan);
+}
+
+.color-success {
+  color: var(--cp-green);
+}
+
+.color-text-primary {
+  color: var(--text-primary);
+}
+
+.color-text-secondary {
+  color: var(--text-secondary);
+}
+
+.color-text-disabled {
+  color: var(--text-disabled);
+}
+
+.color-inherit {
+  color: inherit;
+}
+
+/* Utilities */
+.gutterBottom {
+  margin-bottom: 0.35em;
+}
+
+.noWrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  .variant-h1 {
+    font-size: calc(var(--font-size-h1) * 0.85);
+  }
+  
+  .variant-h2 {
+    font-size: calc(var(--font-size-h2) * 0.85);
+  }
+  
+  .variant-h3 {
+    font-size: calc(var(--font-size-h3) * 0.9);
+  }
+}
+
+/* Dark Mode Overrides */
+[data-theme="dark"] .typography {
+  /* Default text colors are handled by CSS variables */
+}
+
+/* Accessibility - Enhanced focus styles */
+.typography:focus-visible {
+  outline: 2px solid var(--cp-primary);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .typography {
+    color: #000 !important;
+  }
+}

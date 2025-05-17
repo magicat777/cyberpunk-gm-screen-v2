@@ -13,6 +13,7 @@ export interface CharacterSlice {
   selectCharacter: (id: string | null) => void;
   importCharacter: (characterData: string) => void;
   exportCharacter: (id: string) => string;
+  setCharacters: (characters: Character[]) => void;
 }
 
 export const createCharacterSlice: StateCreator<CharacterSlice> = (set, get) => ({
@@ -76,5 +77,9 @@ export const createCharacterSlice: StateCreator<CharacterSlice> = (set, get) => 
       return JSON.stringify(character, null, 2);
     }
     return '';
+  },
+  
+  setCharacters: (characters: Character[]) => {
+    set({ characters });
   },
 });

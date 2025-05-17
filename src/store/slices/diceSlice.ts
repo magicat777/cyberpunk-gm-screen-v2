@@ -10,6 +10,7 @@ export interface DiceSlice {
   rollDice: (type: string, count: number, modifier?: number, exploding?: boolean) => DiceRoll;
   clearHistory: () => void;
   removeRoll: (id: string) => void;
+  setDiceHistory: (history: DiceRoll[]) => void;
 }
 
 export const createDiceSlice: StateCreator<DiceSlice> = (set, get) => ({
@@ -69,5 +70,9 @@ export const createDiceSlice: StateCreator<DiceSlice> = (set, get) => ({
     set((state) => ({
       diceHistory: state.diceHistory.filter((roll) => roll.id !== id),
     }));
+  },
+  
+  setDiceHistory: (history: DiceRoll[]) => {
+    set({ diceHistory: history });
   },
 });

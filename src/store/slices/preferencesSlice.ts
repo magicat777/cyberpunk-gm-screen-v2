@@ -13,6 +13,7 @@ export interface PreferencesSlice {
   toggleReducedMotion: () => void;
   updateDefaultDiceColor: (color: string) => void;
   resetPreferences: () => void;
+  setPreferences: (preferences: UserPreferences) => void;
 }
 
 const defaultPreferences: UserPreferences = {
@@ -93,5 +94,14 @@ export const createPreferencesSlice: StateCreator<PreferencesSlice> = (set) => (
     document.documentElement.setAttribute('data-theme', defaultPreferences.theme);
     document.documentElement.setAttribute('data-font-size', defaultPreferences.fontSize);
     document.documentElement.setAttribute('data-reduced-motion', defaultPreferences.reducedMotion.toString());
+  },
+  
+  setPreferences: (preferences: UserPreferences) => {
+    set({ preferences });
+    
+    // Apply all preferences to document
+    document.documentElement.setAttribute('data-theme', preferences.theme);
+    document.documentElement.setAttribute('data-font-size', preferences.fontSize);
+    document.documentElement.setAttribute('data-reduced-motion', preferences.reducedMotion.toString());
   },
 });

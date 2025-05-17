@@ -1,0 +1,517 @@
+.characterSheet {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--spacing-lg);
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.basicInfo {
+  flex: 1;
+}
+
+.basicInfo h2 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-text);
+}
+
+.handle {
+  color: var(--color-primary);
+  font-style: italic;
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.role {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  margin: 0;
+}
+
+.nameInput,
+.handleInput,
+.roleSelect {
+  margin-bottom: var(--spacing-sm);
+  max-width: 300px;
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-background);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tab {
+  flex: 1;
+  min-width: 120px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  background-color: var(--color-hover);
+  color: var(--color-text);
+}
+
+.tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+.content {
+  flex: 1;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+/* Stats Tab */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  max-width: 600px;
+}
+
+.statBlock {
+  background-color: var(--color-background);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.statBlock label {
+  display: block;
+  font-weight: bold;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.statInput {
+  width: 60px;
+  font-size: 2rem;
+  text-align: center;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.modifier {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* Skills Tab */
+.skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  max-width: 800px;
+}
+
+.skillRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--spacing-md);
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-sm);
+}
+
+.skillName {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.skillStat {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.skillLevel {
+  text-align: center;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.skillInput {
+  width: 50px;
+  text-align: center;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.skillTotal {
+  text-align: right;
+  font-weight: 500;
+}
+
+/* Combat Tab */
+.combatSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.hpSection {
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+}
+
+.hpSection h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text);
+}
+
+.hpBar {
+  position: relative;
+  height: 30px;
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin-bottom: var(--spacing-md);
+}
+
+.hpFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--color-danger);
+  transition: width 0.3s;
+}
+
+.hpText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: var(--color-text);
+  z-index: 1;
+}
+
+.hpInput {
+  width: 50px;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-weight: bold;
+  text-align: center;
+}
+
+.deathSave {
+  margin: 0;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.armorSection {
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+}
+
+.armorSection h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text);
+}
+
+.armorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.armorBlock {
+  text-align: center;
+  padding: var(--spacing-sm);
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-sm);
+}
+
+.armorBlock label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.armorInput {
+  width: 50px;
+  text-align: center;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* Gear Tab */
+.gearSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.weaponsSection,
+.inventorySection {
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+}
+
+.weaponsSection h3,
+.inventorySection h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text);
+}
+
+.weaponsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.weaponCard {
+  background-color: var(--color-surface);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+}
+
+.weaponCard h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-primary);
+}
+
+.weaponStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.inventoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.inventoryList li {
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.inventoryList li:last-child {
+  border-bottom: none;
+}
+
+/* Cyberware Tab */
+.cyberwareSection {
+  max-width: 800px;
+}
+
+.cyberwareSection h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text);
+}
+
+.humanityBar {
+  margin-bottom: var(--spacing-xl);
+}
+
+.humanityBar label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.humanityProgress {
+  position: relative;
+  height: 30px;
+  background-color: var(--color-background);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.humanityFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--color-info);
+  transition: width 0.3s;
+}
+
+.humanityProgress span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: var(--color-text);
+  z-index: 1;
+}
+
+.cyberwareList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.cyberwareCard {
+  background-color: var(--color-background);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+}
+
+.cyberwareCard h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-primary);
+}
+
+.cyberwareCard p {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+/* Lifepath Tab */
+.lifepathSection {
+  max-width: 800px;
+}
+
+.lifepathSection h3 {
+  margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+  color: var(--color-text);
+}
+
+.lifepathSection h3:first-child {
+  margin-top: 0;
+}
+
+.lifepathGrid,
+.motivationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.lifepathGrid > div,
+.motivationsGrid > div {
+  background-color: var(--color-background);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+}
+
+.lifepathGrid h4,
+.motivationsGrid h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.lifepathGrid p,
+.motivationsGrid p {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab {
+    min-width: 100px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skillRow {
+    grid-template-columns: 2fr 1fr 1fr;
+    font-size: 0.875rem;
+  }
+
+  .skillTotal {
+    display: none;
+  }
+
+  .combatSection,
+  .gearSection {
+    grid-template-columns: 1fr;
+  }
+
+  .armorGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cyberwareList {
+    grid-template-columns: 1fr;
+  }
+
+  .lifepathGrid,
+  .motivationsGrid {
+    grid-template-columns: 1fr;
+  }
+}

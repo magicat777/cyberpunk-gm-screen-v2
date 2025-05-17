@@ -11,11 +11,16 @@ const navItems = [
   { to: '/', label: 'Dashboard', icon: '🏠' },
   { to: '/dice', label: 'Dice Roller', icon: '🎲' },
   { to: '/rules', label: 'Rules Reference', icon: '📖' },
-  { to: '/combat', label: 'Combat Tracker', icon: '⚔️' },
+  { to: '/gm-tools', label: 'GM Tools', icon: '🛠️' },
+  { to: '/sessions', label: 'Sessions', icon: '📅' },
+  { to: '/characters', label: 'Characters', icon: '👤' },
+  { to: '/encounters', label: 'Encounters', icon: '⚔️' },
+  { to: '/combat', label: 'Combat Tracker', icon: '🔄' },
   { to: '/npcs', label: 'NPCs', icon: '👥' },
   { to: '/cyberware', label: 'Cyberware', icon: '🤖' },
   { to: '/equipment', label: 'Equipment', icon: '🔧' },
   { to: '/maps', label: 'Maps', icon: '🗺️' },
+  { to: '/netrunning', label: 'Netrunning', icon: '💾' },
 ];
 
 export const Navigation: React.FC<NavigationProps> = ({ isOpen, onClose }) => {

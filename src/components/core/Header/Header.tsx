@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePreferences } from '@/store';
+import { SaveManager } from '@/components/utility/SaveManager';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -50,6 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <h1 className={styles.title}>Cyberpunk GM Screen</h1>
         
         <div className={styles.actions}>
+          <SaveManager />
           <button
             className={styles.themeToggle}
             onClick={handleThemeToggle}

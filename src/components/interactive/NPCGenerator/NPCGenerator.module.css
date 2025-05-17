@@ -1,0 +1,340 @@
+.npcGenerator {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.header {
+  text-align: center;
+  padding: var(--spacing-lg);
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header h2 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-text);
+}
+
+.header p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-background);
+}
+
+.tab {
+  flex: 1;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+  background-color: var(--color-hover);
+  color: var(--color-text);
+}
+
+.tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+.content {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Generator Tab */
+.generatorContent {
+  display: flex;
+  height: 100%;
+}
+
+.optionsPanel {
+  width: 320px;
+  padding: var(--spacing-lg);
+  background-color: var(--color-background);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.optionsPanel h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text);
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.generateActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: auto;
+  padding-top: var(--spacing-lg);
+}
+
+.previewPanel {
+  flex: 1;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+.noNPC {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.npcHeader {
+  margin-bottom: var(--spacing-xl);
+}
+
+.npcHeader h3 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-text);
+  font-size: 1.5rem;
+}
+
+.npcMeta {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.archetype {
+  padding: 4px 12px;
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.threat {
+  padding: 4px 12px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.threat.low {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.threat.medium {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.threat.high {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.threat.elite {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+.npcDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.section {
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+}
+
+.section h4 {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text);
+}
+
+.section p {
+  margin: 0 0 var(--spacing-sm) 0;
+  line-height: 1.5;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+.appearanceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.appearanceGrid div {
+  padding: var(--spacing-xs) 0;
+}
+
+/* Saved Tab */
+.savedContent {
+  display: flex;
+  height: 100%;
+}
+
+.noSaved {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.savedGrid {
+  width: 400px;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.savedCard {
+  background-color: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.savedCard:hover {
+  background-color: var(--color-hover);
+  border-color: var(--color-primary-dark);
+}
+
+.savedCard.selected {
+  background-color: var(--color-primary-bg);
+  border-color: var(--color-primary);
+}
+
+.savedCard h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-text);
+}
+
+.savedMeta {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-md);
+  font-size: 0.875rem;
+}
+
+.savedActions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.savedPreview {
+  flex: 1;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+.savedPreview h3 {
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--color-text);
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .generatorContent {
+    flex-direction: column;
+  }
+
+  .optionsPanel {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    max-height: 50vh;
+  }
+
+  .savedContent {
+    flex-direction: column;
+  }
+
+  .savedGrid {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    max-height: 40vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: var(--spacing-md);
+  }
+
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab {
+    white-space: nowrap;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .optionsPanel,
+  .previewPanel,
+  .savedGrid,
+  .savedPreview {
+    padding: var(--spacing-md);
+  }
+
+  .appearanceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .savedActions {
+    flex-direction: column;
+  }
+
+  .savedActions button {
+    width: 100%;
+  }
+}

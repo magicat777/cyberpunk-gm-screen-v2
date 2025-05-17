@@ -1,0 +1,84 @@
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+/* Size Classes */
+.size-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.size-md {
+  width: 24px;
+  height: 24px;
+}
+
+.size-lg {
+  width: 32px;
+  height: 32px;
+}
+
+.size-xl {
+  width: 48px;
+  height: 48px;
+}
+
+/* Interactive states */
+.icon[onclick] {
+  cursor: pointer;
+}
+
+.icon:hover {
+  opacity: 0.8;
+}
+
+.icon:active {
+  transform: scale(0.95);
+}
+
+/* Focus states for accessibility */
+.icon:focus {
+  outline: 2px solid var(--cp-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Animation for loading/spinning icons */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon.spinning {
+  animation: spin 1s linear infinite;
+}
+
+/* Theme-specific adjustments */
+[data-theme="dark"] .icon {
+  filter: brightness(1.1);
+}
+
+[data-theme="high-contrast"] .icon {
+  filter: contrast(1.2);
+}
+
+/* Disabled state */
+.icon.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Print styles */
+@media print {
+  .icon {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

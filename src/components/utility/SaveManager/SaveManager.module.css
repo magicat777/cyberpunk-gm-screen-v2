@@ -1,0 +1,242 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-lg);
+}
+
+.modal {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-2xl);
+  border: 2px solid var(--color-primary);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background-color: var(--color-background-hover);
+  color: var(--color-text);
+}
+
+.content {
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.currentState {
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+
+.stateInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-sm);
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.saveSlots {
+  flex: 1;
+  min-height: 200px;
+}
+
+.slotsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--color-text-muted);
+}
+
+.emptyState svg {
+  margin-bottom: var(--spacing-md);
+  opacity: 0.3;
+}
+
+.saveSlot {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: all 0.2s;
+}
+
+.saveSlot:hover {
+  border-color: var(--color-primary);
+}
+
+.saveSlot.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+}
+
+.saveSlot.autoSave {
+  background-color: rgba(var(--color-info-rgb), 0.1);
+}
+
+.slotInfo {
+  flex: 1;
+}
+
+.slotInfo h4 {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.description {
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-xs);
+}
+
+.timestamp {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.slotActions {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.newSave {
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+
+.saveForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.slotSelector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.slots {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.slotButton {
+  aspect-ratio: 1;
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  position: relative;
+  transition: all 0.2s;
+}
+
+.slotButton:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.slotButton.selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.slotButton.occupied {
+  background-color: var(--color-background);
+}
+
+.slotButton svg {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: var(--color-success);
+}
+
+.importExport {
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+
+.importActions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .modal {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .saveSlot {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .slotActions {
+    width: 100%;
+  }
+
+  .slots {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .importActions {
+    flex-direction: column;
+  }
+}
