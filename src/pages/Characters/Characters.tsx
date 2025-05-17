@@ -121,8 +121,8 @@ export const Characters: React.FC = () => {
       <div className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <h2>Characters</h2>
-          <Button onClick={() => setShowNewCharacterModal(true)} size="small">
-            <Icon name="plus" /> New
+          <Button onClick={() => setShowNewCharacterModal(true)} size="sm">
+            <Icon name="add" /> New
           </Button>
         </div>
 
@@ -130,12 +130,12 @@ export const Characters: React.FC = () => {
           <TextInput
             placeholder="Search characters..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(value) => setSearchTerm(value)}
             className={styles.searchInput}
           />
           <Select
             value={filterRole}
-            onChange={(e) => setFilterRole(e.target.value as RoleType | 'all')}
+            onChange={(value) => setFilterRole(value as RoleType | 'all')}
             className={styles.roleFilter}
           >
             <option value="all">All Roles</option>
@@ -186,7 +186,7 @@ export const Characters: React.FC = () => {
           />
         ) : (
           <div className={styles.noSelection}>
-            <Icon name="user" size="xlarge" />
+            <Icon name="player" size="xlarge" />
             <p>Select a character or create a new one</p>
           </div>
         )}
@@ -199,18 +199,18 @@ export const Characters: React.FC = () => {
             <TextInput
               label="Name"
               value={newCharacterData.name}
-              onChange={(e) => setNewCharacterData({ ...newCharacterData, name: e.target.value })}
+              onChange={(value) => setNewCharacterData({ ...newCharacterData, name: value })}
               required
             />
             <TextInput
               label="Handle (optional)"
               value={newCharacterData.handle}
-              onChange={(e) => setNewCharacterData({ ...newCharacterData, handle: e.target.value })}
+              onChange={(value) => setNewCharacterData({ ...newCharacterData, handle: value })}
             />
             <Select
               label="Role"
               value={newCharacterData.role}
-              onChange={(e) => setNewCharacterData({ ...newCharacterData, role: e.target.value as RoleType })}
+              onChange={(value) => setNewCharacterData({ ...newCharacterData, role: value as RoleType })}
             >
               <option value="Solo">Solo</option>
               <option value="Netrunner">Netrunner</option>

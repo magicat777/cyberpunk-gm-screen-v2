@@ -304,7 +304,7 @@ export const EquipmentDatabase: React.FC = () => {
             <TextInput
               placeholder="Search equipment..."
               value={filters.search || ''}
-              onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+              onChange={(value) => setFilters({ ...filters, search: value })}
               className={styles.searchInput}
             />
           </div>
@@ -328,9 +328,9 @@ export const EquipmentDatabase: React.FC = () => {
                 type="number"
                 placeholder="Min"
                 value={filters.minCost || ''}
-                onChange={(e) => setFilters({ 
+                onChange={(value) => setFilters({ 
                   ...filters, 
-                  minCost: e.target.value ? parseInt(e.target.value) : undefined 
+                  minCost: value ? parseInt(value) : undefined 
                 })}
               />
               <span>-</span>
@@ -338,9 +338,9 @@ export const EquipmentDatabase: React.FC = () => {
                 type="number"
                 placeholder="Max"
                 value={filters.maxCost || ''}
-                onChange={(e) => setFilters({ 
+                onChange={(value) => setFilters({ 
                   ...filters, 
-                  maxCost: e.target.value ? parseInt(e.target.value) : undefined 
+                  maxCost: value ? parseInt(value) : undefined 
                 })}
               />
             </div>
@@ -382,14 +382,14 @@ export const EquipmentDatabase: React.FC = () => {
             <Button
               onClick={() => setViewMode('grid')}
               variant={viewMode === 'grid' ? 'primary' : 'ghost'}
-              size="small"
+              size="sm"
             >
               <Icon name="grid" /> Grid
             </Button>
             <Button
               onClick={() => setViewMode('list')}
               variant={viewMode === 'list' ? 'primary' : 'ghost'}
-              size="small"
+              size="sm"
             >
               <Icon name="list" /> List
             </Button>
@@ -398,7 +398,7 @@ export const EquipmentDatabase: React.FC = () => {
           <div className={styles.sortControls}>
             <Select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+              onChange={(value) => setSortBy(value as any)}
               className={styles.sortSelect}
             >
               <option value="name">Name</option>
@@ -407,7 +407,7 @@ export const EquipmentDatabase: React.FC = () => {
             </Select>
             <Button
               onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-              size="small"
+              size="sm"
             >
               <Icon name={sortOrder === 'asc' ? 'sort-asc' : 'sort-desc'} />
             </Button>
@@ -450,10 +450,10 @@ export const EquipmentDatabase: React.FC = () => {
             <h3>{selectedItem.name}</h3>
             <Button
               onClick={() => setSelectedItem(null)}
-              variant="ghost"
-              size="small"
+              variant="tertiary"
+              size="sm"
             >
-              <Icon name="times" />
+              <Icon name="close" />
             </Button>
           </div>
 

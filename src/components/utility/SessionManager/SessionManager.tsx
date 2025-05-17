@@ -88,10 +88,10 @@ export const SessionManager: React.FC = () => {
     if (!currentSession) {
       return (
         <div className={styles.noSession}>
-          <Icon name="calendar" size="large" />
+          <Icon name="calendar" size="lg" />
           <p>No active session</p>
           <Button onClick={() => setShowNewSessionModal(true)}>
-            <Icon name="plus" /> Start New Session
+            <Icon name="add" /> Start New Session
           </Button>
         </div>
       );
@@ -118,19 +118,19 @@ export const SessionManager: React.FC = () => {
             onClick={() => updateSessionStatus(currentSession.id, 'paused')}
             disabled={currentSession.status !== 'active'}
           >
-            <Icon name="pause" /> Pause
+            <Icon name="chevron-up" /> Pause
           </Button>
           <Button
             onClick={() => updateSessionStatus(currentSession.id, 'active')}
             disabled={currentSession.status !== 'paused'}
           >
-            <Icon name="play" /> Resume
+            <Icon name="chevron-right" /> Resume
           </Button>
           <Button
             onClick={() => endSession(currentSession.id)}
             variant="danger"
           >
-            <Icon name="stop" /> End Session
+            <Icon name="close" /> End Session
           </Button>
         </div>
 
@@ -145,7 +145,7 @@ export const SessionManager: React.FC = () => {
                     onClick={() => removePlayer(currentSession.id, player.id)}
                     className={styles.removeButton}
                   >
-                    <Icon name="times" size="small" />
+                    <Icon name="close" size="sm" />
                   </button>
                 </li>
               ))}
@@ -212,7 +212,7 @@ export const SessionManager: React.FC = () => {
       <div className={styles.listHeader}>
         <h3>All Sessions</h3>
         <Button onClick={() => setShowNewSessionModal(true)}>
-          <Icon name="plus" /> New Session
+          <Icon name="add" /> New Session
         </Button>
       </div>
       
@@ -236,14 +236,14 @@ export const SessionManager: React.FC = () => {
                 <p>{session.description}</p>
                 <div className={styles.sessionCardActions}>
                   <Button
-                    size="small"
+                    size="sm"
                     onClick={() => loadSession(session.id)}
                     disabled={currentSession?.id === session.id}
                   >
                     Load
                   </Button>
                   <Button
-                    size="small"
+                    size="sm"
                     variant="danger"
                     onClick={() => deleteSession(session.id)}
                   >
@@ -263,7 +263,7 @@ export const SessionManager: React.FC = () => {
       <div className={styles.listHeader}>
         <h3>Campaigns</h3>
         <Button onClick={() => setShowNewCampaignModal(true)}>
-          <Icon name="plus" /> New Campaign
+          <Icon name="add" /> New Campaign
         </Button>
       </div>
       
@@ -284,14 +284,14 @@ export const SessionManager: React.FC = () => {
               <p>{campaign.description}</p>
               <div className={styles.campaignActions}>
                 <Button
-                  size="small"
+                  size="sm"
                   onClick={() => updateCampaign(campaign.id, { status: 'active' })}
                   disabled={campaign.status === 'active'}
                 >
                   Activate
                 </Button>
                 <Button
-                  size="small"
+                  size="sm"
                   variant="danger"
                   onClick={() => deleteCampaign(campaign.id)}
                 >
@@ -341,13 +341,13 @@ export const SessionManager: React.FC = () => {
             <TextInput
               label="Session Title"
               value={newSessionData.title}
-              onChange={(e) => setNewSessionData({ ...newSessionData, title: e.target.value })}
+              onChange={(value) => setNewSessionData({ ...newSessionData, title: value })}
               required
             />
             <Select
               label="Campaign"
               value={newSessionData.campaignId}
-              onChange={(e) => setNewSessionData({ ...newSessionData, campaignId: e.target.value })}
+              onChange={(value) => setNewSessionData({ ...newSessionData, campaignId: value })}
             >
               <option value="">No Campaign</option>
               {campaigns.map(campaign => (
@@ -359,7 +359,7 @@ export const SessionManager: React.FC = () => {
             <TextInput
               label="Description"
               value={newSessionData.description}
-              onChange={(e) => setNewSessionData({ ...newSessionData, description: e.target.value })}
+              onChange={(value) => setNewSessionData({ ...newSessionData, description: value })}
             />
             <div className={styles.modalActions}>
               <Button onClick={() => setShowNewSessionModal(false)} variant="secondary">
@@ -378,18 +378,18 @@ export const SessionManager: React.FC = () => {
             <TextInput
               label="Campaign Name"
               value={newCampaignData.name}
-              onChange={(e) => setNewCampaignData({ ...newCampaignData, name: e.target.value })}
+              onChange={(value) => setNewCampaignData({ ...newCampaignData, name: value })}
               required
             />
             <TextInput
               label="Description"
               value={newCampaignData.description}
-              onChange={(e) => setNewCampaignData({ ...newCampaignData, description: e.target.value })}
+              onChange={(value) => setNewCampaignData({ ...newCampaignData, description: value })}
             />
             <TextInput
               label="GM Notes"
               value={newCampaignData.gmNotes}
-              onChange={(e) => setNewCampaignData({ ...newCampaignData, gmNotes: e.target.value })}
+              onChange={(value) => setNewCampaignData({ ...newCampaignData, gmNotes: value })}
             />
             <div className={styles.modalActions}>
               <Button onClick={() => setShowNewCampaignModal(false)} variant="secondary">

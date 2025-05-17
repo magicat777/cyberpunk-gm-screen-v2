@@ -52,7 +52,7 @@ export function ErrorReporter({ error, onClose, onReport }: ErrorReporterProps) 
           onClick={onClose}
           aria-label="Close reporter"
         >
-          <Icon name="x" size="sm" />
+          <Icon name="close" size="sm" />
         </button>
       </div>
 
@@ -65,7 +65,7 @@ export function ErrorReporter({ error, onClose, onReport }: ErrorReporterProps) 
         <TextArea
           label="What were you doing when this error occurred?"
           value={userMessage}
-          onChange={(e) => setUserMessage(e.target.value)}
+          onChange={(value) => setUserMessage(value)}
           placeholder="Please describe the steps that led to this error..."
           rows={4}
           fullWidth
@@ -79,7 +79,7 @@ export function ErrorReporter({ error, onClose, onReport }: ErrorReporterProps) 
 
       <div className={styles.actions}>
         <Button
-          variant="ghost"
+          variant="tertiary"
           onClick={onClose}
           disabled={isSubmitting}
         >

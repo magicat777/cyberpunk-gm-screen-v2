@@ -26,7 +26,7 @@ export function LoadingError({
           variant="primary"
           size="sm"
           onClick={onRetry}
-          startIcon={<Icon name="refresh" />}
+          startIcon={<Icon name="redo" />}
         >
           Try Again
         </Button>

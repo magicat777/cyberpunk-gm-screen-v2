@@ -244,7 +244,7 @@ export const NPCGenerator: React.FC = () => {
         <Select
           label="Archetype"
           value={options.archetype || ''}
-          onChange={(e) => setOptions({ ...options, archetype: e.target.value as NPCArchetype || undefined })}
+          onChange={(value) => setOptions({ ...options, archetype: value as NPCArchetype || undefined })}
         >
           <option value="">Random</option>
           <option value="ganger">Ganger</option>
@@ -265,7 +265,7 @@ export const NPCGenerator: React.FC = () => {
         <Select
           label="Role"
           value={options.role || ''}
-          onChange={(e) => setOptions({ ...options, role: e.target.value as RoleType || undefined })}
+          onChange={(value) => setOptions({ ...options, role: value as RoleType || undefined })}
         >
           <option value="">Random</option>
           <option value="Solo">Solo</option>
@@ -283,7 +283,7 @@ export const NPCGenerator: React.FC = () => {
         <Select
           label="Threat Level"
           value={options.threat || 'medium'}
-          onChange={(e) => setOptions({ ...options, threat: e.target.value as any })}
+          onChange={(value) => setOptions({ ...options, threat: value as any })}
         >
           <option value="low">Low</option>
           <option value="medium">Medium</option>
@@ -294,7 +294,7 @@ export const NPCGenerator: React.FC = () => {
         <TextInput
           label="Custom Name (optional)"
           value={options.customName || ''}
-          onChange={(e) => setOptions({ ...options, customName: e.target.value })}
+          onChange={(value) => setOptions({ ...options, customName: value })}
           placeholder="Leave blank for random"
         />
         
@@ -327,7 +327,7 @@ export const NPCGenerator: React.FC = () => {
         </div>
         
         <div className={styles.generateActions}>
-          <Button onClick={generateNPC} size="large" fullWidth>
+          <Button onClick={generateNPC} size="lg" fullWidth>
             <Icon name="dice" /> Generate NPC
           </Button>
           {generatedNPC && (
@@ -404,7 +404,7 @@ export const NPCGenerator: React.FC = () => {
           </>
         ) : (
           <div className={styles.noNPC}>
-            <Icon name="user" size="xlarge" />
+            <Icon name="player" size="xlarge" />
             <p>Generate an NPC to see the preview</p>
           </div>
         )}
@@ -416,7 +416,7 @@ export const NPCGenerator: React.FC = () => {
     <div className={styles.savedContent}>
       {savedNPCs.length === 0 ? (
         <div className={styles.noSaved}>
-          <Icon name="folder-open" size="large" />
+          <Icon name="folder-open" size="lg" />
           <p>No saved NPCs</p>
         </div>
       ) : (
@@ -439,9 +439,9 @@ export const NPCGenerator: React.FC = () => {
                     e.stopPropagation();
                     addCharacter(npc);
                   }}
-                  size="small"
+                  size="sm"
                 >
-                  <Icon name="plus" /> Add to Characters
+                  <Icon name="add" /> Add to Characters
                 </Button>
                 <Button
                   onClick={(e) => {
@@ -452,9 +452,9 @@ export const NPCGenerator: React.FC = () => {
                     }
                   }}
                   variant="danger"
-                  size="small"
+                  size="sm"
                 >
-                  <Icon name="trash" /> Delete
+                  <Icon name="remove" /> Delete
                 </Button>
               </div>
             </div>

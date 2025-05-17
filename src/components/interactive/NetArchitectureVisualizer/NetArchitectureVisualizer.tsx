@@ -335,14 +335,14 @@ export const NetArchitectureVisualizer: React.FC = () => {
         <TextInput
           label="Name"
           value={generatorOptions.name}
-          onChange={(e) => setGeneratorOptions({ ...generatorOptions, name: e.target.value })}
+          onChange={(value) => setGeneratorOptions({ ...generatorOptions, name: value })}
           placeholder="Enter architecture name..."
         />
         
         <Select
           label="Template"
           value={generatorOptions.template}
-          onChange={(e) => setGeneratorOptions({ ...generatorOptions, template: e.target.value })}
+          onChange={(value) => setGeneratorOptions({ ...generatorOptions, template: value })}
         >
           <option value="">Custom</option>
           {architectureTemplates.map(template => (
@@ -355,9 +355,9 @@ export const NetArchitectureVisualizer: React.FC = () => {
         <Select
           label="Difficulty"
           value={generatorOptions.difficulty}
-          onChange={(e) => setGeneratorOptions({ 
+          onChange={(value) => setGeneratorOptions({ 
             ...generatorOptions, 
-            difficulty: e.target.value as NetArchitecture['difficulty'] 
+            difficulty: value as NetArchitecture['difficulty'] 
           })}
         >
           <option value="basic">Basic</option>
@@ -373,18 +373,18 @@ export const NetArchitectureVisualizer: React.FC = () => {
           min="1"
           max="10"
           value={generatorOptions.floors}
-          onChange={(e) => setGeneratorOptions({ 
+          onChange={(value) => setGeneratorOptions({ 
             ...generatorOptions, 
-            floors: parseInt(e.target.value) || 1 
+            floors: parseInt(value) || 1 
           })}
         />
         
         <Select
           label="Visual Theme"
           value={generatorOptions.theme}
-          onChange={(e) => setGeneratorOptions({ 
+          onChange={(value) => setGeneratorOptions({ 
             ...generatorOptions, 
-            theme: e.target.value as keyof typeof visualThemes 
+            theme: value as keyof typeof visualThemes 
           })}
         >
           {Object.keys(visualThemes).map(theme => (
@@ -397,7 +397,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
         <TextInput
           label="Location (optional)"
           value={generatorOptions.location}
-          onChange={(e) => setGeneratorOptions({ ...generatorOptions, location: e.target.value })}
+          onChange={(value) => setGeneratorOptions({ ...generatorOptions, location: value })}
           placeholder="Link to map region..."
         />
         
@@ -426,7 +426,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
                   difficulty: template.difficulty
                 });
               }}
-              size="small"
+              size="sm"
             >
               Use Template
             </Button>
@@ -440,7 +440,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
     <div className={styles.savedContent}>
       {savedArchitectures.length === 0 ? (
         <div className={styles.noSaved}>
-          <Icon name="folder-open" size="large" />
+          <Icon name="folder-open" size="lg" />
           <p>No saved architectures</p>
         </div>
       ) : (
@@ -467,7 +467,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
                     setSelectedArchitecture(architecture);
                     setActiveTab('visualizer');
                   }}
-                  size="small"
+                  size="sm"
                 >
                   <Icon name="eye" /> View
                 </Button>
@@ -476,9 +476,9 @@ export const NetArchitectureVisualizer: React.FC = () => {
                     setSavedArchitectures(savedArchitectures.filter(a => a.id !== architecture.id));
                   }}
                   variant="danger"
-                  size="small"
+                  size="sm"
                 >
-                  <Icon name="trash" /> Delete
+                  <Icon name="remove" /> Delete
                 </Button>
               </div>
             </div>

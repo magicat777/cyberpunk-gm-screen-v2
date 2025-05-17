@@ -133,7 +133,7 @@ export function SaveManager() {
   return (
     <>
       <Button
-        variant="ghost"
+        variant="tertiary"
         size="sm"
         onClick={() => setIsOpen(true)}
         startIcon={<Icon name="save" />}
@@ -151,7 +151,7 @@ export function SaveManager() {
                 onClick={() => setIsOpen(false)}
                 aria-label="Close save manager"
               >
-                <Icon name="x" />
+                <Icon name="close" />
               </button>
             </div>
 
@@ -208,7 +208,7 @@ export function SaveManager() {
                         
                         <div className={styles.slotActions}>
                           <Button
-                            variant="ghost"
+                            variant="tertiary"
                             size="sm"
                             onClick={() => handleLoad(slot.slotNumber || 0)}
                             startIcon={<Icon name="upload" />}
@@ -218,7 +218,7 @@ export function SaveManager() {
                           {!slot.isAutoSave && (
                             <>
                               <Button
-                                variant="ghost"
+                                variant="tertiary"
                                 size="sm"
                                 onClick={() => setSelectedSlot(slot.slotNumber || null)}
                                 startIcon={<Icon name="edit" />}
@@ -226,7 +226,7 @@ export function SaveManager() {
                                 Overwrite
                               </Button>
                               <Button
-                                variant="ghost"
+                                variant="tertiary"
                                 size="sm"
                                 onClick={() => handleExport(slot.slotNumber)}
                                 startIcon={<Icon name="download" />}
@@ -243,7 +243,7 @@ export function SaveManager() {
                                     Confirm
                                   </Button>
                                   <Button
-                                    variant="ghost"
+                                    variant="tertiary"
                                     size="sm"
                                     onClick={() => setShowConfirmDelete(null)}
                                   >
@@ -252,10 +252,10 @@ export function SaveManager() {
                                 </>
                               ) : (
                                 <Button
-                                  variant="ghost"
+                                  variant="tertiary"
                                   size="sm"
                                   onClick={() => setShowConfirmDelete(slot.slotNumber || null)}
-                                  startIcon={<Icon name="trash" />}
+                                  startIcon={<Icon name="remove" />}
                                 >
                                   Delete
                                 </Button>
@@ -275,13 +275,13 @@ export function SaveManager() {
                   <TextInput
                     label="Save Name"
                     value={saveName}
-                    onChange={(e) => setSaveName(e.target.value)}
+                    onChange={(value) => setSaveName(value)}
                     placeholder="My Campaign"
                   />
                   <TextInput
                     label="Description (optional)"
                     value={saveDescription}
-                    onChange={(e) => setSaveDescription(e.target.value)}
+                    onChange={(value) => setSaveDescription(value)}
                     placeholder="After defeating the cyber gang..."
                   />
                   <div className={styles.slotSelector}>
@@ -339,7 +339,7 @@ export function SaveManager() {
                   <Button
                     variant="secondary"
                     onClick={handleLoadAutoSave}
-                    startIcon={<Icon name="refresh" />}
+                    startIcon={<Icon name="redo" />}
                     fullWidth
                   >
                     Load Auto-save

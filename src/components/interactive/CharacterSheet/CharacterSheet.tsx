@@ -231,7 +231,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
                   min="0"
                   max={editedCharacter.hp.max}
                   value={editedCharacter.hp.current}
-                  onChange={(e) => updateHP(parseInt(e.target.value) || 0)}
+                  onChange={(value) => updateHP(parseInt(value) || 0)}
                   className={styles.hpInput}
                 />
                 / {editedCharacter.hp.max}
@@ -419,7 +419,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
           className={`${styles.tab} ${activeTab === 'lifepath' ? styles.active : ''}`}
           onClick={() => setActiveTab('lifepath')}
         >
-          <Icon name="user" /> Lifepath
+          <Icon name="player" /> Lifepath
         </button>
       </div>
 

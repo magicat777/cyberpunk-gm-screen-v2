@@ -89,7 +89,7 @@ export const DiceRoller: React.FC = () => {
                 min="1"
                 max="20"
                 value={diceCount}
-                onChange={(e) => setDiceCount(Math.max(1, parseInt(e.target.value) || 1))}
+                onChange={(value) => setDiceCount(Math.max(1, parseInt(value) || 1))}
                 className={styles.numberInput}
               />
             </div>
@@ -100,8 +100,8 @@ export const DiceRoller: React.FC = () => {
               <select
                 id="dice-type"
                 value={selectedDice.value}
-                onChange={(e) => {
-                  const dice = DICE_TYPES.find(d => d.value === parseInt(e.target.value));
+                onChange={(value) => {
+                  const dice = DICE_TYPES.find(d => d.value === parseInt(value));
                   if (dice) setSelectedDice(dice);
                 }}
                 className={styles.select}
@@ -123,7 +123,7 @@ export const DiceRoller: React.FC = () => {
                 min="-20"
                 max="20"
                 value={modifier}
-                onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
+                onChange={(value) => setModifier(parseInt(value) || 0)}
                 className={styles.numberInput}
               />
             </div>

@@ -282,13 +282,13 @@ export const NightCityMap: React.FC = () => {
       <div className={styles.mapControls}>
         <div className={styles.zoomControls}>
           <Button onClick={() => setMapState({ ...mapState, zoom: mapState.zoom * 1.2 })}>
-            <Icon name="plus" /> Zoom In
+            <Icon name="add" /> Zoom In
           </Button>
           <Button onClick={() => setMapState({ ...mapState, zoom: mapState.zoom * 0.8 })}>
             <Icon name="minus" /> Zoom Out
           </Button>
           <Button onClick={() => setMapState({ ...mapState, zoom: 1, center: { x: 400, y: 350 } })}>
-            <Icon name="refresh" /> Reset View
+            <Icon name="redo" /> Reset View
           </Button>
         </div>
 
@@ -339,8 +339,8 @@ export const NightCityMap: React.FC = () => {
         <div className={styles.regionDetails}>
           <div className={styles.detailsHeader}>
             <h3>{selectedRegion.name}</h3>
-            <Button onClick={() => setShowRegionDetails(false)} variant="ghost">
-              <Icon name="times" />
+            <Button onClick={() => setShowRegionDetails(false)} variant="tertiary">
+              <Icon name="close" />
             </Button>
           </div>
 
@@ -400,7 +400,7 @@ export const NightCityMap: React.FC = () => {
                 </div>
               ))}
               <Button onClick={() => setShowAddNote(true)}>
-                <Icon name="plus" /> Add Note
+                <Icon name="add" /> Add Note
               </Button>
             </div>
 
@@ -422,20 +422,20 @@ export const NightCityMap: React.FC = () => {
             <TextInput
               label="Title"
               value={newNote.title}
-              onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
+              onChange={(value) => setNewNote({ ...newNote, title: value })}
               required
             />
             <TextArea
               label="Content"
               value={newNote.content}
-              onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
+              onChange={(value) => setNewNote({ ...newNote, content: value })}
               rows={5}
               required
             />
             <Select
               label="Visibility"
               value={newNote.visibility}
-              onChange={(e) => setNewNote({ ...newNote, visibility: e.target.value as any })}
+              onChange={(value) => setNewNote({ ...newNote, visibility: value as any })}
             >
               <option value="gm">GM Only</option>
               <option value="player">Players</option>

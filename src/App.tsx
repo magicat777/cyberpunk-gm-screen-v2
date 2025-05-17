@@ -23,7 +23,7 @@ function App() {
   return (
     <ThemeProvider>
       <AppShell>
-        <Suspense fallback={<LoadingSpinner size="large" />}>
+        <Suspense fallback={<LoadingSpinner size="lg" />}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dice" element={<DiceRoller />} />

@@ -165,13 +165,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 <Button
                   variant="primary"
                   onClick={this.resetErrorBoundary}
-                  startIcon={<Icon name="refresh" />}
+                  startIcon={<Icon name="redo" />}
                 >
                   Try Again
                 </Button>
                 
                 <Button
-                  variant="ghost"
+                  variant="tertiary"
                   onClick={() => window.location.reload()}
                   startIcon={<Icon name="reload" />}
                 >

@@ -80,7 +80,7 @@ export const RulesReference: React.FC = () => {
               type="text"
               placeholder="Search rules..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(value) => setSearchQuery(value)}
               className={styles.searchInput}
               aria-label="Search rules"
             />
@@ -89,7 +89,7 @@ export const RulesReference: React.FC = () => {
           <div className={styles.filterContainer}>
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(value) => setSelectedCategory(value)}
               className={styles.categorySelect}
               aria-label="Filter by category"
             >

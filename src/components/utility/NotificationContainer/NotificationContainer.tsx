@@ -72,7 +72,7 @@ export function NotificationContainer() {
                 onClick={() => removeNotification(notification.id)}
                 aria-label="Close notification"
               >
-                <Icon name="x" size="sm" />
+                <Icon name="close" size="sm" />
               </button>
             </div>
           </motion.div>

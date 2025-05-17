@@ -43,7 +43,7 @@ export const IconShowcase: React.FC = () => {
           type="text"
           placeholder="Search icons..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(value) => setSearchTerm(value)}
           className={styles.searchInput}
         />
         
