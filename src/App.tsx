@@ -32,7 +32,9 @@ function App() {
             <Route path="/sessions" element={<Sessions />} />
             <Route path="/characters" element={<Characters />} />
             <Route path="/encounters" element={<Encounters />} />
+            <Route path="/combat" element={<GMTools />} />
             <Route path="/npcs" element={<NPCs />} />
+            <Route path="/cyberware" element={<Equipment />} />
             <Route path="/equipment" element={<Equipment />} />
             <Route path="/maps" element={<Maps />} />
             <Route path="/netrunning" element={<Netrunning />} />
