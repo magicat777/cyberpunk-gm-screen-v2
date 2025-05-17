@@ -15,25 +15,25 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
-        cache: 'yarn'
+        cache: 'npm'
     
     - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      run: npm ci
     
     - name: Check formatting
-      run: yarn format --check
+      run: npm run format --check
     
     - name: Run linter
-      run: yarn lint
+      run: npm run lint
     
     - name: Run type check
-      run: yarn type-check
+      run: npm run type-check
     
     - name: Run tests
-      run: yarn test --run
+      run: npm run test -- --run
     
     - name: Build
-      run: yarn build
+      run: npm run build
     
     - name: Comment PR
       uses: actions/github-script@v7
