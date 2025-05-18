@@ -11,7 +11,7 @@ interface UseErrorOptions {
 }
 
 export function useError(options: UseErrorOptions = {}) {
-  const { showNotification = true, autoRecover = true } = options;
+  const { showNotification = true } = options;
   const [error, setError] = useState<AppError | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { showNotification: notify } = useNotification();
@@ -25,7 +25,7 @@ export function useError(options: UseErrorOptions = {}) {
         customMessage || error.message,
         {
           stack: error.stack,
-          metadata: { originalError: error.name }
+          metadata: { errorType: error.name }
         }
       );
     } else if (typeof error === 'object' && error !== null && 'code' in error) {
@@ -35,7 +35,7 @@ export function useError(options: UseErrorOptions = {}) {
         ErrorCode.UNKNOWN_ERROR,
         customMessage || 'An unexpected error occurred',
         {
-          metadata: { originalError: String(error) }
+          metadata: { errorValue: String(error) }
         }
       );
     }

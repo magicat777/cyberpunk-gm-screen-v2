@@ -1,4 +1,4 @@
-import type { Character, Weapon, Armor, Cyberware, Item, Encounter } from '../types/game';
+import type { Character, Weapon, Armor, Cyberware, Encounter } from '../types/game';
 import { CharacterModel } from '../models/Character';
 import { EncounterModel } from '../models/Encounter';
 

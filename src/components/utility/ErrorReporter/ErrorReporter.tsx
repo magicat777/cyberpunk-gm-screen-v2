@@ -90,7 +90,7 @@ export function ErrorReporter({ error, onClose, onReport }: ErrorReporterProps) 
           onClick={handleSubmit}
           disabled={isSubmitting}
           loading={isSubmitting}
-          startIcon={<Icon name="send" />}
+          icon={<Icon name="upload" />}
         >
           Send Report
         </Button>

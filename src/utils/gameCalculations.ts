@@ -19,7 +19,7 @@ export function calculateInitiative(character: Character, roll: number): number 
 }
 
 export function calculateDamage(
-  weapon: Weapon, // eslint-disable-line @typescript-eslint/no-unused-vars
+  _weapon: Weapon,
   rolls: number[],
   modifier: number = 0,
   isHeadshot: boolean = false

@@ -13,7 +13,7 @@ export interface DiceSlice {
   setDiceHistory: (history: DiceRoll[]) => void;
 }
 
-export const createDiceSlice: StateCreator<DiceSlice> = (set, get) => ({
+export const createDiceSlice: StateCreator<DiceSlice> = (set) => ({
   // Initial state
   diceHistory: [],
   isRolling: false,
@@ -24,7 +24,6 @@ export const createDiceSlice: StateCreator<DiceSlice> = (set, get) => ({
     
     const diceType = parseInt(type.replace('d', ''));
     const rolls: number[] = [];
-    let totalRolls = count;
     
     // Roll the dice
     for (let i = 0; i < count; i++) {

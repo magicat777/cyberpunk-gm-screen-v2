@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timer Test</title>
+</head>
+<body>
+    <h1>Timer Test</h1>
+    <div id="timer">00:00</div>
+    <button onclick="toggleTimer()">Start/Stop</button>
+    <button onclick="resetTimer()">Reset</button>
+    <script>
+        let duration = 60;
+        let remaining = 60;
+        let isRunning = false;
+        let interval = null;
+
+        function updateDisplay() {
+            const mins = Math.floor(remaining / 60);
+            const secs = remaining % 60;
+            document.getElementById('timer').textContent = 
+                `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            isRunning = !isRunning;
+            console.log('Toggle timer:', isRunning);
+            if (isRunning) {
+                interval = setInterval(() => {
+                    remaining = Math.max(0, remaining - 1);
+                    updateDisplay();
+                    if (remaining === 0) {
+                        clearInterval(interval);
+                        isRunning = false;
+                    }
+                }, 1000);
+            } else {
+                clearInterval(interval);
+            }
+        }
+
+        function resetTimer() {
+            console.log('Reset timer');
+            clearInterval(interval);
+            isRunning = false;
+            remaining = duration;
+            updateDisplay();
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>

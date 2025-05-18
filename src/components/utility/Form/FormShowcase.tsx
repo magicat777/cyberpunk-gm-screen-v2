@@ -183,7 +183,7 @@ export const FormShowcase: React.FC = () => {
           <Button loading>Loading</Button>
           <Button icon={<Icon name="save" />}>With Icon</Button>
           <Button icon={<Icon name="save" />} iconPosition="end">Icon End</Button>
-          <Button icon={<Icon name="settings" />} />
+          <Button icon={<Icon name="settings" />}>Settings</Button>
         </div>
         
         <h3>Form Field Wrapper</h3>

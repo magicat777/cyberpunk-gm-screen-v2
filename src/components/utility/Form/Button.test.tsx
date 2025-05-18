@@ -64,7 +64,7 @@ describe('Button', () => {
   });
 
   it('renders as icon-only button', () => {
-    const { container } = render(<Button icon={<Icon name="save" />} />);
+    const { container } = render(<Button icon={<Icon name="save" />}>Icon Button</Button>);
     const button = container.querySelector('button');
     expect(button).toHaveClass('iconOnly');
   });

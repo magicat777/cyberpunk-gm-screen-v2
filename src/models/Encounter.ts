@@ -1,5 +1,4 @@
 import type { Encounter, Character, Item, CombatTurn } from '../types/game';
-import { CharacterModel } from './Character';
 
 export class EncounterModel implements Encounter {
   id: string;

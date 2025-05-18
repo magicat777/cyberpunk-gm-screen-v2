@@ -1,4 +1,4 @@
-import { NetArchitectureTemplate, Challenge, DigitalLoot } from '../types/netarchitecture';
+import { NetArchitectureTemplate, Challenge, DigitalLoot, VisualTheme } from '../types/netarchitecture';
 
 export const challengeTemplates: Record<string, Challenge[]> = {
   password: [
@@ -265,7 +265,7 @@ export const architectureTemplates: NetArchitectureTemplate[] = [
   }
 ];
 
-export const visualThemes = {
+export const visualThemes: Record<VisualTheme, { primaryColor: string; secondaryColor: string; description: string }> = {
   corporate: {
     primaryColor: '#0080ff',
     secondaryColor: '#004080',
@@ -275,11 +275,6 @@ export const visualThemes = {
     primaryColor: '#00ff00',
     secondaryColor: '#008000',
     description: 'Tactical displays and warning systems'
-  },
-  criminal: {
-    primaryColor: '#ff0000',
-    secondaryColor: '#800000',
-    description: 'Dark and dangerous aesthetic'
   },
   entertainment: {
     primaryColor: '#ff00ff',
@@ -295,5 +290,25 @@ export const visualThemes = {
     primaryColor: '#ffffff',
     secondaryColor: '#808080',
     description: 'Geometric shapes and patterns'
+  },
+  industrial: {
+    primaryColor: '#ff8000',
+    secondaryColor: '#804000',
+    description: 'Rugged and mechanical aesthetic'
+  },
+  organic: {
+    primaryColor: '#80ff00',
+    secondaryColor: '#408000',
+    description: 'Fluid and natural patterns'
+  },
+  retro: {
+    primaryColor: '#ff00ff',
+    secondaryColor: '#ff0080',
+    description: 'Vintage cyberpunk style'
+  },
+  custom: {
+    primaryColor: '#808080',
+    secondaryColor: '#404040',
+    description: 'User-defined styling'
   }
 };

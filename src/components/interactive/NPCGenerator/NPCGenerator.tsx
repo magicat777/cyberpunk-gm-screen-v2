@@ -8,7 +8,7 @@ import {
   NPCAppearance,
   NPCMotivation
 } from '../../../types/npc';
-import { Character, RoleType, StatType, SkillType, Stat } from '../../../types/game';
+import { RoleType, StatType, SkillType, Stat, SkillCategory, Skill } from '../../../types/game';
 import { npcGeneratorData, npcTemplates } from '../../../data/npcGeneratorData';
 import { CharacterSheet } from '../CharacterSheet/CharacterSheet';
 import styles from './NPCGenerator.module.css';
@@ -45,6 +45,165 @@ export const NPCGenerator: React.FC = () => {
     }
     
     return `${firstName} ${lastName}`;
+  };
+
+  // Helper function to get linked stat for a skill
+  const getLinkedStat = (skill: SkillType): StatType => {
+    // Map skills to their linked stats based on Cyberpunk RED rules
+    const skillStatMap: Partial<Record<SkillType, StatType>> = {
+      // Awareness skills -> INT
+      [SkillType.Concentration]: 'INT',
+      [SkillType.ConcealRevealObject]: 'INT',
+      [SkillType.LipReading]: 'INT',
+      [SkillType.Perception]: 'INT',
+      [SkillType.Tracking]: 'INT',
+      // Body skills -> BODY
+      [SkillType.Athletics]: 'BODY',
+      [SkillType.Contortionist]: 'BODY',
+      [SkillType.Dance]: 'BODY',
+      [SkillType.Endurance]: 'BODY',
+      [SkillType.ResistTortureDrugs]: 'BODY',
+      [SkillType.Stealth]: 'DEX',
+      // Control skills -> REF
+      [SkillType.Driving]: 'REF',
+      [SkillType.PilotAirVehicle]: 'REF',
+      [SkillType.PilotSeaVehicle]: 'REF',
+      [SkillType.Riding]: 'REF',
+      // Fighting skills -> REF
+      [SkillType.Brawling]: 'REF',
+      [SkillType.Evasion]: 'DEX',
+      [SkillType.MartialArts]: 'REF',
+      [SkillType.MeleeWeapon]: 'REF',
+      // Ranged weapon skills -> REF
+      [SkillType.Archery]: 'REF',
+      [SkillType.Handgun]: 'REF',
+      [SkillType.HeavyWeapons]: 'REF',
+      [SkillType.ShoulderArms]: 'REF',
+      // Social skills -> COOL or EMP
+      [SkillType.Bribery]: 'COOL',
+      [SkillType.Conversation]: 'EMP',
+      [SkillType.HumanPerception]: 'EMP',
+      [SkillType.Interrogation]: 'COOL',
+      [SkillType.Persuasion]: 'COOL',
+      [SkillType.PersonalGrooming]: 'COOL',
+      [SkillType.Streetwise]: 'COOL',
+      [SkillType.Trading]: 'COOL',
+      [SkillType.WardrobeStyle]: 'COOL',
+      // Education skills -> INT
+      [SkillType.Accounting]: 'INT',
+      [SkillType.Bureaucracy]: 'INT',
+      [SkillType.Business]: 'INT',
+      [SkillType.Composition]: 'INT',
+      [SkillType.Criminology]: 'INT',
+      [SkillType.Cryptography]: 'INT',
+      [SkillType.Deduction]: 'INT',
+      [SkillType.Education]: 'INT',
+      [SkillType.Gamble]: 'INT',
+      [SkillType.Language]: 'INT',
+      [SkillType.LibrarySearch]: 'INT',
+      [SkillType.LocalExpert]: 'INT',
+      [SkillType.Science]: 'INT',
+      [SkillType.Tactics]: 'INT',
+      [SkillType.WildernessSurvival]: 'INT',
+      // Technique skills -> TECH
+      [SkillType.AnimalHandling]: 'TECH',
+      [SkillType.Demolitions]: 'TECH',
+      [SkillType.DriveLandVehicle]: 'TECH',
+      [SkillType.ElectronicsSecurityTech]: 'TECH',
+      [SkillType.FirstAid]: 'TECH',
+      [SkillType.Forgery]: 'TECH',
+      [SkillType.Interface]: 'TECH',
+      [SkillType.LandVehicleTech]: 'TECH',
+      [SkillType.PaintDrawSculpt]: 'TECH',
+      [SkillType.Paramedic]: 'TECH',
+      [SkillType.PhotographyFilm]: 'TECH',
+      [SkillType.PickLock]: 'TECH',
+      [SkillType.PickPocket]: 'TECH',
+      [SkillType.SeaVehicleTech]: 'TECH',
+      [SkillType.WeaponsTech]: 'TECH'
+    };
+    
+    return skillStatMap[skill] || 'INT';
+  };
+
+  const getSkillCategory = (skill: SkillType): SkillCategory => {
+    const skillCategoryMap: Partial<Record<SkillType, SkillCategory>> = {
+      // Awareness skills
+      [SkillType.Concentration]: 'Awareness',
+      [SkillType.ConcealRevealObject]: 'Awareness',
+      [SkillType.LipReading]: 'Awareness',
+      [SkillType.Perception]: 'Awareness',
+      [SkillType.Tracking]: 'Awareness',
+      // Body skills
+      [SkillType.Athletics]: 'Body',
+      [SkillType.Contortionist]: 'Body',
+      [SkillType.Dance]: 'Body',
+      [SkillType.Endurance]: 'Body',
+      [SkillType.ResistTortureDrugs]: 'Body',
+      [SkillType.Stealth]: 'Body',
+      // Control skills
+      [SkillType.Driving]: 'Control',
+      [SkillType.PilotAirVehicle]: 'Control',
+      [SkillType.PilotSeaVehicle]: 'Control',
+      [SkillType.Riding]: 'Control',
+      // Fighting skills
+      [SkillType.Brawling]: 'Fighting',
+      [SkillType.Evasion]: 'Fighting',
+      [SkillType.MartialArts]: 'Fighting',
+      [SkillType.MeleeWeapon]: 'Fighting',
+      // Performance skills
+      [SkillType.Acting]: 'Performance',
+      [SkillType.PlayInstrument]: 'Performance',
+      // Ranged weapon skills
+      [SkillType.Archery]: 'Ranged Weapon',
+      [SkillType.Handgun]: 'Ranged Weapon',
+      [SkillType.HeavyWeapons]: 'Ranged Weapon',
+      [SkillType.ShoulderArms]: 'Ranged Weapon',
+      // Social skills
+      [SkillType.Bribery]: 'Social',
+      [SkillType.Conversation]: 'Social',
+      [SkillType.HumanPerception]: 'Social',
+      [SkillType.Interrogation]: 'Social',
+      [SkillType.Persuasion]: 'Social',
+      [SkillType.PersonalGrooming]: 'Social',
+      [SkillType.Streetwise]: 'Social',
+      [SkillType.Trading]: 'Social',
+      [SkillType.WardrobeStyle]: 'Social',
+      // Education skills
+      [SkillType.Accounting]: 'Education',
+      [SkillType.Bureaucracy]: 'Education',
+      [SkillType.Business]: 'Education',
+      [SkillType.Composition]: 'Education',
+      [SkillType.Criminology]: 'Education',
+      [SkillType.Cryptography]: 'Education',
+      [SkillType.Deduction]: 'Education',
+      [SkillType.Education]: 'Education',
+      [SkillType.Gamble]: 'Education',
+      [SkillType.Language]: 'Education',
+      [SkillType.LibrarySearch]: 'Education',
+      [SkillType.LocalExpert]: 'Education',
+      [SkillType.Science]: 'Education',
+      [SkillType.Tactics]: 'Education',
+      [SkillType.WildernessSurvival]: 'Education',
+      // Technique skills
+      [SkillType.AnimalHandling]: 'Technique',
+      [SkillType.Demolitions]: 'Technique',
+      [SkillType.DriveLandVehicle]: 'Technique',
+      [SkillType.ElectronicsSecurityTech]: 'Technique',
+      [SkillType.FirstAid]: 'Technique',
+      [SkillType.Forgery]: 'Technique',
+      [SkillType.Interface]: 'Technique',
+      [SkillType.LandVehicleTech]: 'Technique',
+      [SkillType.PaintDrawSculpt]: 'Technique',
+      [SkillType.Paramedic]: 'Technique',
+      [SkillType.PhotographyFilm]: 'Technique',
+      [SkillType.PickLock]: 'Technique',
+      [SkillType.PickPocket]: 'Technique',
+      [SkillType.SeaVehicleTech]: 'Technique',
+      [SkillType.WeaponsTech]: 'Technique'
+    };
+    
+    return skillCategoryMap[skill] || 'Awareness';
   };
 
   const generateAppearance = (archetype: NPCArchetype): NPCAppearance => {
@@ -110,40 +269,51 @@ export const NPCGenerator: React.FC = () => {
   };
 
   const generateSkills = (
-    stats: Record<StatType, Stat>,
+    _stats: Record<StatType, Stat>,
     threat: string,
     archetype: NPCArchetype
-  ): Character['skills'] => {
+  ): Skill[] => {
     const template = npcTemplates.find(t => t.archetype === archetype) ?? npcTemplates[0];
     const threatBonus = { low: 0, medium: 2, high: 4, elite: 6 }[threat] ?? 0;
     
-    const skills: Character['skills'] = {} as any;
+    const skillsMap: Record<string, Skill> = {};
     
     // Initialize all skills to 0
     Object.values(SkillType).forEach(skill => {
-      skills[skill] = {
-        level: 0,
-        linkedStat: getLinkedStat(skill),
-        ipSpent: 0
+      const stat = getLinkedStat(skill);
+      const level = 0;
+      skillsMap[skill] = {
+        name: skill,
+        category: getSkillCategory(skill),
+        stat,
+        level,
+        ip: 0,
+        total: level // total will be calculated with stats later
       };
     });
     
     // Set primary skills
     template.skillPriorities.primary.forEach(skill => {
-      skills[skill].level = Math.min(10, 4 + threatBonus + Math.floor(Math.random() * 3));
+      if (skillsMap[skill]) {
+        skillsMap[skill].level = Math.min(10, 4 + threatBonus + Math.floor(Math.random() * 3));
+      }
     });
     
     // Set secondary skills
     template.skillPriorities.secondary.forEach(skill => {
-      skills[skill].level = Math.min(10, 2 + threatBonus + Math.floor(Math.random() * 3));
+      if (skillsMap[skill]) {
+        skillsMap[skill].level = Math.min(10, 2 + threatBonus + Math.floor(Math.random() * 3));
+      }
     });
     
     // Minimal skills stay at 0 or 1
     template.skillPriorities.minimal.forEach(skill => {
-      skills[skill].level = Math.random() < 0.3 ? 1 : 0;
+      if (skillsMap[skill]) {
+        skillsMap[skill].level = Math.random() < 0.3 ? 1 : 0;
+      }
     });
     
-    return skills;
+    return Object.values(skillsMap);
   };
 
   const handleSelectSavedNPC = useCallback((npc: GeneratedNPC) => {
@@ -192,12 +362,12 @@ export const NPCGenerator: React.FC = () => {
       reputation: Math.floor(Math.random() * 3) + 1,
       stats,
       skills,
-      hp: {
+      hitPoints: {
         current: hp,
         max: hp,
-        wounds: { light: 0, serious: 0, critical: 0, mortal: 0 }
+        seriouslyWounded: Math.floor(hp / 2),
+        deathSave: stats.BODY.value
       },
-      deathSave: stats.BODY.value,
       humanity: {
         current: 50 - Math.floor(Math.random() * 20),
         max: 50
@@ -205,16 +375,20 @@ export const NPCGenerator: React.FC = () => {
       armor: [],
       weapons: [],
       cyberware: [],
-      inventory: [],
-      money: Math.floor(Math.random() * 5000) + 500,
-      improvement: { totalIp: 0, availableIp: 0, spentIp: 0 },
+      gear: [],
+      background: {},
       lifepath: {
         friends: [],
         enemies: [],
         lovers: [],
         mentors: []
       },
+      eurodollars: Math.floor(Math.random() * 5000) + 500,
+      ip: 0,
       notes: '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      isNPC: true,
       archetype,
       threat
     };
@@ -463,13 +637,17 @@ export const NPCGenerator: React.FC = () => {
                 >
                   <Icon name="add" /> Add to Characters
                 </Button>
-                <Button
-                  onClick={(e) => handleDeleteNPC(e, npc.id)}
-                  variant="danger"
-                  size="sm"
+                <div
+                  onClick={(e: React.MouseEvent) => handleDeleteNPC(e, npc.id)}
+                  style={{ display: 'inline-block' }}
                 >
-                  <Icon name="remove" /> Delete
-                </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                  >
+                    <Icon name="remove" /> Delete
+                  </Button>
+                </div>
               </div>
             </button>
           ))}

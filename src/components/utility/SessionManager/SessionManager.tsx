@@ -5,8 +5,6 @@ import { Button } from '../Form/Button';
 import { Icon } from '../Icon';
 import { TextInput } from '../Form/TextInput';
 import { Select } from '../Form/Select';
-import { GameSession, SessionPlayer, SessionNPC } from '../../../store/types';
-import { Campaign } from '../../../store/slices/sessionSlice';
 
 export const SessionManager: React.FC = () => {
   const {
@@ -21,12 +19,8 @@ export const SessionManager: React.FC = () => {
     createCampaign,
     updateCampaign,
     deleteCampaign,
-    addPlayer,
     removePlayer,
-    addNPC,
-    addLoot,
-    updateLoot,
-    addReputationChange
+    addPlayer
   } = useStore(state => ({
     currentSession: state.currentSession,
     sessions: state.sessions,
@@ -39,12 +33,8 @@ export const SessionManager: React.FC = () => {
     createCampaign: state.createCampaign,
     updateCampaign: state.updateCampaign,
     deleteCampaign: state.deleteCampaign,
-    addPlayer: state.addPlayer,
     removePlayer: state.removePlayer,
-    addNPC: state.addNPC,
-    addLoot: state.addLoot,
-    updateLoot: state.updateLoot,
-    addReputationChange: state.addReputationChange
+    addPlayer: state.addPlayer
   }));
 
   const [activeTab, setActiveTab] = useState<'sessions' | 'campaigns' | 'current'>('current');
@@ -89,7 +79,7 @@ export const SessionManager: React.FC = () => {
     if (!currentSession) {
       return (
         <div className={styles.noSession}>
-          <Icon name="calendar" size="lg" />
+          <Icon name="chevron-right" size="lg" />
           <p>No active session</p>
           <Button onClick={() => setShowNewSessionModal(true)}>
             <Icon name="add" /> Start New Session
@@ -107,7 +97,7 @@ export const SessionManager: React.FC = () => {
           <div className={styles.sessionMeta}>
             <span>Session #{currentSession.sessionNumber}</span>
             {campaign && <span>Campaign: {campaign.name}</span>}
-            <span>Started: {new Date(currentSession.startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+            <span>Started: {currentSession.startTime ? new Date(currentSession.startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Not started'}</span>
             <span className={`${styles.status} ${styles[currentSession.status]}`}>
               {currentSession.status}
             </span>
@@ -313,19 +303,19 @@ export const SessionManager: React.FC = () => {
           className={`${styles.tab} ${activeTab === 'current' ? styles.active : ''}`}
           onClick={() => setActiveTab('current')}
         >
-          <Icon name="play" /> Current Session
+          <Icon name="chevron-right" /> Current Session
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'sessions' ? styles.active : ''}`}
           onClick={() => setActiveTab('sessions')}
         >
-          <Icon name="clock" /> All Sessions
+          <Icon name="initiative" /> All Sessions
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'campaigns' ? styles.active : ''}`}
           onClick={() => setActiveTab('campaigns')}
         >
-          <Icon name="file" /> Campaigns
+          <Icon name="encounter" /> Campaigns
         </button>
       </div>
 

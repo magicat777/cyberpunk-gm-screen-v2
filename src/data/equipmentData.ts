@@ -222,7 +222,6 @@ export const cyberware: Cyberware[] = [
     humanityLoss: '4d6',
     surgery: 'CR',
     location: 'Neuralware',
-    specialRules: ['Allows extra actions in combat'],
     tags: ['combat', 'reflex', 'military']
   },
   // Optics

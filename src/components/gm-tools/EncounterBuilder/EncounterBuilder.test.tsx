@@ -32,7 +32,7 @@ describe('EncounterBuilder', () => {
     
     // Check if templates are displayed
     const firstTemplate = Object.values(templates.encounters)[0];
-    expect(screen.getByText(firstTemplate.name)).toBeInTheDocument();
+    expect(screen.getByText(firstTemplate.name!)).toBeInTheDocument();
   });
 
   it('should handle keyboard navigation for template selection', () => {
@@ -44,7 +44,7 @@ describe('EncounterBuilder', () => {
     
     // Get first template button
     const firstTemplate = Object.values(templates.encounters)[0];
-    const templateButton = screen.getByText(firstTemplate.name).closest('button');
+    const templateButton = screen.getByText(firstTemplate.name!).closest('button');
     
     if (templateButton) {
       // Simulate Enter key press

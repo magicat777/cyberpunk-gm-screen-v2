@@ -2,14 +2,14 @@ import { useNotificationStore } from '../../../hooks/useNotification';
 import { Icon } from '../Icon';
 import { IconName } from '../../../types/icons';
 import { NotificationType } from '../../../hooks/useNotification';
-import { motion, AnimatePresence } from 'framer-motion';
+// import { motion, AnimatePresence } from 'framer-motion';  // Temporarily disabled - need to install dependency
 import styles from './NotificationContainer.module.css';
 
 const iconMap: Record<NotificationType, IconName> = {
-  success: 'check-circle',
-  error: 'x-circle',
-  warning: 'alert-triangle',
-  info: 'info-circle'
+  success: 'success',
+  error: 'error',
+  warning: 'warning',
+  info: 'info'
 };
 
 const colorMap: Record<NotificationType, string> = {
@@ -24,26 +24,21 @@ export function NotificationContainer() {
 
   return (
     <div className={styles.container} aria-live="polite" aria-atomic="true">
-      <AnimatePresence>
-        {notifications.map((notification) => (
-          <motion.div
-            key={notification.id}
-            className={styles.notification}
-            initial={{ opacity: 0, x: 300, y: 0 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            exit={{ opacity: 0, x: 300, y: 0 }}
-            transition={{ duration: 0.3 }}
+      {notifications.map((notification) => (
+        <div
+          key={notification.id}
+          className={styles.notification}
+        >
+          <div 
+            className={styles.content}
+            style={{ borderLeftColor: colorMap[notification.type] }}
           >
-            <div 
-              className={styles.content}
-              style={{ borderLeftColor: colorMap[notification.type] }}
-            >
-              <Icon
-                name={iconMap[notification.type]}
-                size="md"
-                className={styles.icon}
-                style={{ color: colorMap[notification.type] }}
-              />
+            <Icon
+              name={iconMap[notification.type]}
+              size="md"
+              className={styles.icon}
+              aria-hidden="true"
+            />
               
               <div className={styles.text}>
                 <h4 className={styles.title}>{notification.title}</h4>
@@ -75,9 +70,8 @@ export function NotificationContainer() {
                 <Icon name="close" size="sm" />
               </button>
             </div>
-          </motion.div>
+          </div>
         ))}
-      </AnimatePresence>
     </div>
   );
 }

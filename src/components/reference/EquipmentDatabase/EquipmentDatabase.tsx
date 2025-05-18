@@ -7,10 +7,6 @@ import {
   Weapon,
   Armor,
   Cyberware,
-  Gear,
-  Fashion,
-  Drug,
-  Service,
   Vehicle
 } from '../../../types/equipment';
 import { allEquipment } from '../../../data/equipmentData';
@@ -330,7 +326,7 @@ export const EquipmentDatabase: React.FC = () => {
               <TextInput
                 type="number"
                 placeholder="Min"
-                value={filters.minCost ?? ''}
+                value={filters.minCost?.toString() ?? ''}
                 onChange={(value) => setFilters({ 
                   ...filters, 
                   minCost: value ? parseInt(value) : undefined 
@@ -340,7 +336,7 @@ export const EquipmentDatabase: React.FC = () => {
               <TextInput
                 type="number"
                 placeholder="Max"
-                value={filters.maxCost ?? ''}
+                value={filters.maxCost?.toString() ?? ''}
                 onChange={(value) => setFilters({ 
                   ...filters, 
                   maxCost: value ? parseInt(value) : undefined 
@@ -384,17 +380,17 @@ export const EquipmentDatabase: React.FC = () => {
           <div className={styles.viewControls}>
             <Button
               onClick={() => setViewMode('grid')}
-              variant={viewMode === 'grid' ? 'primary' : 'ghost'}
+              variant={viewMode === 'grid' ? 'primary' : 'secondary'}
               size="sm"
             >
-              <Icon name="grid" /> Grid
+              <Icon name="filter" /> Grid
             </Button>
             <Button
               onClick={() => setViewMode('list')}
-              variant={viewMode === 'list' ? 'primary' : 'ghost'}
+              variant={viewMode === 'list' ? 'primary' : 'secondary'}
               size="sm"
             >
-              <Icon name="list" /> List
+              <Icon name="menu" /> List
             </Button>
           </div>
 
@@ -412,7 +408,7 @@ export const EquipmentDatabase: React.FC = () => {
               onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
               size="sm"
             >
-              <Icon name={sortOrder === 'asc' ? 'sort-asc' : 'sort-desc'} />
+              <Icon name={sortOrder === 'asc' ? 'chevron-up' : 'chevron-down'} />
             </Button>
           </div>
 

@@ -1,18 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   NetArchitecture, 
-  NetFloor, 
+  NetFloor,
   Challenge, 
   DigitalLoot,
-  SecurityLevel,
-  AlertLevel 
+  SecurityLevel
 } from '../../../types/netarchitecture';
 import { architectureTemplates, challengeTemplates, lootTemplates, visualThemes } from '../../../data/netArchitectureData';
 import styles from './NetArchitectureVisualizer.module.css';
 import { Button } from '../../utility/Form/Button';
 import { Icon } from '../../utility/Icon';
 import { TextInput } from '../../utility/Form/TextInput';
-import { TextArea } from '../../utility/Form/TextArea';
 import { Select } from '../../utility/Form/Select';
 
 export const NetArchitectureVisualizer: React.FC = () => {
@@ -21,7 +19,6 @@ export const NetArchitectureVisualizer: React.FC = () => {
   const [selectedArchitecture, setSelectedArchitecture] = useState<NetArchitecture | null>(null);
   const [selectedFloor, setSelectedFloor] = useState<NetFloor | null>(null);
   const [savedArchitectures, setSavedArchitectures] = useState<NetArchitecture[]>([]);
-  const [showGeneratorModal, setShowGeneratorModal] = useState(false);
   
   const [generatorOptions, setGeneratorOptions] = useState({
     name: '',
@@ -31,14 +28,6 @@ export const NetArchitectureVisualizer: React.FC = () => {
     location: '',
     customTheme: false,
     theme: 'corporate' as keyof typeof visualThemes
-  });
-
-  const [newArchitecture, setNewArchitecture] = useState<Partial<NetArchitecture>>({
-    name: '',
-    description: '',
-    difficulty: 'standard',
-    floors: [],
-    security: { rating: 2, description: 'Standard security' }
   });
 
   // Visualize the architecture
@@ -183,7 +172,6 @@ export const NetArchitectureVisualizer: React.FC = () => {
 
     setSavedArchitectures([...savedArchitectures, architecture]);
     setSelectedArchitecture(architecture);
-    setShowGeneratorModal(false);
     setActiveTab('visualizer');
   };
 
@@ -208,7 +196,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
     return challenges;
   };
 
-  const generateLoot = (level: number, difficulty: string): DigitalLoot[] => {
+  const generateLoot = (_level: number, difficulty: string): DigitalLoot[] => {
     const lootCount = Math.floor(Math.random() * 3) + 1;
     const loot: DigitalLoot[] = [];
     const valueMultiplier = { basic: 0.5, standard: 1, uncommon: 1.5, advanced: 2, legendary: 3 }[difficulty] || 1;
@@ -370,9 +358,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
         <TextInput
           label="Number of Floors"
           type="number"
-          min="1"
-          max="10"
-          value={generatorOptions.floors}
+          value={generatorOptions.floors.toString()}
           onChange={(value) => setGeneratorOptions({ 
             ...generatorOptions, 
             floors: parseInt(value) || 1 
@@ -402,7 +388,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
         />
         
         <Button onClick={generateArchitecture} fullWidth>
-          <Icon name="magic" /> Generate Architecture
+          <Icon name="tech" /> Generate Architecture
         </Button>
       </div>
       
@@ -440,7 +426,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
     <div className={styles.savedContent}>
       {savedArchitectures.length === 0 ? (
         <div className={styles.noSaved}>
-          <Icon name="folder-open" size="lg" />
+          <Icon name="save" size="lg" />
           <p>No saved architectures</p>
         </div>
       ) : (
@@ -458,7 +444,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
               <p>{architecture.description}</p>
               {architecture.location && (
                 <p className={styles.location}>
-                  <Icon name="map-pin" /> {architecture.location}
+                  <Icon name="location" /> {architecture.location}
                 </p>
               )}
               <div className={styles.savedActions}>
@@ -469,7 +455,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
                   }}
                   size="sm"
                 >
-                  <Icon name="eye" /> View
+                  <Icon name="search" /> View
                 </Button>
                 <Button
                   onClick={() => {
@@ -500,13 +486,13 @@ export const NetArchitectureVisualizer: React.FC = () => {
           className={`${styles.tab} ${activeTab === 'visualizer' ? styles.active : ''}`}
           onClick={() => setActiveTab('visualizer')}
         >
-          <Icon name="cube" /> Visualizer
+          <Icon name="chip" /> Visualizer
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'generator' ? styles.active : ''}`}
           onClick={() => setActiveTab('generator')}
         >
-          <Icon name="magic" /> Generator
+          <Icon name="tech" /> Generator
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'saved' ? styles.active : ''}`}

@@ -1,5 +1,5 @@
-import { NPCGeneratorData, NPCTemplate, NPCArchetype } from '../types/npc';
-import { RoleType, StatType, SkillType } from '../types/game';
+import { NPCGeneratorData, NPCTemplate } from '../types/npc';
+import { SkillType } from '../types/game';
 
 export const npcGeneratorData: NPCGeneratorData = {
   firstNames: {
@@ -109,7 +109,7 @@ export const npcGeneratorData: NPCGeneratorData = {
     ],
     methods: [
       'Violence', 'Negotiation', 'Manipulation', 'Stealth', 'Technology',
-      'Intimidation', 'Bribery', 'Blackmail', 'Diplomacy', 'Deception',
+      'Force', 'Bribery', 'Blackmail', 'Diplomacy', 'Deception',
       'Seduction', 'Infiltration', 'Sabotage', 'Assassination', 'Theft'
     ]
   },
@@ -183,7 +183,7 @@ export const npcTemplates: NPCTemplate[] = [
     },
     skillPriorities: {
       primary: [SkillType.Handgun, SkillType.Brawling, SkillType.Streetwise],
-      secondary: [SkillType.Intimidation, SkillType.Athletics, SkillType.Perception],
+      secondary: [SkillType.Interrogation, SkillType.Athletics, SkillType.Perception],
       minimal: [SkillType.Education, SkillType.Science, SkillType.Business]
     },
     equipmentTags: ['cheap weapons', 'gang colors', 'basic armor'],

@@ -111,7 +111,7 @@ export class GlobalErrorHandler {
     // Network error recovery
     this.registerRecoveryStrategy({
       code: ErrorCode.NETWORK_ERROR,
-      handler: async (error) => {
+      handler: async () => {
         // Implement retry logic
         const maxRetries = 3;
         const retryDelay = 1000;
@@ -130,7 +130,7 @@ export class GlobalErrorHandler {
     // Storage error recovery
     this.registerRecoveryStrategy({
       code: ErrorCode.STORAGE_FULL,
-      handler: async (error) => {
+      handler: async () => {
         // Attempt to clear old data
         try {
           await this.clearOldData();

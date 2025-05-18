@@ -140,7 +140,7 @@ export function SaveManager() {
         variant="tertiary"
         size="sm"
         onClick={() => setIsOpen(true)}
-        startIcon={<Icon name="save" />}
+        icon={<Icon name="save" />}
       >
         Save/Load
       </Button>
@@ -179,7 +179,7 @@ export function SaveManager() {
                       variant="primary"
                       size="sm"
                       onClick={() => handleExport()}
-                      startIcon={<Icon name="download" />}
+                      icon={<Icon name="download" />}
                     >
                       Export Current
                     </Button>
@@ -225,7 +225,7 @@ export function SaveManager() {
                             variant="tertiary"
                             size="sm"
                             onClick={() => handleLoad(slot.slotNumber || 0)}
-                            startIcon={<Icon name="upload" />}
+                            icon={<Icon name="upload" />}
                           >
                             Load
                           </Button>
@@ -235,7 +235,7 @@ export function SaveManager() {
                                 variant="tertiary"
                                 size="sm"
                                 onClick={() => setSelectedSlot(slot.slotNumber || null)}
-                                startIcon={<Icon name="edit" />}
+                                icon={<Icon name="edit" />}
                               >
                                 Overwrite
                               </Button>
@@ -243,7 +243,7 @@ export function SaveManager() {
                                 variant="tertiary"
                                 size="sm"
                                 onClick={() => handleExport(slot.slotNumber)}
-                                startIcon={<Icon name="download" />}
+                                icon={<Icon name="download" />}
                               >
                                 Export
                               </Button>
@@ -269,7 +269,7 @@ export function SaveManager() {
                                   variant="tertiary"
                                   size="sm"
                                   onClick={() => setShowConfirmDelete(slot.slotNumber || null)}
-                                  startIcon={<Icon name="remove" />}
+                                  icon={<Icon name="remove" />}
                                 >
                                   Delete
                                 </Button>
@@ -314,7 +314,7 @@ export function SaveManager() {
                             onClick={() => setSelectedSlot(slot)}
                           >
                             {slot}
-                            {existingSlot && <Icon name="check" size="xs" />}
+                            {existingSlot && <Icon name="success" size="sm" />}
                           </button>
                         );
                       })}
@@ -325,7 +325,7 @@ export function SaveManager() {
                     onClick={() => handleSave()}
                     disabled={!selectedSlot || !saveName.trim()}
                     fullWidth
-                    startIcon={<Icon name="save" />}
+                    icon={<Icon name="save" />}
                   >
                     Save Game
                   </Button>
@@ -345,7 +345,7 @@ export function SaveManager() {
                   <Button
                     variant="secondary"
                     onClick={() => fileInputRef.current?.click()}
-                    startIcon={<Icon name="upload" />}
+                    icon={<Icon name="upload" />}
                     fullWidth
                   >
                     Import Save File
@@ -353,7 +353,7 @@ export function SaveManager() {
                   <Button
                     variant="secondary"
                     onClick={handleLoadAutoSave}
-                    startIcon={<Icon name="redo" />}
+                    icon={<Icon name="redo" />}
                     fullWidth
                   >
                     Load Auto-save

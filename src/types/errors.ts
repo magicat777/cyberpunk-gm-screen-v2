@@ -42,6 +42,8 @@ export interface ErrorMetadata {
   action?: string;
   user?: string;
   context?: Record<string, any>;
+  errorType?: string;
+  errorValue?: string;
 }
 
 export interface AppError {

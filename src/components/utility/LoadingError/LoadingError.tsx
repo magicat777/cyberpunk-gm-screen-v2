@@ -16,7 +16,7 @@ export function LoadingError({
   return (
     <div className={`${styles.container} ${className || ''}`}>
       <Icon 
-        name="alert-circle" 
+        name="error" 
         size="xl" 
         className={styles.icon}
       />
@@ -26,7 +26,7 @@ export function LoadingError({
           variant="primary"
           size="sm"
           onClick={onRetry}
-          startIcon={<Icon name="redo" />}
+          icon={<Icon name="redo" />}
         >
           Try Again
         </Button>

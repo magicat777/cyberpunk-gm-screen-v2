@@ -285,7 +285,7 @@ export const NightCityMap: React.FC = () => {
             <Icon name="add" /> Zoom In
           </Button>
           <Button onClick={() => setMapState({ ...mapState, zoom: mapState.zoom * 0.8 })}>
-            <Icon name="minus" /> Zoom Out
+            <Icon name="remove" /> Zoom Out
           </Button>
           <Button onClick={() => setMapState({ ...mapState, zoom: 1, center: { x: 400, y: 350 } })}>
             <Icon name="redo" /> Reset View
@@ -309,7 +309,7 @@ export const NightCityMap: React.FC = () => {
           <Select
             multiple
             value={filterTags}
-            onChange={(e) => setFilterTags(Array.from(e.target.selectedOptions, option => option.value))}
+            onChange={(value) => setFilterTags(Array.isArray(value) ? value : [value])}
           >
             <option value="corporate">Corporate</option>
             <option value="gang-activity">Gang Activity</option>

@@ -165,7 +165,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 <Button
                   variant="primary"
                   onClick={this.resetErrorBoundary}
-                  startIcon={<Icon name="redo" />}
+                  icon={<Icon name="redo" />}
                 >
                   Try Again
                 </Button>
@@ -173,7 +173,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 <Button
                   variant="tertiary"
                   onClick={() => window.location.reload()}
-                  startIcon={<Icon name="reload" />}
+                  icon={<Icon name="load" />}
                 >
                   Reload Page
                 </Button>
@@ -186,7 +186,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 <Button
                   variant="primary"
                   onClick={() => window.location.reload()}
-                  startIcon={<Icon name="reload" />}
+                  icon={<Icon name="load" />}
                 >
                   Reload Page
                 </Button>

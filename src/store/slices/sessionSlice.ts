@@ -42,19 +42,6 @@ export interface Campaign {
   status: 'active' | 'completed' | 'hiatus';
 }
 
-export interface SessionPlayer {
-  id: string;
-  name: string;
-  role: string;
-}
-
-export interface SessionNPC {
-  id: string;
-  name: string;
-  role: string;
-  status?: string;
-}
-
 export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
   // Initial state
   currentSession: null,
