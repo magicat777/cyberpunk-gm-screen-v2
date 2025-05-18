@@ -2,7 +2,7 @@ import React from 'react';
 import { EquipmentDatabase } from '../../components/reference/EquipmentDatabase/EquipmentDatabase';
 import styles from './Equipment.module.css';
 
-export const Equipment: React.FC = () => {
+const Equipment: React.FC = () => {
   return (
     <div className={styles.equipmentPage}>
       <div className={styles.header}>
@@ -14,3 +14,5 @@ export const Equipment: React.FC = () => {
     </div>
   );
 };
+
+export default Equipment;

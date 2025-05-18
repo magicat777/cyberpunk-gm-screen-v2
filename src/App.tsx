@@ -14,7 +14,7 @@ const Sessions = React.lazy(() => import('@/pages/Sessions/Sessions').then(m => 
 const Characters = React.lazy(() => import('@/pages/Characters/Characters').then(m => ({default: m.Characters})))
 const Encounters = React.lazy(() => import('@/pages/Encounters/Encounters').then(m => ({default: m.Encounters})))
 const NPCs = React.lazy(() => import('@/pages/NPCs/NPCs').then(m => ({default: m.NPCs})))
-const Equipment = React.lazy(() => import('@/pages/Equipment/Equipment').then(m => ({default: m.Equipment})))
+const Equipment = React.lazy(() => import('@/pages/Equipment/Equipment'))
 const Maps = React.lazy(() => import('@/pages/Maps/Maps').then(m => ({default: m.Maps})))
 const Netrunning = React.lazy(() => import('@/pages/Netrunning/Netrunning').then(m => ({default: m.Netrunning})))
 const NotFound = React.lazy(() => import('@/pages/NotFound/NotFound'))
@@ -23,7 +23,7 @@ function App() {
   return (
     <ThemeProvider>
       <AppShell>
-        <Suspense fallback={<LoadingSpinner size="lg" />}>
+        <Suspense fallback={<LoadingSpinner size="large" />}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dice" element={<DiceRoller />} />
