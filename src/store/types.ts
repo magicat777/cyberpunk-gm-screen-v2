@@ -13,15 +13,20 @@ export interface DiceRoll {
 export interface GameSession {
   id: string;
   name: string;
+  title: string;
   createdAt: Date;
   lastUpdated: Date;
+  startTime?: Date;
+  endTime?: Date;
   notes: string;
+  gmNotes?: string;
+  description?: string;
   combatEncounters: CombatEncounter[];
-  players: string[];
+  players: SessionPlayer[];
   tags: string[];
-  status: 'planning' | 'active' | 'completed' | 'archived';
+  status: 'planning' | 'active' | 'completed' | 'archived' | 'paused';
   synopsis?: string;
-  npcs: string[];
+  npcs: SessionNPC[];
   loot: LootItem[];
   experienceAwarded: number;
   reputationChanges: ReputationChange[];
@@ -35,14 +40,31 @@ export interface LootItem {
   description: string;
   value: number;
   quantity: number;
+  distributed?: boolean;
+  distributedTo?: string;
   receivedBy?: string;
 }
 
 export interface ReputationChange {
   id: string;
-  character: string;
-  amount: number;
+  faction: string;
+  change: number;
+  character?: string;
+  amount?: number;
   reason: string;
+}
+
+export interface SessionPlayer {
+  id: string;
+  name: string;
+  role: string;
+}
+
+export interface SessionNPC {
+  id: string;
+  name: string;
+  role: string;
+  status?: string;
 }
 
 export interface CombatEncounter {

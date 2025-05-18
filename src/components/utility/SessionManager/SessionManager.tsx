@@ -5,8 +5,8 @@ import { Button } from '../Form/Button';
 import { Icon } from '../Icon';
 import { TextInput } from '../Form/TextInput';
 import { Select } from '../Form/Select';
-import { GameSession } from '../../../store/types';
-import { Campaign } from '../../../models/Session';
+import { GameSession, SessionPlayer, SessionNPC } from '../../../store/types';
+import { Campaign } from '../../../store/slices/sessionSlice';
 
 export const SessionManager: React.FC = () => {
   const {

@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { GameSession, LootItem, ReputationChange } from '../types';
+import { GameSession, LootItem, ReputationChange, SessionPlayer, SessionNPC } from '../types';
 
 export interface SessionSlice {
   // State
@@ -9,21 +9,22 @@ export interface SessionSlice {
   isLoading: boolean;
   
   // Actions
-  createSession: (name: string, campaignId?: string) => void;
+  createSession: (title: string, campaignId?: string, description?: string) => void;
   loadSession: (id: string) => void;
   updateSession: (id: string, updates: Partial<GameSession>) => void;
   deleteSession: (id: string) => void;
+  endSession: (id: string) => void;
   setCurrentSession: (session: GameSession | null) => void;
   setSessions: (sessions: GameSession[]) => void;
-  addPlayer: (sessionId: string, playerName: string) => void;
-  removePlayer: (sessionId: string, playerName: string) => void;
-  addNPC: (sessionId: string, npcName: string) => void;
-  removeNPC: (sessionId: string, npcName: string) => void;
+  addPlayer: (sessionId: string, player: SessionPlayer) => void;
+  removePlayer: (sessionId: string, playerId: string) => void;
+  addNPC: (sessionId: string, npc: SessionNPC) => void;
+  removeNPC: (sessionId: string, npcId: string) => void;
   addLoot: (sessionId: string, loot: LootItem) => void;
   updateLoot: (sessionId: string, lootId: string, updates: Partial<LootItem>) => void;
   addReputationChange: (sessionId: string, change: ReputationChange) => void;
   updateSessionStatus: (sessionId: string, status: GameSession['status']) => void;
-  createCampaign: (name: string, description?: string) => void;
+  createCampaign: (name: string, description?: string, gmNotes?: string) => void;
   updateCampaign: (id: string, updates: Partial<Campaign>) => void;
   deleteCampaign: (id: string) => void;
 }
@@ -32,12 +33,26 @@ export interface Campaign {
   id: string;
   name: string;
   description?: string;
+  gmNotes?: string;
   createdAt: Date;
   lastUpdated: Date;
   sessions: string[];
   players: string[];
   tags: string[];
   status: 'active' | 'completed' | 'hiatus';
+}
+
+export interface SessionPlayer {
+  id: string;
+  name: string;
+  role: string;
+}
+
+export interface SessionNPC {
+  id: string;
+  name: string;
+  role: string;
+  status?: string;
 }
 
 export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
@@ -48,7 +63,7 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
   isLoading: false,
   
   // Actions
-  createSession: (name: string, campaignId?: string) => {
+  createSession: (title: string, campaignId?: string, description?: string) => {
     const campaign = campaignId ? get().campaigns.find(c => c.id === campaignId) : null;
     const sessionNumber = campaign 
       ? get().sessions.filter(s => s.campaignId === campaignId).length + 1
@@ -56,14 +71,17 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
     
     const newSession: GameSession = {
       id: crypto.randomUUID(),
-      name,
+      name: title,
+      title,
       createdAt: new Date(),
       lastUpdated: new Date(),
+      startTime: new Date(),
       notes: '',
+      description,
       combatEncounters: [],
       players: [],
       tags: [],
-      status: 'planning',
+      status: 'active',
       npcs: [],
       loot: [],
       experienceAwarded: 0,
@@ -113,6 +131,17 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
     }));
   },
   
+  endSession: (id: string) => {
+    set((state) => ({
+      sessions: state.sessions.map((session) =>
+        session.id === id
+          ? { ...session, status: 'completed' as const, endTime: new Date(), lastUpdated: new Date() }
+          : session
+      ),
+      currentSession: state.currentSession?.id === id ? null : state.currentSession,
+    }));
+  },
+  
   setCurrentSession: (session: GameSession | null) => {
     set({ currentSession: session });
   },
@@ -121,13 +150,13 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
     set({ sessions });
   },
   
-  addPlayer: (sessionId: string, playerName: string) => {
+  addPlayer: (sessionId: string, player: SessionPlayer) => {
     set((state) => ({
       sessions: state.sessions.map((session) =>
         session.id === sessionId
           ? { 
               ...session, 
-              players: [...session.players, playerName],
+              players: [...session.players, player],
               lastUpdated: new Date()
             }
           : session
@@ -136,20 +165,20 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
         state.currentSession?.id === sessionId
           ? { 
               ...state.currentSession, 
-              players: [...state.currentSession.players, playerName],
+              players: [...state.currentSession.players, player],
               lastUpdated: new Date()
             }
           : state.currentSession,
     }));
   },
   
-  removePlayer: (sessionId: string, playerName: string) => {
+  removePlayer: (sessionId: string, playerId: string) => {
     set((state) => ({
       sessions: state.sessions.map((session) =>
         session.id === sessionId
           ? { 
               ...session, 
-              players: session.players.filter(p => p !== playerName),
+              players: session.players.filter(p => p.id !== playerId),
               lastUpdated: new Date()
             }
           : session
@@ -158,20 +187,20 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
         state.currentSession?.id === sessionId
           ? { 
               ...state.currentSession, 
-              players: state.currentSession.players.filter(p => p !== playerName),
+              players: state.currentSession.players.filter(p => p.id !== playerId),
               lastUpdated: new Date()
             }
           : state.currentSession,
     }));
   },
   
-  addNPC: (sessionId: string, npcName: string) => {
+  addNPC: (sessionId: string, npc: SessionNPC) => {
     set((state) => ({
       sessions: state.sessions.map((session) =>
         session.id === sessionId
           ? { 
               ...session, 
-              npcs: [...session.npcs, npcName],
+              npcs: [...session.npcs, npc],
               lastUpdated: new Date()
             }
           : session
@@ -180,20 +209,20 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
         state.currentSession?.id === sessionId
           ? { 
               ...state.currentSession, 
-              npcs: [...state.currentSession.npcs, npcName],
+              npcs: [...state.currentSession.npcs, npc],
               lastUpdated: new Date()
             }
           : state.currentSession,
     }));
   },
   
-  removeNPC: (sessionId: string, npcName: string) => {
+  removeNPC: (sessionId: string, npcId: string) => {
     set((state) => ({
       sessions: state.sessions.map((session) =>
         session.id === sessionId
           ? { 
               ...session, 
-              npcs: session.npcs.filter(n => n !== npcName),
+              npcs: session.npcs.filter(n => n.id !== npcId),
               lastUpdated: new Date()
             }
           : session
@@ -202,7 +231,7 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
         state.currentSession?.id === sessionId
           ? { 
               ...state.currentSession, 
-              npcs: state.currentSession.npcs.filter(n => n !== npcName),
+              npcs: state.currentSession.npcs.filter(n => n.id !== npcId),
               lastUpdated: new Date()
             }
           : state.currentSession,
@@ -293,11 +322,12 @@ export const createSessionSlice: StateCreator<SessionSlice> = (set, get) => ({
     }));
   },
   
-  createCampaign: (name: string, description?: string) => {
+  createCampaign: (name: string, description?: string, gmNotes?: string) => {
     const newCampaign: Campaign = {
       id: crypto.randomUUID(),
       name,
       description,
+      gmNotes,
       createdAt: new Date(),
       lastUpdated: new Date(),
       sessions: [],
