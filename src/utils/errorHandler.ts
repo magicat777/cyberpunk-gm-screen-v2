@@ -33,7 +33,7 @@ export class GlobalErrorHandler {
         error.message,
         {
           stack: error.stack,
-          metadata: { originalError: error.name }
+          metadata: { timestamp: Date.now(), context: { originalError: error.name } }
         }
       );
     } else {
@@ -41,7 +41,7 @@ export class GlobalErrorHandler {
         ErrorCode.UNKNOWN_ERROR,
         'An unknown error occurred',
         {
-          metadata: { originalError: String(error) }
+          metadata: { timestamp: Date.now(), context: { originalError: String(error) } }
         }
       );
     }

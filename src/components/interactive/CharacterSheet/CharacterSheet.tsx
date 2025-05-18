@@ -53,13 +53,9 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
   const updateSkill = (skill: SkillType, value: number) => {
     setEditedCharacter(prev => ({
       ...prev,
-      skills: {
-        ...prev.skills,
-        [skill]: {
-          ...prev.skills[skill],
-          level: Math.max(0, Math.min(10, value))
-        }
-      }
+      skills: prev.skills.map(s => 
+        s.name === skill ? { ...s, level: Math.max(0, Math.min(10, value)) } : s
+      )
     }));
   };
 
@@ -76,13 +72,9 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
   const updateArmor = (location: ArmorLocation, value: number) => {
     setEditedCharacter(prev => ({
       ...prev,
-      armor: {
-        ...prev.armor,
-        [location]: {
-          ...prev.armor[location],
-          current: Math.max(0, value)
-        }
-      }
+      armor: prev.armor.map(a => 
+        a.location === location ? { ...a, sp: Math.max(0, value) } : a
+      )
     }));
   };
 
@@ -170,7 +162,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
               min="1"
               max="10"
               value={data.value}
-              onChange={(value) => updateStat(stat as StatType, parseInt(value) || 1)}
+              onChange={(e) => updateStat(stat as StatType, parseInt(e.target.value) || 1)}
               className={styles.statInput}
             />
           ) : (
@@ -200,7 +192,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
               min="0"
               max="10"
               value={skill.level}
-              onChange={(value) => updateSkill(skill.name as SkillType, parseInt(value) || 0)}
+              onChange={(e) => updateSkill(skill.name as SkillType, parseInt(e.target.value) || 0)}
               className={styles.skillInput}
             />
           ) : (
@@ -221,7 +213,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
         <div className={styles.hpBar}>
           <div
             className={styles.hpFill}
-            style={{ width: `${(editedCharacter.hp.current / editedCharacter.hp.max) * 100}%` }}
+            style={{ width: `${(editedCharacter.hitPoints.current / editedCharacter.hitPoints.max) * 100}%` }}
           />
           <span className={styles.hpText}>
             {isEditing ? (
@@ -229,12 +221,12 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 <input id="field-1"
                   type="number"
                   min="0"
-                  max={editedCharacter.hp.max}
-                  value={editedCharacter.hp.current}
-                  onChange={(value) => updateHP(parseInt(value) || 0)}
+                  max={editedCharacter.hitPoints.max}
+                  value={editedCharacter.hitPoints.current}
+                  onChange={(e) => updateHP(parseInt(e.target.value) || 0)}
                   className={styles.hpInput}
                 />
-                / {editedCharacter.hp.max}
+                / {editedCharacter.hitPoints.max}
               </>
             ) : (
               `${editedCharacter.hitPoints.current} / ${editedCharacter.hitPoints.max}`
@@ -255,7 +247,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
                   type="number"
                   min="0"
                   value={armor.sp}
-                  onChange={(value) => updateArmor(armor.location, parseInt(value) || 0)}
+                  onChange={(e) => updateArmor(armor.location, parseInt(e.target.value) || 0)}
                   className={styles.armorInput}
                 />
               ) : (
@@ -284,7 +276,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
                   <span>Damage: {weapon.damage}</span>
                   <span>Range: {weapon.range}</span>
                   <span>ROF: {weapon.rof}</span>
-                  {weapon.ammo && <span>Ammo: {weapon.ammo.current}/{weapon.ammo.max}</span>}
+                  {weapon.magazine && <span>Ammo: {weapon.currentAmmo}/{weapon.magazine}</span>}
                 </div>
               </div>
             ))}
@@ -294,11 +286,11 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
 
       <div className={styles.inventorySection}>
         <h3>Inventory</h3>
-        {editedCharacter.inventory.length === 0 ? (
+        {editedCharacter.gear.length === 0 ? (
           <p>No items in inventory</p>
         ) : (
           <ul className={styles.inventoryList}>
-            {editedCharacter.inventory.map((item, index) => (
+            {editedCharacter.gear.map((item, index) => (
               <li key={index}>
                 {item.quantity > 1 && `${item.quantity}x `}{item.name}
               </li>
@@ -330,7 +322,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
           {editedCharacter.cyberware.map((cyber, index) => (
             <div key={index} className={styles.cyberwareCard}>
               <h4>{cyber.name}</h4>
-              <p>{cyber.type} - {cyber.location}</p>
+              <p>{cyber.type}</p>
               <p>{cyber.description}</p>
               <p>HL: {cyber.humanityLoss}</p>
             </div>
@@ -346,19 +338,19 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
       <div className={styles.lifepathGrid}>
         <div>
           <h4>Cultural Region</h4>
-          <p>{editedCharacter.lifepath.background?.culturalRegion || 'Unknown'}</p>
+          <p>{editedCharacter.background?.culturalOrigin || 'Unknown'}</p>
         </div>
         <div>
           <h4>Personality</h4>
-          <p>{editedCharacter.lifepath.background?.personality || 'Unknown'}</p>
+          <p>{editedCharacter.background?.personality || 'Unknown'}</p>
         </div>
         <div>
           <h4>Clothing Style</h4>
-          <p>{editedCharacter.lifepath.background?.clothingStyle || 'Unknown'}</p>
+          <p>{editedCharacter.background?.clothingStyle || 'Unknown'}</p>
         </div>
         <div>
           <h4>Hairstyle</h4>
-          <p>{editedCharacter.lifepath.background?.hairstyle || 'Unknown'}</p>
+          <p>{editedCharacter.background?.hairstyle || 'Unknown'}</p>
         </div>
       </div>
       
@@ -366,15 +358,15 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = ({
       <div className={styles.motivationsGrid}>
         <div>
           <h4>What Do You Value Most?</h4>
-          <p>{editedCharacter.lifepath.motivation?.valueMost || 'Unknown'}</p>
+          <p>{editedCharacter.background?.valueMost || 'Unknown'}</p>
         </div>
         <div>
           <h4>Who Do You Value Most?</h4>
-          <p>{editedCharacter.lifepath.motivation?.valueWho || 'Unknown'}</p>
+          <p>{editedCharacter.background?.valuedPerson || 'Unknown'}</p>
         </div>
         <div>
           <h4>What's Your Outlook?</h4>
-          <p>{editedCharacter.lifepath.motivation?.outlook || 'Unknown'}</p>
+          <p>{editedCharacter.background?.feelAboutPeople || 'Unknown'}</p>
         </div>
       </div>
     </div>

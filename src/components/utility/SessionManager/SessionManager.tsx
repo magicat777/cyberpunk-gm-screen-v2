@@ -5,7 +5,8 @@ import { Button } from '../Form/Button';
 import { Icon } from '../Icon';
 import { TextInput } from '../Form/TextInput';
 import { Select } from '../Form/Select';
-import { GameSession, Campaign } from '../../../types/session';
+import { GameSession } from '../../../store/types';
+import { Campaign } from '../../../models/Session';
 
 export const SessionManager: React.FC = () => {
   const {
@@ -224,16 +225,16 @@ export const SessionManager: React.FC = () => {
             const campaign = campaigns.find(c => c.id === session.campaignId);
             return (
               <div key={session.id} className={styles.sessionCard}>
-                <h4>{session.title}</h4>
+                <h4>{session.name}</h4>
                 <div className={styles.sessionCardMeta}>
                   <span>Session #{session.sessionNumber}</span>
                   {campaign && <span>{campaign.name}</span>}
-                  <span>{new Date(session.startTime).toLocaleDateString()}</span>
+                  <span>{new Date(session.createdAt).toLocaleDateString()}</span>
                   <span className={`${styles.status} ${styles[session.status]}`}>
                     {session.status}
                   </span>
                 </div>
-                <p>{session.description}</p>
+                <p>{session.synopsis || ''}</p>
                 <div className={styles.sessionCardActions}>
                   <Button
                     size="sm"
@@ -312,19 +313,19 @@ export const SessionManager: React.FC = () => {
           className={`${styles.tab} ${activeTab === 'current' ? styles.active : ''}`}
           onClick={() => setActiveTab('current')}
         >
-          <Icon name="play-circle" /> Current Session
+          <Icon name="play" /> Current Session
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'sessions' ? styles.active : ''}`}
           onClick={() => setActiveTab('sessions')}
         >
-          <Icon name="calendar" /> All Sessions
+          <Icon name="clock" /> All Sessions
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'campaigns' ? styles.active : ''}`}
           onClick={() => setActiveTab('campaigns')}
         >
-          <Icon name="book" /> Campaigns
+          <Icon name="file" /> Campaigns
         </button>
       </div>
 
@@ -346,16 +347,16 @@ export const SessionManager: React.FC = () => {
             />
             <Select
               label="Campaign"
-              value={newSessionData.campaignId}
-              onChange={(value) => setNewSessionData({ ...newSessionData, campaignId: value })}
-            >
-              <option value="">No Campaign</option>
-              {campaigns.map(campaign => (
-                <option key={campaign.id} value={campaign.id}>
-                  {campaign.name}
-                </option>
-              ))}
-            </Select>
+              value={newSessionData.campaignId || ''}
+              onChange={(value) => setNewSessionData({ ...newSessionData, campaignId: value as string })}
+              options={[
+                { value: '', label: 'No Campaign' },
+                ...campaigns.map(campaign => ({
+                  value: campaign.id,
+                  label: campaign.name
+                }))
+              ]}
+            />
             <TextInput
               label="Description"
               value={newSessionData.description}

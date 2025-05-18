@@ -31,7 +31,7 @@ describe('EncounterBuilder', () => {
     fireEvent.click(templatesTab);
     
     // Check if templates are displayed
-    const firstTemplate = templates[0];
+    const firstTemplate = Object.values(templates.encounters)[0];
     expect(screen.getByText(firstTemplate.name)).toBeInTheDocument();
   });
 
@@ -43,7 +43,7 @@ describe('EncounterBuilder', () => {
     fireEvent.click(templatesTab);
     
     // Get first template button
-    const firstTemplate = templates[0];
+    const firstTemplate = Object.values(templates.encounters)[0];
     const templateButton = screen.getByText(firstTemplate.name).closest('button');
     
     if (templateButton) {

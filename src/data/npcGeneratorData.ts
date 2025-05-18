@@ -170,16 +170,16 @@ export const npcTemplates: NPCTemplate[] = [
       Lawman: { roleRank: { min: 1, max: 2 } }
     },
     statRanges: {
-      int: { min: 3, max: 6 },
-      ref: { min: 4, max: 7 },
-      dex: { min: 4, max: 7 },
-      tech: { min: 2, max: 5 },
-      cool: { min: 3, max: 6 },
-      will: { min: 3, max: 6 },
-      luck: { min: 3, max: 6 },
-      move: { min: 4, max: 7 },
-      body: { min: 4, max: 7 },
-      emp: { min: 2, max: 5 }
+      INT: { min: 3, max: 6 },
+      REF: { min: 4, max: 7 },
+      DEX: { min: 4, max: 7 },
+      TECH: { min: 2, max: 5 },
+      COOL: { min: 3, max: 6 },
+      WILL: { min: 3, max: 6 },
+      LUCK: { min: 3, max: 6 },
+      MOVE: { min: 4, max: 7 },
+      BODY: { min: 4, max: 7 },
+      EMP: { min: 2, max: 5 }
     },
     skillPriorities: {
       primary: [SkillType.Handgun, SkillType.Brawling, SkillType.Streetwise],
@@ -200,19 +200,19 @@ export const npcTemplates: NPCTemplate[] = [
       Fixer: { roleRank: { min: 3, max: 6 } }
     },
     statRanges: {
-      int: { min: 6, max: 9 },
-      ref: { min: 3, max: 6 },
-      dex: { min: 3, max: 6 },
-      tech: { min: 4, max: 7 },
-      cool: { min: 6, max: 9 },
-      will: { min: 5, max: 8 },
-      luck: { min: 4, max: 7 },
-      move: { min: 3, max: 6 },
-      body: { min: 3, max: 6 },
-      emp: { min: 4, max: 7 }
+      INT: { min: 6, max: 9 },
+      REF: { min: 3, max: 6 },
+      DEX: { min: 3, max: 6 },
+      TECH: { min: 4, max: 7 },
+      COOL: { min: 6, max: 9 },
+      WILL: { min: 5, max: 8 },
+      LUCK: { min: 4, max: 7 },
+      MOVE: { min: 3, max: 6 },
+      BODY: { min: 3, max: 6 },
+      EMP: { min: 4, max: 7 }
     },
     skillPriorities: {
-      primary: [SkillType.Business, SkillType.Persuasion, SkillType.Resources],
+      primary: [SkillType.Business, SkillType.Persuasion, SkillType.Trading],
       secondary: [SkillType.Education, SkillType.HumanPerception, SkillType.Bribery],
       minimal: [SkillType.Brawling, SkillType.MeleeWeapon, SkillType.Endurance]
     },
@@ -229,20 +229,20 @@ export const npcTemplates: NPCTemplate[] = [
       Netrunner: { roleRank: { min: 4, max: 8 } }
     },
     statRanges: {
-      int: { min: 7, max: 10 },
-      ref: { min: 4, max: 7 },
-      dex: { min: 4, max: 7 },
-      tech: { min: 6, max: 9 },
-      cool: { min: 4, max: 7 },
-      will: { min: 5, max: 8 },
-      luck: { min: 4, max: 7 },
-      move: { min: 3, max: 6 },
-      body: { min: 3, max: 6 },
-      emp: { min: 3, max: 6 }
+      INT: { min: 7, max: 10 },
+      REF: { min: 4, max: 7 },
+      DEX: { min: 4, max: 7 },
+      TECH: { min: 6, max: 9 },
+      COOL: { min: 4, max: 7 },
+      WILL: { min: 5, max: 8 },
+      LUCK: { min: 4, max: 7 },
+      MOVE: { min: 3, max: 6 },
+      BODY: { min: 3, max: 6 },
+      EMP: { min: 3, max: 6 }
     },
     skillPriorities: {
-      primary: [SkillType.Interface, SkillType.ElectronicsSecurity, SkillType.Programming],
-      secondary: [SkillType.Electronics, SkillType.Cryptography, SkillType.LibrarySearch],
+      primary: [SkillType.Interface, SkillType.ElectronicsSecurityTech, SkillType.ElectronicsSecurityTech],
+      secondary: [SkillType.Education, SkillType.Science, SkillType.LocalExpert],
       minimal: [SkillType.Brawling, SkillType.Athletics, SkillType.Endurance]
     },
     equipmentTags: ['cyberdeck', 'interface cables', 'tech gear'],

@@ -1,4 +1,4 @@
-import type { Character, Weapon, Armor, StatType, DamageType } from '../types/game';
+import type { Character, Weapon } from '../types/game';
 
 export function calculateMaxHP(character: Character): number {
   const body = character.stats.BODY.value;
@@ -19,7 +19,7 @@ export function calculateInitiative(character: Character, roll: number): number 
 }
 
 export function calculateDamage(
-  weapon: Weapon,
+  weapon: Weapon, // eslint-disable-line @typescript-eslint/no-unused-vars
   rolls: number[],
   modifier: number = 0,
   isHeadshot: boolean = false
@@ -127,7 +127,7 @@ export function calculateCarryCapacity(character: Character): {
 
 export function calculateNetActions(character: Character): number {
   const netrunnerRank = character.role === 'Netrunner' ? character.roleRank : 0;
-  const interfaceSkill = calculateSkillTotal(character, 'Interface');
+  // const interfaceSkill = calculateSkillTotal(character, 'Interface');
   
   // Netrunners get extra NET actions based on rank
   const baseActions = 2;

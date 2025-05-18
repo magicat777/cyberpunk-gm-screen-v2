@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { Character } from '../types';
+import { Character } from '../../types/game';
 
 export interface CharacterSlice {
   // State

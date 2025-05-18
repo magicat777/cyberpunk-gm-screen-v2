@@ -10,7 +10,7 @@ import { Character, RoleType, StatType, SkillType } from '../../types/game';
 import styles from './Characters.module.css';
 
 export const Characters: React.FC = () => {
-  const { characters, addCharacter, updateCharacter, removeCharacter } = useStore();
+  const { characters, addCharacter, updateCharacter, deleteCharacter } = useStore();
   const [showNewCharacterModal, setShowNewCharacterModal] = useState(false);
   const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,6 +21,71 @@ export const Characters: React.FC = () => {
     role: 'Solo' as RoleType
   });
 
+  const getSkillCategory = (skill: SkillType): any => {
+    // Map skills to their categories
+    const skillCategories: Record<string, string> = {
+      // Awareness
+      Concentration: 'Awareness',
+      ConcealRevealObject: 'Awareness',
+      LipReading: 'Awareness',
+      Perception: 'Awareness',
+      Tracking: 'Awareness',
+      // Body
+      Athletics: 'Body',
+      Contortionist: 'Body',
+      Dance: 'Body',
+      Endurance: 'Body',
+      ResistTortureDrugs: 'Body',
+      Stealth: 'Body',
+      // Control
+      Driving: 'Control',
+      PilotAirVehicle: 'Control',
+      PilotSeaVehicle: 'Control',
+      Riding: 'Control',
+      // Fighting
+      Brawling: 'Fighting',
+      Evasion: 'Fighting',
+      MartialArts: 'Fighting',
+      MeleeWeapon: 'Fighting',
+      // Performance
+      Acting: 'Performance',
+      PlayInstrument: 'Performance',
+      // Ranged Weapon
+      Archery: 'Ranged Weapon',
+      Handgun: 'Ranged Weapon',
+      HeavyWeapons: 'Ranged Weapon',
+      ShoulderArms: 'Ranged Weapon',
+      // Social
+      Bribery: 'Social',
+      Conversation: 'Social',
+      HumanPerception: 'Social',
+      Interrogation: 'Social',
+      Persuasion: 'Social',
+      PersonalGrooming: 'Social',
+      Streetwise: 'Social',
+      Trading: 'Social',
+      WardrobeStyle: 'Social',
+      // Technique
+      AnimalHandling: 'Technique',
+      Demolitions: 'Technique',
+      DriveLandVehicle: 'Technique',
+      ElectronicsSecurityTech: 'Technique',
+      FirstAid: 'Technique',
+      Forgery: 'Technique',
+      Interface: 'Technique',
+      LandVehicleTech: 'Technique',
+      PaintDrawSculpt: 'Technique',
+      Paramedic: 'Technique',
+      PhotographyFilm: 'Technique',
+      PickLock: 'Technique',
+      PickPocket: 'Technique',
+      SeaVehicleTech: 'Technique',
+      WeaponsTech: 'Technique'
+    };
+    
+    return skillCategories[skill] || 'Education';
+  };
+
   const createNewCharacter = () => {
     const newCharacter: Character = {
       id: Date.now().toString(),
@@ -28,65 +93,55 @@ export const Characters: React.FC = () => {
       handle: newCharacterData.handle,
       role: newCharacterData.role,
       roleRank: 5,
-      reputationRank: 1,
       stats: {
-        int: { base: 5, current: 5 },
-        ref: { base: 5, current: 5 },
-        dex: { base: 5, current: 5 },
-        tech: { base: 5, current: 5 },
-        cool: { base: 5, current: 5 },
-        will: { base: 5, current: 5 },
-        luck: { base: 5, current: 5 },
-        move: { base: 5, current: 5 },
-        body: { base: 5, current: 5 },
-        emp: { base: 5, current: 5 }
+        INT: { name: 'INT', value: 5, base: 5, modifier: 0 },
+        REF: { name: 'REF', value: 5, base: 5, modifier: 0 },
+        DEX: { name: 'DEX', value: 5, base: 5, modifier: 0 },
+        TECH: { name: 'TECH', value: 5, base: 5, modifier: 0 },
+        COOL: { name: 'COOL', value: 5, base: 5, modifier: 0 },
+        WILL: { name: 'WILL', value: 5, base: 5, modifier: 0 },
+        LUCK: { name: 'LUCK', value: 5, base: 5, modifier: 0 },
+        MOVE: { name: 'MOVE', value: 5, base: 5, modifier: 0 },
+        BODY: { name: 'BODY', value: 5, base: 5, modifier: 0 },
+        EMP: { name: 'EMP', value: 5, base: 5, modifier: 0 }
       },
-      skills: Object.values(SkillType).reduce((acc, skill) => {
-        acc[skill] = {
-          level: 0,
-          linkedStat: getLinkedStat(skill),
-          ipSpent: 0
-        };
-        return acc;
-      }, {} as Character['skills']),
-      hp: {
+      skills: Object.values(SkillType).map(skill => ({
+        name: skill,
+        category: getSkillCategory(skill),
+        stat: getLinkedStat(skill),
+        level: 0,
+        ip: 0,
+        total: 5,
+        isRoleSkill: false
+      })),
+      hitPoints: {
         current: 40,
         max: 40,
-        wounds: {
-          light: 0,
-          serious: 0,
-          critical: 0,
-          mortal: 0
-        }
+        seriouslyWounded: 20,
+        deathSave: 5
       },
-      deathSave: 5,
       humanity: {
         current: 50,
         max: 50
       },
-      armor: {
-        head: { current: 11, max: 11 },
-        body: { current: 11, max: 11 },
-        leftArm: { current: 11, max: 11 },
-        rightArm: { current: 11, max: 11 },
-        leftLeg: { current: 11, max: 11 },
-        rightLeg: { current: 11, max: 11 }
-      },
+      armor: [],
       weapons: [],
       cyberware: [],
-      inventory: [],
-      money: 2550,
-      improvement: {
-        totalIp: 0,
-        availableIp: 0,
-        spentIp: 0
-      },
+      gear: [],
+      eurodollars: 2550,
+      reputation: 0,
+      ip: 0,
+      background: {},
       lifepath: {
-        background: {},
-        motivation: {},
-        events: []
+        friends: [],
+        enemies: [],
+        lovers: [],
+        mentors: []
       },
-      notes: ''
+      notes: '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      isNPC: false
     };
 
     addCharacter(newCharacter);
@@ -101,7 +156,7 @@ export const Characters: React.FC = () => {
 
   const handleCharacterDelete = (characterId: string) => {
     if (confirm('Are you sure you want to delete this character?')) {
-      removeCharacter(characterId);
+      deleteCharacter(characterId);
       if (selectedCharacterId === characterId) {
         setSelectedCharacterId(null);
       }
@@ -171,7 +226,7 @@ export const Characters: React.FC = () => {
                   <p className={styles.role}>{character.role} (Rank {character.roleRank})</p>
                 </div>
                 <div className={styles.characterStats}>
-                  <span>HP: {character.hp.current}/{character.hp.max}</span>
+                  <span>HP: {character.hitPoints.current}/{character.hitPoints.max}</span>
                   <span>Humanity: {character.humanity.current}</span>
                 </div>
               </button>
@@ -189,7 +244,7 @@ export const Characters: React.FC = () => {
           />
         ) : (
           <div className={styles.noSelection}>
-            <Icon name="player" size="xlarge" />
+            <Icon name="player" size="xl" />
             <p>Select a character or create a new one</p>
           </div>
         )}
@@ -214,18 +269,19 @@ export const Characters: React.FC = () => {
               label="Role"
               value={newCharacterData.role}
               onChange={(value) => setNewCharacterData({ ...newCharacterData, role: value as RoleType })}
-            >
-              <option value="Solo">Solo</option>
-              <option value="Netrunner">Netrunner</option>
-              <option value="Tech">Tech</option>
-              <option value="Medtech">Medtech</option>
-              <option value="Media">Media</option>
-              <option value="Exec">Exec</option>
-              <option value="Lawman">Lawman</option>
-              <option value="Fixer">Fixer</option>
-              <option value="Nomad">Nomad</option>
-              <option value="Rockerboy">Rockerboy</option>
-            </Select>
+              options={[
+                { value: 'Solo', label: 'Solo' },
+                { value: 'Netrunner', label: 'Netrunner' },
+                { value: 'Tech', label: 'Tech' },
+                { value: 'Medtech', label: 'Medtech' },
+                { value: 'Media', label: 'Media' },
+                { value: 'Exec', label: 'Exec' },
+                { value: 'Lawman', label: 'Lawman' },
+                { value: 'Fixer', label: 'Fixer' },
+                { value: 'Nomad', label: 'Nomad' },
+                { value: 'Rockerboy', label: 'Rockerboy' }
+              ]}
+            />
             <div className={styles.modalActions}>
               <Button onClick={() => setShowNewCharacterModal(false)} variant="secondary">
                 Cancel
@@ -281,7 +337,6 @@ function getLinkedStat(skill: SkillType): StatType {
     [SkillType.Acting]: 'COOL',
     [SkillType.PlayInstrument]: 'TECH',
     [SkillType.Archery]: 'REF',
-    [SkillType.Autofire]: 'REF',
     [SkillType.Handgun]: 'REF',
     [SkillType.HeavyWeapons]: 'REF',
     [SkillType.ShoulderArms]: 'REF',
@@ -294,26 +349,21 @@ function getLinkedStat(skill: SkillType): StatType {
     [SkillType.Streetwise]: 'COOL',
     [SkillType.Trading]: 'COOL',
     [SkillType.WardrobeStyle]: 'COOL',
-    [SkillType.AirVehicleTech]: 'TECH',
-    [SkillType.BasicTech]: 'TECH',
-    [SkillType.Cybertech]: 'TECH',
+    [SkillType.AnimalHandling]: 'INT',
     [SkillType.Demolitions]: 'TECH',
-    [SkillType.Electronics]: 'TECH',
-    [SkillType.ElectronicsSecurity]: 'TECH',
+    [SkillType.DriveLandVehicle]: 'REF',
+    [SkillType.ElectronicsSecurityTech]: 'TECH',
     [SkillType.FirstAid]: 'TECH',
     [SkillType.Forgery]: 'TECH',
     [SkillType.LandVehicleTech]: 'TECH',
     [SkillType.PaintDrawSculpt]: 'TECH',
     [SkillType.Paramedic]: 'TECH',
-    [SkillType.Photography]: 'TECH',
+    [SkillType.PhotographyFilm]: 'TECH',
     [SkillType.PickLock]: 'TECH',
     [SkillType.PickPocket]: 'TECH',
     [SkillType.SeaVehicleTech]: 'TECH',
-    [SkillType.Weaponstech]: 'TECH',
-    [SkillType.Interface]: 'INT',
-    [SkillType.MedTech]: 'TECH',
-    [SkillType.Resources]: 'INT',
-    [SkillType.Streetdeal]: 'COOL'
+    [SkillType.WeaponsTech]: 'TECH',
+    [SkillType.Interface]: 'INT'
   };
   
   return skillStatMap[skill] || 'INT';

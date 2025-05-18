@@ -15,8 +15,4 @@ export * from './ErrorReporter';
 export * from './NotificationContainer';
 
 // Other utilities
-export * from './FilterSystem';
-export * from './SearchBar';
 export * from './SaveManager';
-export * from './NotesManager';
-export * from './PrintView';

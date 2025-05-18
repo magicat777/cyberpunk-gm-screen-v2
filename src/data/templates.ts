@@ -422,3 +422,11 @@ export function createCyberwareFromTemplate(
     installed: false
   };
 }
+
+export const templates = {
+  weapons: WEAPON_TEMPLATES,
+  armor: ARMOR_TEMPLATES,
+  cyberware: CYBERWARE_TEMPLATES,
+  characters: CHARACTER_TEMPLATES,
+  encounters: ENCOUNTER_TEMPLATES
+};

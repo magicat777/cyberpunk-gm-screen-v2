@@ -8,7 +8,7 @@ import {
   NPCAppearance,
   NPCMotivation
 } from '../../../types/npc';
-import { Character, RoleType, StatType, SkillType } from '../../../types/game';
+import { Character, RoleType, StatType, SkillType, Stat } from '../../../types/game';
 import { npcGeneratorData, npcTemplates } from '../../../data/npcGeneratorData';
 import { CharacterSheet } from '../CharacterSheet/CharacterSheet';
 import styles from './NPCGenerator.module.css';
@@ -93,24 +93,24 @@ export const NPCGenerator: React.FC = () => {
     };
   };
 
-  const generateStats = (threat: string, archetype: NPCArchetype): Record<StatType, { base: number; current: number }> => {
+  const generateStats = (threat: string, archetype: NPCArchetype): Record<StatType, Stat> => {
     const template = npcTemplates.find(t => t.archetype === archetype) ?? npcTemplates[0];
     const threatModifier = { low: -1, medium: 0, high: 1, elite: 2 }[threat] ?? 0;
     
-    const stats: Partial<Record<StatType, { base: number; current: number }>> = {};
+    const stats: Partial<Record<StatType, Stat>> = {};
     
     Object.entries(template.statRanges).forEach(([stat, range]) => {
       const base = Math.max(1, Math.min(10, 
         range.min + Math.floor(Math.random() * (range.max - range.min + 1)) + threatModifier
       ));
-      stats[stat as StatType] = { base, current: base };
+      stats[stat as StatType] = { name: stat as StatType, value: base, base, modifier: 0 };
     });
     
-    return stats as Record<StatType, { base: number; current: number }>;
+    return stats as Record<StatType, Stat>;
   };
 
   const generateSkills = (
-    stats: Record<StatType, { base: number; current: number }>,
+    stats: Record<StatType, Stat>,
     threat: string,
     archetype: NPCArchetype
   ): Character['skills'] => {
@@ -180,7 +180,7 @@ export const NPCGenerator: React.FC = () => {
     const stats = generateStats(threat, archetype);
     const skills = generateSkills(stats, threat, archetype);
     
-    const hp = 10 + (stats.body.current * 5);
+    const hp = 10 + (stats.BODY.value * 5);
     
     const newNPC: GeneratedNPC = {
       id: Date.now().toString(),
@@ -189,7 +189,7 @@ export const NPCGenerator: React.FC = () => {
       roleRank: Math.max(1, Math.min(10, 
         { low: 1, medium: 3, high: 5, elite: 7 }[threat] + Math.floor(Math.random() * 3)
       )),
-      reputationRank: Math.floor(Math.random() * 3) + 1,
+      reputation: Math.floor(Math.random() * 3) + 1,
       stats,
       skills,
       hp: {
@@ -197,25 +197,23 @@ export const NPCGenerator: React.FC = () => {
         max: hp,
         wounds: { light: 0, serious: 0, critical: 0, mortal: 0 }
       },
-      deathSave: stats.body.current,
+      deathSave: stats.BODY.value,
       humanity: {
         current: 50 - Math.floor(Math.random() * 20),
         max: 50
       },
-      armor: {
-        head: { current: 11, max: 11 },
-        body: { current: 11, max: 11 },
-        leftArm: { current: 11, max: 11 },
-        rightArm: { current: 11, max: 11 },
-        leftLeg: { current: 11, max: 11 },
-        rightLeg: { current: 11, max: 11 }
-      },
+      armor: [],
       weapons: [],
       cyberware: [],
       inventory: [],
       money: Math.floor(Math.random() * 5000) + 500,
       improvement: { totalIp: 0, availableIp: 0, spentIp: 0 },
-      lifepath: { background: {}, motivation: {}, events: [] },
+      lifepath: {
+        friends: [],
+        enemies: [],
+        lovers: [],
+        mentors: []
+      },
       notes: '',
       archetype,
       threat
@@ -245,6 +243,7 @@ export const NPCGenerator: React.FC = () => {
     setGeneratedNPC(newNPC);
   };
 
+
   const saveNPC = () => {
     if (generatedNPC) {
       addCharacter(generatedNPC);
@@ -262,51 +261,54 @@ export const NPCGenerator: React.FC = () => {
           label="Archetype"
           value={options.archetype ?? ''}
           onChange={(value) => setOptions({ ...options, archetype: value as NPCArchetype || undefined })}
-        >
-          <option value="">Random</option>
-          <option value="ganger">Ganger</option>
-          <option value="corporate">Corporate</option>
-          <option value="lawEnforcement">Law Enforcement</option>
-          <option value="civilian">Civilian</option>
-          <option value="fixer">Fixer</option>
-          <option value="techie">Techie</option>
-          <option value="media">Media</option>
-          <option value="nomad">Nomad</option>
-          <option value="criminal">Criminal</option>
-          <option value="mercenary">Mercenary</option>
-          <option value="netrunner">Netrunner</option>
-          <option value="medtech">Medtech</option>
-          <option value="exotic">Exotic</option>
-        </Select>
+          options={[
+            { value: '', label: 'Random' },
+            { value: 'ganger', label: 'Ganger' },
+            { value: 'corporate', label: 'Corporate' },
+            { value: 'lawEnforcement', label: 'Law Enforcement' },
+            { value: 'civilian', label: 'Civilian' },
+            { value: 'fixer', label: 'Fixer' },
+            { value: 'techie', label: 'Techie' },
+            { value: 'media', label: 'Media' },
+            { value: 'nomad', label: 'Nomad' },
+            { value: 'criminal', label: 'Criminal' },
+            { value: 'mercenary', label: 'Mercenary' },
+            { value: 'netrunner', label: 'Netrunner' },
+            { value: 'medtech', label: 'Medtech' },
+            { value: 'exotic', label: 'Exotic' }
+          ]}
+        />
         
         <Select
           label="Role"
           value={options.role ?? ''}
           onChange={(value) => setOptions({ ...options, role: value as RoleType || undefined })}
-        >
-          <option value="">Random</option>
-          <option value="Solo">Solo</option>
-          <option value="Netrunner">Netrunner</option>
-          <option value="Tech">Tech</option>
-          <option value="Medtech">Medtech</option>
-          <option value="Media">Media</option>
-          <option value="Exec">Exec</option>
-          <option value="Lawman">Lawman</option>
-          <option value="Fixer">Fixer</option>
-          <option value="Nomad">Nomad</option>
-          <option value="Rockerboy">Rockerboy</option>
-        </Select>
+          options={[
+            { value: '', label: 'Random' },
+            { value: 'Solo', label: 'Solo' },
+            { value: 'Netrunner', label: 'Netrunner' },
+            { value: 'Tech', label: 'Tech' },
+            { value: 'Medtech', label: 'Medtech' },
+            { value: 'Media', label: 'Media' },
+            { value: 'Exec', label: 'Exec' },
+            { value: 'Lawman', label: 'Lawman' },
+            { value: 'Fixer', label: 'Fixer' },
+            { value: 'Nomad', label: 'Nomad' },
+            { value: 'Rockerboy', label: 'Rockerboy' }
+          ]}
+        />
         
         <Select
           label="Threat Level"
           value={options.threat ?? 'medium'}
           onChange={(value) => setOptions({ ...options, threat: value as any })}
-        >
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-          <option value="elite">Elite</option>
-        </Select>
+          options={[
+            { value: 'low', label: 'Low' },
+            { value: 'medium', label: 'Medium' },
+            { value: 'high', label: 'High' },
+            { value: 'elite', label: 'Elite' }
+          ]}
+        />
         
         <TextInput
           label="Custom Name (optional)"
@@ -345,7 +347,7 @@ export const NPCGenerator: React.FC = () => {
         
         <div className={styles.generateActions}>
           <Button onClick={generateNPC} size="lg" fullWidth>
-            <Icon name="dice" /> Generate NPC
+            <Icon name="dice-d6" /> Generate NPC
           </Button>
           {generatedNPC && (
             <Button onClick={saveNPC} variant="primary" fullWidth>
@@ -421,7 +423,7 @@ export const NPCGenerator: React.FC = () => {
           </>
         ) : (
           <div className={styles.noNPC}>
-            <Icon name="player" size="xlarge" />
+            <Icon name="player" size="xl" />
             <p>Generate an NPC to see the preview</p>
           </div>
         )}
@@ -433,7 +435,7 @@ export const NPCGenerator: React.FC = () => {
     <div className={styles.savedContent}>
       {savedNPCs.length === 0 ? (
         <div className={styles.noSaved}>
-          <Icon name="folder-open" size="lg" />
+          <Icon name="save" size="lg" />
           <p>No saved NPCs</p>
         </div>
       ) : (
@@ -454,8 +456,7 @@ export const NPCGenerator: React.FC = () => {
               </div>
               <div className={styles.savedActions}>
                 <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
+                  onClick={() => {
                     addCharacter(npc);
                   }}
                   size="sm"
@@ -499,7 +500,7 @@ export const NPCGenerator: React.FC = () => {
           className={`${styles.tab} ${activeTab === 'generator' ? styles.active : ''}`}
           onClick={() => setActiveTab('generator')}
         >
-          <Icon name="magic" /> Generator
+          <Icon name="player" /> Generator
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'saved' ? styles.active : ''}`}

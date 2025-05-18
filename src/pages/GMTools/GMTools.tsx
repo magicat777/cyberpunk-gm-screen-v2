@@ -31,11 +31,11 @@ export function GMTools() {
         {tools.map(tool => (
           <Button
             key={tool.id}
-            variant={activeTool === tool.id ? 'primary' : 'ghost'}
+            variant={activeTool === tool.id ? 'primary' : 'secondary'}
             className={clsx(styles.toolButton, !tool.available && styles.disabled)}
             onClick={() => tool.available && setActiveTool(tool.id)}
             disabled={!tool.available}
-            startIcon={<Icon name={tool.icon as any} />}
+            icon={<Icon name={tool.icon as any} />}
           >
             {tool.name}
             {!tool.available && <span className={styles.comingSoon}>Coming Soon</span>}
@@ -49,7 +49,7 @@ export function GMTools() {
         {activeTool === 'timer' && <TimerManager />}
         {activeTool === 'session' && (
           <div className={styles.placeholder}>
-            <Icon name="book-open" size="xl" />
+            <Icon name="info" size="xl" />
             <Typography variant="h3">Session Notes</Typography>
             <Typography variant="body1">Keep notes and track session progress</Typography>
             <Typography variant="body2">Coming Soon</Typography>

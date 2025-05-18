@@ -44,7 +44,7 @@ export class ErrorFactory {
     return this.create(ErrorCode.VALIDATION_ERROR, message, {
       level: ErrorLevel.WARNING,
       details,
-      metadata: { field }
+      metadata: { timestamp: Date.now(), context: { field } }
     });
   }
 
@@ -55,7 +55,7 @@ export class ErrorFactory {
   ): AppError {
     return this.create(ErrorCode.NETWORK_ERROR, message, {
       level: ErrorLevel.ERROR,
-      metadata: { url, statusCode }
+      metadata: { timestamp: Date.now(), context: { url, statusCode } }
     });
   }
 
@@ -67,7 +67,7 @@ export class ErrorFactory {
       ErrorCode.NOT_FOUND,
       `${resourceType} not found: ${resourceId}`,
       {
-        metadata: { resourceType, resourceId }
+        metadata: { timestamp: Date.now(), context: { resourceType, resourceId } }
       }
     );
   }
@@ -89,7 +89,7 @@ export class ErrorFactory {
   ): AppError {
     return this.create(ErrorCode.STORAGE_NOT_AVAILABLE, message, {
       level: ErrorLevel.ERROR,
-      metadata: { operation },
+      metadata: { timestamp: Date.now(), context: { operation } },
       recoverable: false
     });
   }
@@ -100,7 +100,7 @@ export class ErrorFactory {
   ): AppError {
     return this.create(ErrorCode.UNKNOWN_ERROR, message, {
       level: ErrorLevel.CRITICAL,
-      metadata: { component },
+      metadata: { timestamp: Date.now(), context: { component } },
       recoverable: false
     });
   }

@@ -8,19 +8,19 @@ interface NavigationProps {
 }
 
 const navItems = [
-  { to: '/', label: 'Dashboard', icon: '🏠' },
-  { to: '/dice', label: 'Dice Roller', icon: '🎲' },
-  { to: '/rules', label: 'Rules Reference', icon: '📖' },
-  { to: '/gm-tools', label: 'GM Tools', icon: '🛠️' },
-  { to: '/sessions', label: 'Sessions', icon: '📅' },
-  { to: '/characters', label: 'Characters', icon: '👤' },
-  { to: '/encounters', label: 'Encounters', icon: '⚔️' },
-  { to: '/combat', label: 'Combat Tracker', icon: '🔄' },
-  { to: '/npcs', label: 'NPCs', icon: '👥' },
-  { to: '/cyberware', label: 'Cyberware', icon: '🤖' },
-  { to: '/equipment', label: 'Equipment', icon: '🔧' },
-  { to: '/maps', label: 'Maps', icon: '🗺️' },
-  { to: '/netrunning', label: 'Netrunning', icon: '💾' },
+  { to: '/', label: 'Dashboard' },
+  { to: '/dice', label: 'Dice Roller' },
+  { to: '/rules', label: 'Rules Reference' },
+  { to: '/gm-tools', label: 'GM Tools' },
+  { to: '/sessions', label: 'Sessions' },
+  { to: '/characters', label: 'Characters' },
+  { to: '/encounters', label: 'Encounters' },
+  { to: '/combat', label: 'Combat Tracker' },
+  { to: '/npcs', label: 'NPCs' },
+  { to: '/cyberware', label: 'Cyberware' },
+  { to: '/equipment', label: 'Equipment' },
+  { to: '/maps', label: 'Maps' },
+  { to: '/netrunning', label: 'Netrunning' },
 ];
 
 export const Navigation: React.FC<NavigationProps> = ({ isOpen, onClose }) => {
@@ -61,7 +61,6 @@ export const Navigation: React.FC<NavigationProps> = ({ isOpen, onClose }) => {
                 }
                 onClick={onClose}
               >
-                <span className={styles.icon}>{item.icon}</span>
                 <span className={styles.label}>{item.label}</span>
               </NavLink>
             </li>

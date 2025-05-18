@@ -25,7 +25,7 @@ const defaultPreferences: UserPreferences = {
   defaultDiceColor: '#00ff41',
 };
 
-export const createPreferencesSlice: StateCreator<PreferencesSlice> = (set) => ({
+export const createPreferencesSlice: StateCreator<PreferencesSlice> = (set, get) => ({
   // Initial state
   preferences: defaultPreferences,
   
@@ -74,10 +74,13 @@ export const createPreferencesSlice: StateCreator<PreferencesSlice> = (set) => (
       },
     }));
     
+    // Get the current state from the store
+    const currentState = get();
+    
     // Apply reduced motion preference
     document.documentElement.setAttribute(
       'data-reduced-motion',
-      (!state.preferences.reducedMotion).toString()
+      (!currentState.preferences.reducedMotion).toString()
     );
   },
   
