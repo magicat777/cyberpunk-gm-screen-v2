@@ -696,17 +696,3 @@ export const NPCGenerator: React.FC = () => {
   );
 };
 
-// Helper function for skill stats
-function getLinkedStat(skill: SkillType): StatType {
-  // This is a simplified mapping - you should use the full mapping from Characters.tsx
-  const skillStatMap: Partial<Record<SkillType, StatType>> = {
-    [SkillType.Concentration]: 'WILL',
-    [SkillType.Athletics]: 'DEX',
-    [SkillType.Handgun]: 'REF',
-    [SkillType.Interface]: 'INT',
-    // Add more mappings as needed
-  };
-  
-  return skillStatMap[skill] ?? 'INT';
-}
-

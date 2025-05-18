@@ -71,14 +71,14 @@ describe('Icon', () => {
 
   it('warns when icon name is not found', () => {
     const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    render(<Icon name="non-existent-icon" as any />);
+    render(<Icon name={"non-existent-icon" as any} />);
     expect(consoleSpy).toHaveBeenCalledWith('Icon "non-existent-icon" not found');
     consoleSpy.mockRestore();
   });
 
   it('returns null for non-existent icon', () => {
     const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    const { container } = render(<Icon name="non-existent-icon" as any />);
+    const { container } = render(<Icon name={"non-existent-icon" as any} />);
     expect(container.firstChild).toBeNull();
     consoleSpy.mockRestore();
   });

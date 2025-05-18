@@ -1,17 +1,21 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { SaveManager } from './SaveManager';
-import * as saveLoadService from '@/services/saveLoadService';
-import * as notification from '@/hooks/useNotification';
-import * as store from '@/store/useStore';
+import { saveLoadService } from '@/services/saveLoadService';
+import { useNotification } from '@/hooks/useNotification';
+import { useStore } from '@/store/useStore';
 
 // Mock dependencies
 vi.mock('@/services/saveLoadService', () => ({
   saveLoadService: {
-    loadSaveSlots: vi.fn(),
-    saveGame: vi.fn(),
-    loadGame: vi.fn(),
-    deleteSave: vi.fn(),
+    getSaveSlots: vi.fn(),
+    saveToSlot: vi.fn(),
+    loadFromSlot: vi.fn(),
+    deleteSaveSlot: vi.fn(),
+    saveToFile: vi.fn(),
+    loadFromFile: vi.fn(),
+    saveAutosave: vi.fn(),
+    loadAutosave: vi.fn(),
   }
 }));
 
@@ -30,16 +34,16 @@ describe('SaveManager', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     
-    (notification.useNotification as any).mockReturnValue({
+    (useNotification as any).mockReturnValue({
       showSuccess: mockShowSuccess,
       showError: mockShowError,
     });
 
-    (store.useStore as any).mockReturnValue({
+    (useStore as any).mockReturnValue({
       preferences: { autoSave: false },
     });
 
-    (saveLoadService.saveLoadService.loadSaveSlots as any).mockResolvedValue([]);
+    (saveLoadService.getSaveSlots as any).mockReturnValue([]);
   });
 
   it('should render save manager button', () => {
@@ -62,7 +66,7 @@ describe('SaveManager', () => {
   });
 
   it('should handle save game with proper dialog interaction', async () => {
-    (saveLoadService.saveLoadService.saveGame as any).mockResolvedValue({ id: 1 });
+    (saveLoadService.saveToSlot as any).mockReturnValue({ id: 1 });
     
     render(<SaveManager />);
     
@@ -76,7 +80,7 @@ describe('SaveManager', () => {
     });
     
     await waitFor(() => {
-      expect(saveLoadService.saveLoadService.saveGame).toHaveBeenCalled();
+      expect(saveLoadService.saveToSlot).toHaveBeenCalled();
       expect(mockShowSuccess).toHaveBeenCalled();
     });
   });

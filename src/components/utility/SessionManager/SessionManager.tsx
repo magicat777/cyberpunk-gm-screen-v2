@@ -19,8 +19,7 @@ export const SessionManager: React.FC = () => {
     createCampaign,
     updateCampaign,
     deleteCampaign,
-    removePlayer,
-    addPlayer
+    removePlayer
   } = useStore(state => ({
     currentSession: state.currentSession,
     sessions: state.sessions,
@@ -33,8 +32,7 @@ export const SessionManager: React.FC = () => {
     createCampaign: state.createCampaign,
     updateCampaign: state.updateCampaign,
     deleteCampaign: state.deleteCampaign,
-    removePlayer: state.removePlayer,
-    addPlayer: state.addPlayer
+    removePlayer: state.removePlayer
   }));
 
   const [activeTab, setActiveTab] = useState<'sessions' | 'campaigns' | 'current'>('current');

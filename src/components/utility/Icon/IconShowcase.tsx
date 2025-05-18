@@ -70,7 +70,7 @@ export const IconShowcase: React.FC = () => {
         </div>
       )}
 
-      {Object.entries(iconCategories).map(([category, icons]) => {
+      {Object.entries(iconCategories).map(([category]) => {
         const categoryIcons = getIconsByCategory(category);
         if (categoryIcons.length === 0) return null;
 

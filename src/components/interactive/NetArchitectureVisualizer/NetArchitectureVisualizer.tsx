@@ -330,7 +330,7 @@ export const NetArchitectureVisualizer: React.FC = () => {
         <Select
           label="Template"
           value={generatorOptions.template}
-          onChange={(value) => setGeneratorOptions({ ...generatorOptions, template: value })}
+          onChange={(value) => setGeneratorOptions({ ...generatorOptions, template: Array.isArray(value) ? value[0] : value })}
         >
           <option value="">Custom</option>
           {architectureTemplates.map(template => (
