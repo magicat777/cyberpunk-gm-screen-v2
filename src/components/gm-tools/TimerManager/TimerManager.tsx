@@ -133,12 +133,14 @@ export const TimerManager: React.FC = () => {
   };
 
   const toggleTimer = (id: string) => {
+    console.log('toggleTimer called with id:', id);
     setTimers(timers.map(timer => 
       timer.id === id ? { ...timer, isRunning: !timer.isRunning } : timer
     ));
   };
 
   const resetTimer = (id: string) => {
+    console.log('resetTimer called with id:', id);
     setTimers(timers.map(timer => 
       timer.id === id ? { 
         ...timer, 
@@ -149,6 +151,7 @@ export const TimerManager: React.FC = () => {
   };
 
   const deleteTimer = (id: string) => {
+    console.log('deleteTimer called with id:', id);
     setTimers(timers.filter(timer => timer.id !== id));
   };
 
@@ -245,26 +248,31 @@ export const TimerManager: React.FC = () => {
 
                 <div className={styles.timerControls}>
                   <Button
-                    onClick={() => toggleTimer(timer.id)}
+                    onClick={() => {
+                      console.log('Button clicked for timer:', timer.id);
+                      toggleTimer(timer.id);
+                    }}
                     variant={timer.isRunning ? 'secondary' : 'primary'}
                     size="sm"
+                    type="button"
                   >
-                    <Icon name={timer.isRunning ? 'chevron-up' : 'chevron-right'} />
                     {timer.isRunning ? 'Pause' : 'Start'}
                   </Button>
                   <Button
                     onClick={() => resetTimer(timer.id)}
                     variant="tertiary"
                     size="sm"
+                    type="button"
                   >
-                    <Icon name="redo" /> Reset
+                    Reset
                   </Button>
                   <Button
                     onClick={() => deleteTimer(timer.id)}
                     variant="danger"
                     size="sm"
+                    type="button"
                   >
-                    <Icon name="remove" />
+                    Delete
                   </Button>
                 </div>
 
