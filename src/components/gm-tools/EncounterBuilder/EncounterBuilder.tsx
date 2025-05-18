@@ -7,8 +7,11 @@ import { Icon } from '../../utility/Icon';
 import { TextInput } from '../../utility/Form/TextInput';
 import { TextArea } from '../../utility/Form/TextArea';
 import { Select } from '../../utility/Form/Select';
+import { useStore } from '../../../store/useStore';
 
 export const EncounterBuilder: React.FC = () => {
+  const { savedEncounters, saveEncounter: storeSaveEncounter, deleteEncounter: storeDeleteEncounter } = useStore();
+  
   const [activeTab, setActiveTab] = useState<'builder' | 'templates' | 'saved'>('builder');
   const [encounter, setEncounter] = useState<Partial<Encounter>>({
     name: '',
@@ -29,7 +32,6 @@ export const EncounterBuilder: React.FC = () => {
   const [newObjective, setNewObjective] = useState('');
   const [newTag, setNewTag] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
-  const [savedEncounters, setSavedEncounters] = useState<Encounter[]>([]);
 
   // Pre-defined templates for quick encounter generation
   const templates: EncounterTemplate[] = [
@@ -209,7 +211,7 @@ export const EncounterBuilder: React.FC = () => {
       modifiedAt: new Date()
     };
 
-    setSavedEncounters(prev => [...prev, newEncounter]);
+    storeSaveEncounter(newEncounter);
     // Reset form
     setEncounter({
       name: '',
@@ -580,8 +582,8 @@ export const EncounterBuilder: React.FC = () => {
   );
 
   const handleDeleteEncounter = useCallback((encounterId: string) => {
-    setSavedEncounters(prev => prev.filter(e => e.id !== encounterId));
-  }, []);
+    storeDeleteEncounter(encounterId);
+  }, [storeDeleteEncounter]);
 
   const renderSaved = () => (
     <div className={styles.savedContent}>

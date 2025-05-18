@@ -6,13 +6,15 @@ import { createCharacterSlice, CharacterSlice } from './slices/characterSlice';
 import { createCombatSlice, CombatSlice } from './slices/combatSlice';
 import { createPreferencesSlice, PreferencesSlice } from './slices/preferencesSlice';
 import { createNotificationSlice, NotificationSlice } from './slices/notificationSlice';
+import { createEncountersSlice, EncountersSlice } from './slices/encountersSlice';
 
 export type StoreState = SessionSlice &
   DiceSlice &
   CharacterSlice &
   CombatSlice &
   PreferencesSlice &
-  NotificationSlice;
+  NotificationSlice &
+  EncountersSlice;
 
 export const useStore = create<StoreState>()(
   devtools(
@@ -24,6 +26,7 @@ export const useStore = create<StoreState>()(
         ...createCombatSlice(set, get, api),
         ...createPreferencesSlice(set, get, api),
         ...createNotificationSlice(set, get, api),
+        ...createEncountersSlice(set, get, api),
       }),
       {
         name: 'cyberpunk-gm-store',
@@ -38,6 +41,11 @@ export const useStore = create<StoreState>()(
           characters: state.characters,
           // Recent dice rolls (limited)
           diceHistory: state.diceHistory.slice(-20),
+          // Combat encounters (Initiative Tracker)
+          combatEncounters: state.combatEncounters,
+          activeCombat: state.activeCombat,
+          // Saved encounters (Encounter Builder)
+          savedEncounters: state.savedEncounters,
         }),
       }
     ),
