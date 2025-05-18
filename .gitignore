@@ -48,3 +48,10 @@ docs/
 *.tmp
 *.temp
 .cache/
+# SonarQube
+.scannerwork/
+eslint-report.json
+.sonar/
+sonarqube_data/
+sonarqube_extensions/
+sonarqube_logs/
