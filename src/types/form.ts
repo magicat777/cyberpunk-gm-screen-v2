@@ -65,9 +65,10 @@ export interface RadioOption {
 export interface SelectProps extends BaseInputProps {
   value: string | string[];
   onChange: (value: string | string[]) => void;
-  options: SelectOption[];
+  options?: SelectOption[];
   multiple?: boolean;
   placeholder?: string;
+  children?: ReactNode;
 }
 
 export interface SelectOption {

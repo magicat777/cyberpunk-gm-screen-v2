@@ -193,19 +193,20 @@ export const Characters: React.FC = () => {
             value={filterRole}
             onChange={(value) => setFilterRole(value as RoleType | 'all')}
             className={styles.roleFilter}
-          >
-            <option value="all">All Roles</option>
-            <option value="Solo">Solo</option>
-            <option value="Netrunner">Netrunner</option>
-            <option value="Tech">Tech</option>
-            <option value="Medtech">Medtech</option>
-            <option value="Media">Media</option>
-            <option value="Exec">Exec</option>
-            <option value="Lawman">Lawman</option>
-            <option value="Fixer">Fixer</option>
-            <option value="Nomad">Nomad</option>
-            <option value="Rockerboy">Rockerboy</option>
-          </Select>
+            options={[
+              { value: 'all', label: 'All Roles' },
+              { value: 'Solo', label: 'Solo' },
+              { value: 'Netrunner', label: 'Netrunner' },
+              { value: 'Tech', label: 'Tech' },
+              { value: 'Medtech', label: 'Medtech' },
+              { value: 'Media', label: 'Media' },
+              { value: 'Exec', label: 'Exec' },
+              { value: 'Lawman', label: 'Lawman' },
+              { value: 'Fixer', label: 'Fixer' },
+              { value: 'Nomad', label: 'Nomad' },
+              { value: 'Rockerboy', label: 'Rockerboy' }
+            ]}
+          />
         </div>
 
         <div className={styles.characterList}>

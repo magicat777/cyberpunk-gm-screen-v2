@@ -19,6 +19,7 @@ export const Select: React.FC<SelectProps> = ({
   options,
   multiple = false,
   placeholder,
+  children,
 }) => {
   const generatedId = useId();
   const inputId = providedId || generatedId;
@@ -34,14 +35,14 @@ export const Select: React.FC<SelectProps> = ({
   };
 
   // Group options by group property
-  const groupedOptions = options.reduce((acc, option) => {
+  const groupedOptions = options ? options.reduce((acc, option) => {
     const group = option.group || '';
     if (!acc[group]) {
       acc[group] = [];
     }
     acc[group].push(option);
     return acc;
-  }, {} as Record<string, typeof options>);
+  }, {} as Record<string, typeof options>) : {};
 
   return (
     <div
@@ -83,33 +84,38 @@ export const Select: React.FC<SelectProps> = ({
             </option>
           )}
           
-          {Object.entries(groupedOptions).map(([groupName, groupOptions]) => {
-            if (groupName) {
-              return (
-                <optgroup key={groupName} label={groupName}>
-                  {groupOptions.map(option => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                      disabled={option.disabled}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </optgroup>
-              );
-            }
-            
-            return groupOptions.map(option => (
-              <option
-                key={option.value}
-                value={option.value}
-                disabled={option.disabled}
-              >
-                {option.label}
-              </option>
-            ));
-          })}
+          {/* Support both options prop and children */}
+          {options ? (
+            Object.entries(groupedOptions).map(([groupName, groupOptions]) => {
+              if (groupName) {
+                return (
+                  <optgroup key={groupName} label={groupName}>
+                    {groupOptions.map(option => (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled={option.disabled}
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                );
+              }
+              
+              return groupOptions.map(option => (
+                <option
+                  key={option.value}
+                  value={option.value}
+                  disabled={option.disabled}
+                >
+                  {option.label}
+                </option>
+              ));
+            })
+          ) : (
+            children
+          )}
         </select>
         
         <Icon
