@@ -92,7 +92,7 @@ export const EquipmentDatabase: React.FC = () => {
   }, [filters, sortBy, sortOrder]);
 
   const handleCategoryToggle = (category: EquipmentCategory) => {
-    const current = filters.categories || [];
+    const current = filters.categories ?? [];
     if (current.includes(category)) {
       setFilters({
         ...filters,
@@ -318,7 +318,7 @@ export const EquipmentDatabase: React.FC = () => {
               <Checkbox
                 key={category}
                 label={category.charAt(0).toUpperCase() + category.slice(1)}
-                checked={filters.categories?.includes(category) || false}
+                checked={filters.categories?.includes(category) ?? false}
                 onChange={() => handleCategoryToggle(category)}
               />
             ))}
@@ -355,9 +355,9 @@ export const EquipmentDatabase: React.FC = () => {
               <Checkbox
                 key={avail}
                 label={avail}
-                checked={filters.availability?.includes(avail) || false}
+                checked={filters.availability?.includes(avail) ?? false}
                 onChange={(checked) => {
-                  const current = filters.availability || [];
+                  const current = filters.availability ?? [];
                   setFilters({
                     ...filters,
                     availability: checked

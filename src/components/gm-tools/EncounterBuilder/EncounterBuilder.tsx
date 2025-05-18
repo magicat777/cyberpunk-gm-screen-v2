@@ -1,5 +1,5 @@
 import { handleKeyboardClick } from '@/utils/accessibilityHelpers';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Encounter, EncounterParticipant, EncounterTemplate, EnvironmentConditions } from '../../../types/encounter';
 import styles from './EncounterBuilder.module.css';
 import { Button } from '../../utility/Form/Button';
@@ -530,6 +530,14 @@ export const EncounterBuilder: React.FC = () => {
     </div>
   );
 
+  const handleTemplateSelect = useCallback((templateId: string) => {
+    setSelectedTemplate(templateId);
+  }, []);
+
+  const handleTemplateKeyDown = useCallback((e: React.KeyboardEvent, templateId: string) => {
+    handleKeyboardClick(e, () => handleTemplateSelect(templateId));
+  }, [handleTemplateSelect]);
+
   const renderTemplates = () => (
     <div className={styles.templatesContent}>
       <div className={styles.templateGrid}>
@@ -537,8 +545,8 @@ export const EncounterBuilder: React.FC = () => {
           <button
             key={template.id}
             className={`${styles.templateCard} ${selectedTemplate === template.id ? styles.selected : ''}`}
-            onClick={() => setSelectedTemplate(template.id)}
-            onKeyDown={(e) => handleKeyboardClick(e, () => setSelectedTemplate(template.id))}
+            onClick={() => handleTemplateSelect(template.id)}
+            onKeyDown={(e) => handleTemplateKeyDown(e, template.id)}
             tabIndex={0}
           >
             <h4>{template.name}</h4>
@@ -570,6 +578,10 @@ export const EncounterBuilder: React.FC = () => {
       </div>
     </div>
   );
+
+  const handleDeleteEncounter = useCallback((encounterId: string) => {
+    setSavedEncounters(prev => prev.filter(e => e.id !== encounterId));
+  }, []);
 
   const renderSaved = () => (
     <div className={styles.savedContent}>
@@ -603,9 +615,7 @@ export const EncounterBuilder: React.FC = () => {
                   Edit
                 </Button>
                 <Button
-                  onClick={() => setSavedEncounters(prev => 
-                    prev.filter(e => e.id !== saved.id)
-                  )}
+                  onClick={() => handleDeleteEncounter(saved.id)}
                   variant="danger"
                   size="sm"
                   icon={<Icon name="remove" />}

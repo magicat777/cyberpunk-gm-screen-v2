@@ -1,5 +1,5 @@
 import { handleKeyboardClick } from '@/utils/accessibilityHelpers';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useStore } from '../../../store/useStore';
 import { 
   NPCGeneratorOptions, 
@@ -94,8 +94,8 @@ export const NPCGenerator: React.FC = () => {
   };
 
   const generateStats = (threat: string, archetype: NPCArchetype): Record<StatType, { base: number; current: number }> => {
-    const template = npcTemplates.find(t => t.archetype === archetype) || npcTemplates[0];
-    const threatModifier = { low: -1, medium: 0, high: 1, elite: 2 }[threat] || 0;
+    const template = npcTemplates.find(t => t.archetype === archetype) ?? npcTemplates[0];
+    const threatModifier = { low: -1, medium: 0, high: 1, elite: 2 }[threat] ?? 0;
     
     const stats: Partial<Record<StatType, { base: number; current: number }>> = {};
     
@@ -114,8 +114,8 @@ export const NPCGenerator: React.FC = () => {
     threat: string,
     archetype: NPCArchetype
   ): Character['skills'] => {
-    const template = npcTemplates.find(t => t.archetype === archetype) || npcTemplates[0];
-    const threatBonus = { low: 0, medium: 2, high: 4, elite: 6 }[threat] || 0;
+    const template = npcTemplates.find(t => t.archetype === archetype) ?? npcTemplates[0];
+    const threatBonus = { low: 0, medium: 2, high: 4, elite: 6 }[threat] ?? 0;
     
     const skills: Character['skills'] = {} as any;
     
@@ -146,20 +146,36 @@ export const NPCGenerator: React.FC = () => {
     return skills;
   };
 
+  const handleSelectSavedNPC = useCallback((npc: GeneratedNPC) => {
+    setSelectedSavedNPC(npc);
+  }, []);
+
+  const handleSelectSavedNPCKeyDown = useCallback((e: React.KeyboardEvent, npc: GeneratedNPC) => {
+    handleKeyboardClick(e, () => handleSelectSavedNPC(npc));
+  }, [handleSelectSavedNPC]);
+
+  const handleDeleteNPC = useCallback((e: React.MouseEvent, npcId: string) => {
+    e.stopPropagation();
+    setSavedNPCs(prevNPCs => prevNPCs.filter(n => n.id !== npcId));
+    if (selectedSavedNPC?.id === npcId) {
+      setSelectedSavedNPC(null);
+    }
+  }, [selectedSavedNPC]);
+
   const generateNPC = () => {
-    const archetype = options.archetype || 
+    const archetype = options.archetype ?? 
       (['ganger', 'corporate', 'civilian', 'criminal', 'mercenary'] as NPCArchetype[])[
         Math.floor(Math.random() * 5)
       ];
     
-    const role = options.role || 
+    const role = options.role ?? 
       (['Solo', 'Netrunner', 'Tech', 'Medtech', 'Fixer'] as RoleType[])[
         Math.floor(Math.random() * 5)
       ];
     
-    const threat = options.threat || 'medium';
+    const threat = options.threat ?? 'medium';
     const gender = ['male', 'female', 'neutral'][Math.floor(Math.random() * 3)] as any;
-    const name = options.customName || generateRandomName(gender);
+    const name = options.customName ?? generateRandomName(gender);
     
     const stats = generateStats(threat, archetype);
     const skills = generateSkills(stats, threat, archetype);
@@ -244,7 +260,7 @@ export const NPCGenerator: React.FC = () => {
         
         <Select
           label="Archetype"
-          value={options.archetype || ''}
+          value={options.archetype ?? ''}
           onChange={(value) => setOptions({ ...options, archetype: value as NPCArchetype || undefined })}
         >
           <option value="">Random</option>
@@ -265,7 +281,7 @@ export const NPCGenerator: React.FC = () => {
         
         <Select
           label="Role"
-          value={options.role || ''}
+          value={options.role ?? ''}
           onChange={(value) => setOptions({ ...options, role: value as RoleType || undefined })}
         >
           <option value="">Random</option>
@@ -283,7 +299,7 @@ export const NPCGenerator: React.FC = () => {
         
         <Select
           label="Threat Level"
-          value={options.threat || 'medium'}
+          value={options.threat ?? 'medium'}
           onChange={(value) => setOptions({ ...options, threat: value as any })}
         >
           <option value="low">Low</option>
@@ -294,7 +310,7 @@ export const NPCGenerator: React.FC = () => {
         
         <TextInput
           label="Custom Name (optional)"
-          value={options.customName || ''}
+          value={options.customName ?? ''}
           onChange={(value) => setOptions({ ...options, customName: value })}
           placeholder="Leave blank for random"
         />
@@ -302,27 +318,27 @@ export const NPCGenerator: React.FC = () => {
         <div className={styles.checkboxGroup}>
           <Checkbox
             label="Include Appearance"
-            checked={options.includeAppearance || false}
+            checked={options.includeAppearance ?? false}
             onChange={(checked) => setOptions({ ...options, includeAppearance: checked })}
           />
           <Checkbox
             label="Include Motivation"
-            checked={options.includeMotivation || false}
+            checked={options.includeMotivation ?? false}
             onChange={(checked) => setOptions({ ...options, includeMotivation: checked })}
           />
           <Checkbox
             label="Include Background"
-            checked={options.includeBackground || false}
+            checked={options.includeBackground ?? false}
             onChange={(checked) => setOptions({ ...options, includeBackground: checked })}
           />
           <Checkbox
             label="Include Cyberware"
-            checked={options.includeCyberware || false}
+            checked={options.includeCyberware ?? false}
             onChange={(checked) => setOptions({ ...options, includeCyberware: checked })}
           />
           <Checkbox
             label="Include Equipment"
-            checked={options.includeEquipment || false}
+            checked={options.includeEquipment ?? false}
             onChange={(checked) => setOptions({ ...options, includeEquipment: checked })}
           />
         </div>
@@ -426,8 +442,8 @@ export const NPCGenerator: React.FC = () => {
             <button
               key={npc.id}
               className={`${styles.savedCard} ${selectedSavedNPC?.id === npc.id ? styles.selected : ''}`}
-              onClick={() => setSelectedSavedNPC(npc)}
-              onKeyDown={(e) => handleKeyboardClick(e, () => setSelectedSavedNPC(npc))}
+              onClick={() => handleSelectSavedNPC(npc)}
+              onKeyDown={(e) => handleSelectSavedNPCKeyDown(e, npc)}
               tabIndex={0}
             >
               <h4>{npc.name}</h4>
@@ -447,13 +463,7 @@ export const NPCGenerator: React.FC = () => {
                   <Icon name="add" /> Add to Characters
                 </Button>
                 <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSavedNPCs(savedNPCs.filter(n => n.id !== npc.id));
-                    if (selectedSavedNPC?.id === npc.id) {
-                      setSelectedSavedNPC(null);
-                    }
-                  }}
+                  onClick={(e) => handleDeleteNPC(e, npc.id)}
                   variant="danger"
                   size="sm"
                 >
